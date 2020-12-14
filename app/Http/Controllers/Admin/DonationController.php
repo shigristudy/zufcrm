@@ -1,0 +1,156 @@
+<?php
+
+namespace App\Http\Controllers\Admin;
+
+use App\Http\Controllers\Controller;
+use App\Http\Requests\DonationRequest;
+use App\Models\Donation;
+use App\Models\DonationLine;
+use App\Models\OrderItem;
+use App\Models\WooOrder;
+use App\Models\WooProduct;
+use Carbon\Carbon;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
+
+class DonationController extends Controller
+{
+    public function store( DonationRequest $request ){
+        
+        $is_sponsor_count = 0;
+        foreach($request->donationsArray as $key => $line ){
+            if(in_array($line['project'],[11863, 11864, 11814, 11815, 11816])){
+                $is_sponsor_count++;
+            }
+        }
+        DB::beginTransaction();
+
+        try {
+            $woo = new WooOrder();
+            $woo->title                     = $request->title;
+            $woo->order_id                  = 0;
+            $woo->first_name                = $request->first_name;
+            $woo->last_name                 = $request->last_name;
+            $woo->order_total               = $request->total_amount;
+            $woo->is_sponsor_count          = $is_sponsor_count;
+            $woo->donation_date             = $request->date_of_donation;
+            $woo->number_of_items           = count($request->donationsArray);
+            $woo->gift_aid                  = $request->gift_aid;
+            $woo->address_1                 = $request->address_line1;
+            $woo->address_2                 = $request->address_line2;
+            $woo->city                      = $request->city;
+            $woo->state                     = $request->state;
+            $woo->postcode                  = $request->postal_code;
+            $woo->country                   = $request->country;
+            $woo->email                     = $request->email;
+            $woo->phone                     = $request->contact;
+            $woo->payment_method            = $request->payment_type;
+            $woo->payment_method_title      = $request->payment_type;
+            $woo->donation_type             = 'offline';
+            
+            $woo->save();
+            
+            // Insert Donation Lines 
+            foreach($request->donationsArray as $item ){
+                $is_sponsor = 0;
+                if(in_array($item['project'],[11863, 11864, 11814, 11815, 11816])){
+                    $is_sponsor = 1;
+                }
+                $Orderitem = new OrderItem();
+                $Orderitem->order_id         = $woo->id;
+                $Orderitem->woo_order_id     = 0;
+                $Orderitem->product_id       = $item['project'];
+                $Orderitem->donation_type    = $item['donation_type'];
+                $Orderitem->quantity         = 1;
+                $Orderitem->total            = $item['amount'];
+                $Orderitem->type             = 'simple';
+                $Orderitem->is_sponsor       = $is_sponsor;
+                $Orderitem->save();
+            }
+            DB::commit();
+        
+        } catch (\Exception $e) {
+            DB::rollback();
+            return $e;
+        }
+        return response()->json([
+            'success'   => 1,
+            'message'   => 'Donation Added Successfully!'    
+        ]);
+    }
+
+
+    public function getDonations(Request $request){
+        
+        // $columns = ['id','payment_type','date_of_donation','full_name','gift_aid','city','postal_code','contact','email','address_line1','address_line2','status'];
+        $columns = ['id','order_total','gift_aid','first_name','last_name','email','phone','payment_method','submitted','claimed','is_allocated'];
+        $length = $request->input('length');
+        $column = $request->input('column'); //Index
+        $dir = $request->input('dir');
+        $searchValue = $request->input('search');
+
+        $query = WooOrder::with('items.product')->orderBy($columns[$column], $dir);
+        // Filters
+        if($request->filtering){
+            
+            $filters = json_decode($request->form,true);
+            $gift_aid           = $filters["gift_aid"];
+            $project            = $filters["project"];
+            $donation_type      = $filters["donation_type"];
+            $payment_method     = $filters["payment_method"];
+            $date_from          = ($filters["date_from"]);
+            $date_to            = ($filters["date_to"]);
+            $has_sponsored      = $filters["has_sponsored"];
+            
+            if($gift_aid != ''){
+                $query->ofGiftAidType($gift_aid);
+            }
+            if($donation_type){
+                $query->where('donation_type',$donation_type);
+            }
+            if($payment_method){
+                $query->where('payment_method',$payment_method);
+            }
+            if($payment_method){
+                $query->where('payment_method',$payment_method);
+            }
+            if($date_from || $date_to){
+                
+                if($date_from && $date_to){
+                    $query->whereBetween('donation_date',[$date_from,$date_to]);
+                }else if($date_from){
+                    $query->whereDate('donation_date','>',$date_from);
+                }else{
+                    $query->whereDate('donation_date','<',$date_to);
+                }
+            }
+        }
+
+        if ($searchValue) {
+            $query->where(function($query) use ($searchValue,$columns) {
+                foreach($columns as $c){
+                    $query->orWhere($c, 'like', '%' . $searchValue . '%');
+                }
+            });
+        }
+
+        $projects = $query->paginate($length);
+        return ['data' => $projects, 'draw' => $request->input('draw')];
+    }
+
+    public function getSingleDonation( $id ){
+        $donation = WooOrder::with(['items.product'])->find($id);
+        return response()->json($donation);
+    }
+
+    public function getneworderdata(Request $request){
+        return response()->json($request->all());
+    }
+
+
+    public function getProjects(){
+        $projects = WooProduct::all();
+        return response()->json($projects);
+    }
+
+}
