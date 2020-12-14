@@ -1,0 +1,1 @@
+[14-Dec-2020 15:47:57 UTC] PHP Fatal error:  require(): Failed opening required '/home/customer/www/crm.ziaulummahfoundation.org.uk/public_html/public/../vendor/autoload.php' (include_path='.:/usr/local/php73/pear') in /home/customer/www/crm.ziaulummahfoundation.org.uk/public_html/public/index.php on line 34
