@@ -1,0 +1,2 @@
+ssh-add /home/kabeer/.ssh/zufcrm
+ssh -p18765 u211-8bpasz666au7@ziaulummahfoundation.org.uk
