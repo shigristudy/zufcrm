@@ -1,2 +1,5 @@
 ssh-add /home/kabeer/.ssh/zufcrm
 ssh -p18765 u211-8bpasz666au7@ziaulummahfoundation.org.uk
+
+http://crm.ziaulummahfoundation.org.uk/dist/js/8a0306b2f2ab2b324e81.js
+http://crm.ziaulummahfoundation.org.uk/public/dist/js/app.js
