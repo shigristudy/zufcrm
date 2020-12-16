@@ -30,11 +30,11 @@ mix.webpackConfig({
     }
   },
   output: {
+    publicPath: '/public/',
     chunkFilename: 'dist/js/[chunkhash].js',
     path: mix.config.hmr
       ? '/'
-      : path.resolve(__dirname, mix.inProduction() ? './public/build' : './public'),
-    publicPath: './public/'  
+      : path.resolve(__dirname, mix.inProduction() ? './public/build' : './public')
   }
 })
 

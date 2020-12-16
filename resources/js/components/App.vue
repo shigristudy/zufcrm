@@ -50,6 +50,7 @@ export default {
   },
 
   mounted () {
+    console.log('here')
     this.$loading = this.$refs.loading
   },
 
