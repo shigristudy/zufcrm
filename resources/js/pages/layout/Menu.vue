@@ -84,17 +84,24 @@
 </template>
 <script>
 export default {
-    created(){
-        jQuery('#main-menu-navigation .nav-item').click(function(){
-            jQuery('#main-menu-navigation .nav-item').removeClass('open')
-            jQuery(this).addClass('open');
+    mounted(){
+        this.$nextTick(() => {
+            $(document).on('mouseover','#main-menu-navigation .nav-item',function(){
+                $(this).addClass('hover');
+               
+            })
+            $(document).on('mouseout','#main-menu-navigation .nav-item',function(){
+                $(this).removeClass('hover');
+            })
+            $(document).on('click','#main-menu-navigation .nav-item',function(){
+                $('#main-menu-navigation .nav-item').removeClass('open');
+                $('#main-menu-navigation .nav-item').removeClass('active');
+                $(this).addClass('open');
+                $(this).addClass('active');
+            })
         })
-        jQuery('#main-menu-navigation .nav-item').mouseover(function(){
-            jQuery(this).addClass('hover');
-        })
-        jQuery('#main-menu-navigation .nav-item').mouseout(function(){
-            jQuery(this).removeClass('hover')
-        })
+        console.log('mounted')
+        
     }
 }
 </script>
