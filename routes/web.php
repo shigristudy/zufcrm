@@ -21,7 +21,7 @@ Route::get('/hello', function () {
     return 'hello';
 });
 Route::get('/testing', function () {
-    dd(1);
+    // dd(1);
    
     $client = new Client();
     $response = $client->request('GET', 'https://www.ziaulummahfoundation.org.uk/wp-json/getdonations/v1/get_all_donations');
