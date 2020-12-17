@@ -82,3 +82,19 @@
     </div>
     <!-- END: Main Menu-->
 </template>
+<script>
+export default {
+    created(){
+        jQuery('#main-menu-navigation .nav-item').click(function(){
+            jQuery('#main-menu-navigation .nav-item').removeClass('open')
+            jQuery(this).addClass('open');
+        })
+        jQuery('#main-menu-navigation .nav-item').mouseover(function(){
+            jQuery(this).addClass('hover');
+        })
+        jQuery('#main-menu-navigation .nav-item').mouseout(function(){
+            jQuery(this).removeClass('hover')
+        })
+    }
+}
+</script>
