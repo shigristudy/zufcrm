@@ -4,7 +4,7 @@
           <div class="card bg-authentication rounded-0 mb-0">
               <div class="row m-0 mb-3">
                   <div class="col-lg-6 d-lg-block d-none text-center align-self-center px-1 py-0">
-                      <img :src="BaseUrl+'/app-assets/images/pages/login.png'" alt="branding logo">
+                      <img :src="BaseUrlPublic+'/app-assets/images/pages/login.png'" alt="branding logo">
                   </div>
                   <div class="col-lg-6 col-12 p-0">
                       <div class="card rounded-0 mb-0 px-2">

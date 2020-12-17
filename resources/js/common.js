@@ -4,6 +4,7 @@ export default {
     data() {
         return {
             BaseUrl: window.location.origin,
+            BaseUrlPublic: window.location.origin+'/public/',
             AdminBaseUrl: window.location.origin+'/api/',
             AssetsBaseUrl:window.location.origin+'/uploads/',
             imgSrc:'',
