@@ -124,7 +124,24 @@ Route::group(['middleware' => 'guest:api'], function () {
 
 
 Route::post('gocardless_webhook', function (Request $request) {
+
+    // payment
+    // mandate
+    // payer_authorisation
+    // payout
+    // refund
+    // subscription
+    // instalment_schedule
+    // creditor
     // dd($request->all());
+    Log::info($request->header('Webhook-Signature'));
+    Log::info($request->all());
+    return 'hello';
+});
+
+Route::post('gocardless_create_customer', function (Request $request) {
+    // dd($request->all());
+    Log::info($request->header('Webhook-Signature'));
     Log::info($request->all());
     return 'hello';
 });

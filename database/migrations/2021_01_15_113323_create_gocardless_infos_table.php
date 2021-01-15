@@ -15,6 +15,11 @@ class CreateGocardlessInfosTable extends Migration
     {
         Schema::create('gocardless_infos', function (Blueprint $table) {
             $table->id();
+            $table->integer('order_id');
+            $table->string('gcl_customer_id');
+            $table->string('gcl_customer_bank_id');
+            $table->string('gcl_mandate_id');
+            $table->string('gcl_subscription_id');
             $table->timestamps();
         });
     }
