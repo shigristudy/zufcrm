@@ -14,24 +14,11 @@
           </div>
         </div>
       </div>
-      <div
+     <div
         class="content-header-right text-md-right col-md-3 col-12 d-md-block d-none"
       >
         <div class="form-group breadcrum-right">
-          <div class="dropdown">
-            <button
-              class="btn-icon btn btn-primary btn-round btn-sm dropdown-toggle"
-              type="button"
-              data-toggle="dropdown"
-              aria-haspopup="true"
-              aria-expanded="false"
-            >
-              <i class="feather icon-settings"></i>
-            </button>
-            <div class="dropdown-menu dropdown-menu-right">
-              <a class="dropdown-item" href="#">Add User</a>
-            </div>
-          </div>
+            <router-link :to="{ name:'settings.user.add' }"  class="btn btn-primary mr-1 mb-1 waves-effect waves-light">Add User</router-link>
         </div>
       </div>
     </div>
@@ -83,33 +70,28 @@
                 @sort="sortBy"
                 >
                 <tbody>
-                    <tr v-for="project in projects" :key="project.id">
-                    <td>{{ project.name }}</td>
-                    <td>{{ project.email }}</td>
-                    <td>{{ project.role || 'none' }}</td>
-                    <td class="text-center">
-                        <div class="btn-group mb-1">
-                            <div class="dropdown">
-                                <button class="btn btn-primary dropdown-toggle mr-1 waves-effect waves-light" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                    Primary
-                                </button>
-                                <div class="dropdown-menu" aria-labelledby="dropdownMenuButton" x-placement="bottom-start" style="position: absolute; will-change: transform; top: 0px; left: 0px; transform: translate3d(0px, 38px, 0px);">
-                                    <a class="dropdown-item" href="#">Option 1</a>
-                                    <a class="dropdown-item" href="#">Option 2</a>
-                                    <a class="dropdown-item" href="#">Option 3</a>
+                    <tr v-for="item in items" :key="item.id">
+                      <td>{{ item.name }}</td>
+                      <td>{{ item.email }}</td>
+                      <td>{{ item.role || 'none' }}</td>
+                      <td class="text-center">
+                           <div class="dropdown">
+                                <button class="btn-icon btn btn-primary btn-round btn-sm dropdown-toggle waves-effect waves-light" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Action</button>
+                                <div class="dropdown-menu dropdown-menu-right" x-placement="bottom-end" style="position: absolute; transform: translate3d(263px, 36px, 0px); top: 0px; left: 0px; will-change: transform;">
+                                    <router-link class="dropdown-item" :to="{ name:'settings.user.edit',params:{ record_id:item.id } }">Edit</router-link>
+                                    <a class="dropdown-item" @click="deleteUser(item.id)">Delete</a>
                                 </div>
                             </div>
-                        </div>
-                    </td>
+                       </td>
                     </tr>
                 </tbody>
                 </datatable>
             </div>
             <pagination
               :pagination="pagination"
-              @paginate="getProjects(page)"
-              @prev="getProjects(pagination.prevPageUrl)"
-              @next="getProjects(pagination.nextPageUrl)"
+              @paginate="getData(page)"
+              @prev="getData(pagination.prevPageUrl)"
+              @next="getData(pagination.nextPageUrl)"
             >
             </pagination>
           </div>
@@ -129,7 +111,7 @@ export default {
   middleware: "auth",
 
   metaInfo() {
-    return { title: this.$t("home") };
+    return { title: 'Users' };
   },
   data() {
     let sortOrders = {};
@@ -143,7 +125,7 @@ export default {
       sortOrders[column.name] = -1;
     });
     return {
-      projects: [],
+      items: [],
       columns: columns,
       sortKey: "name",
       sortOrders: sortOrders,
@@ -168,14 +150,24 @@ export default {
     };
   },
   methods: {
-    getProjects(url = "/api/users") {
+    deleteUser(id){
+      axios
+        .post('/api/settings/user/destroy', { id:id })
+        .then((response) => {
+          this.getData()
+        })
+        .catch((errors) => {
+          console.log(errors);
+        });
+    },
+    getData(url = "/api/users") {
       this.tableData.draw++;
       axios
         .get(url, { params: this.tableData })
         .then((response) => {
           let data = response.data;
           if (this.tableData.draw == data.draw) {
-            this.projects = data.data.data;
+            this.items = data.data.data;
             this.configPagination(data.data);
           }
         })
@@ -188,11 +180,11 @@ export default {
       this.sortOrders[key] = this.sortOrders[key] * -1;
       this.tableData.column = this.getIndex(this.columns, "name", key);
       this.tableData.dir = this.sortOrders[key] === 1 ? "asc" : "desc";
-      this.getProjects();
+      this.getData();
     },
   },
   created() {
-    this.getProjects();
+    this.getData();
   },
 };
 </script>

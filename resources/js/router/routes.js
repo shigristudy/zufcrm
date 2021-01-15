@@ -59,6 +59,8 @@ export default [
       { path: 'permissions', name: 'settings.permissions', component: page('settings/permission/permission.vue') },
       { path: 'permission/add', name: 'settings.permission.add', component: page('settings/permission/add.vue') },
       { path: 'permission/assign/:record_id', name: 'settings.permission.assign', component: page('settings/permission/assign.vue') },
+      { path: 'user/add', name: 'settings.user.add', component: page('settings/user/add.vue') },
+      { path: 'user/edit/:record_id', name: 'settings.user.edit', component: page('settings/user/edit.vue') },
     ]
   },
 

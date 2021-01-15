@@ -54,7 +54,6 @@
                                             </router-link>
                                           </div>
                                       </div>
-                                      <a href="auth-register.html" class="btn btn-outline-primary float-left btn-inline waves-effect waves-light">Register</a>
                                       <button type="submit" class="btn btn-primary float-right btn-inline waves-effect waves-light">Login</button>
                                   </form>
                               </div>

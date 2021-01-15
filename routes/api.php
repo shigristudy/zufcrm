@@ -94,6 +94,11 @@ Route::group(['middleware' => 'auth:api'], function () {
         Route::post('option/store',[OptionsController::class,'store']);
         Route::get('option/edit',[OptionsController::class,'edit']);
 
+        // Admin Options Routes
+        Route::post('user/store',[UserController::class,'store']);
+        Route::post('user/update',[UserController::class,'update']);
+        Route::post('user/destroy', [UserController::class,'destroy']);
+        Route::post('user/edit', [UserController::class,'edit']);
 
     });
    
