@@ -22,7 +22,7 @@ use Illuminate\Support\Facades\Route;
 Route::post('gocardless_webhook', function (Request $request) {
     Log::info($request);
     return 'hello';
-});
+})->withoutMiddleware(['csrf']);
 Route::get('/testing', function () {
     // dd(1);
    

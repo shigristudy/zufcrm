@@ -12,6 +12,6 @@ class VerifyCsrfToken extends Middleware
      * @var array
      */
     protected $except = [
-        //
+        // 'https://crm.ziaulummahfoundation.org.uk/gocardless_webhook'
     ];
 }
