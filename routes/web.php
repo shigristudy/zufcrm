@@ -4,7 +4,9 @@ use App\Models\OrderItem;
 use App\Models\WooOrder;
 use App\Models\WooProduct;
 use GuzzleHttp\Client;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -17,7 +19,8 @@ use Illuminate\Support\Facades\Route;
 | contains the "web" middleware group. Now create something great!
 |
 */
-Route::get('/hello', function () {
+Route::get('gocardless_webhook', function (Request $request) {
+    Log::info($request);
     return 'hello';
 });
 Route::get('/testing', function () {
