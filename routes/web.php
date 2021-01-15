@@ -19,7 +19,7 @@ use Illuminate\Support\Facades\Route;
 | contains the "web" middleware group. Now create something great!
 |
 */
-Route::get('gocardless_webhook', function (Request $request) {
+Route::post('gocardless_webhook', function (Request $request) {
     Log::info($request);
     return 'hello';
 });
