@@ -19,10 +19,10 @@ use Illuminate\Support\Facades\Route;
 | contains the "web" middleware group. Now create something great!
 |
 */
-Route::post('gocardless_webhook', function (Request $request) {
-    Log::info($request);
-    return 'hello';
-})->withoutMiddleware(['csrf']);
+// Route::post('gocardless_webhook', function (Request $request) {
+//     Log::info($request);
+//     return 'hello';
+// })->withoutMiddleware(['csrf']);
 Route::get('/testing', function () {
     // dd(1);
    

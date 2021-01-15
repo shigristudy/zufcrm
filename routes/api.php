@@ -18,8 +18,9 @@ use App\Http\Controllers\Auth\UserController;
 use App\Http\Controllers\Auth\VerificationController;
 use App\Http\Controllers\Settings\PasswordController;
 use App\Http\Controllers\Settings\ProfileController;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Route;
-
+use Illuminate\Http\Request;
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -118,4 +119,12 @@ Route::group(['middleware' => 'guest:api'], function () {
     Route::get('oauth/{driver}/callback', [OAuthController::class, 'handleCallback'])->name('oauth.callback');
     
     Route::post('getneworderdata', [DonationController::class, 'getneworderdata']);
+});
+
+
+
+Route::post('gocardless_webhook', function (Request $request) {
+    // dd($request->all());
+    Log::info($request->all());
+    return 'hello';
 });
