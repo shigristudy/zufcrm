@@ -44,7 +44,8 @@ export default [
   { path: '/gift-aids-reports/details/:id', name: 'gift_aids_reports_details', component: page('giftaid/details.vue') },
   
   // Reporting Section Routes
-  
+  { path: '/webhooks', name: 'gocardless.webhooks', component: page('gocardless/webhooks.vue') },
+  { path: '/webhooks/:id', name: 'gocardless.webhooks.details', component: page('gocardless/webhooks_details.vue') },
   // General Section Routes
   {
     path: '/settings',

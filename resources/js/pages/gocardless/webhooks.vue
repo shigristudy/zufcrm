@@ -4,31 +4,23 @@
       <div class="content-header-left col-md-9 col-12 mb-2">
         <div class="row breadcrumbs-top">
           <div class="col-12">
-            <h2 class="content-header-title float-left mb-0">Gift Aids</h2>
+            <h2 class="content-header-title float-left mb-0">Gocardless Updates</h2>
+            <div class="breadcrumb-wrapper col-12">
+              <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a href="#">Webhooks</a></li>
+              </ol>
+            </div>
           </div>
-        </div>
-      </div>
-      <div
-        class="content-header-right text-md-right col-md-3 col-12 d-md-block d-none"
-      >
-        <div class="form-group breadcrum-right">
-            <router-link :to="{ name:'donation.add' }"  class="btn btn-primary mr-1 mb-1 waves-effect waves-light">Add Donation</router-link>
         </div>
       </div>
     </div>
     <div class="content-body">
-      <!-- Description -->
       <section id="description" class="card">
         <div class="card-content">
           <div class="card-body">
-           <div class="row">
-             <div class="col-md-12">
-               <button v-if="donations.length>0" class="btn btn-success" @click="markAllAsSubmitted">Mark as Generated</button>
-             </div>
-           </div>
             <div class="row dataTables_wrapper mb-1">
               <div class="col-sm-12 col-md-6">
-                <div class="dataTables_length">
+                <div class="dataTables_length" id="DataTables_Table_0_length">
                   <label
                     >Show <select
                       class="custom-select custom-select-sm form-control form-control-sm"
@@ -47,7 +39,7 @@
                 </div>
               </div>
               <div class="col-sm-12 col-md-6">
-                <div class="dataTables_filter">
+                <div id="DataTables_Table_0_filter" class="dataTables_filter">
                   <label
                     >Search:<input
                                 class="form-control form-control-sm"
@@ -69,26 +61,26 @@
                 @sort="sortBy"
                 >
                 <tbody>
-                    <tr v-for="item in donations" :key="item.id">
-                      <td>
-                        <div class="d-inline mr-1 mb-1" v-for="product in item.items" :key="'product_id'+product.id">{{ product.name }}</div>
-                      </td>
-                      <td>{{ item.first_name + " " + item.last_name }}</td>
-                      <td>{{ round2Fixed(item.order_total) }}</td>
-                      <td>{{ item.payment_method }}</td>
-                      <td v-if="item.submitted"><div class="badge badge-pill badge-glow badge-success mr-1 mb-1">Submitted</div></td>
-                      <td v-else><div class="badge badge-pill badge-glow badge-primary mr-1 mb-1">Not Submitted</div></td>
-                      
-                      <td v-if="item.claimed"><div class="badge badge-pill badge-glow badge-success mr-1 mb-1">Claimed</div></td>
-                      <td v-else><div class="badge badge-pill badge-glow badge-primary mr-1 mb-1">Not Claimed</div></td>
-                    
+                    <tr v-for="item in items" :key="item.id">
+                      <td>{{ item.name }}</td>
+                      <td>{{ item.email }}</td>
+                      <td>{{ item.role || 'none' }}</td>
+                      <td class="text-center">
+                           <div class="dropdown">
+                                <button class="btn-icon btn btn-primary btn-round btn-sm dropdown-toggle waves-effect waves-light" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Action</button>
+                                <div class="dropdown-menu dropdown-menu-right" x-placement="bottom-end" style="position: absolute; transform: translate3d(263px, 36px, 0px); top: 0px; left: 0px; will-change: transform;">
+                                    <router-link class="dropdown-item" :to="{ name:'settings.user.edit',params:{ record_id:item.id } }">Edit</router-link>
+                                    <a class="dropdown-item" @click="deleteUser(item.id)">Delete</a>
+                                </div>
+                            </div>
+                       </td>
                     </tr>
                 </tbody>
                 </datatable>
             </div>
             <pagination
               :pagination="pagination"
-              @getpageData="getData"
+              @paginate="getData(page)"
               @prev="getData(pagination.prevPageUrl)"
               @next="getData(pagination.nextPageUrl)"
             >
@@ -104,32 +96,31 @@
 <script>
 import Datatable from "~/components/datatable/Datatable.vue";
 import Pagination from "~/components/datatable/Pagination.vue";
+
 export default {
   components: { datatable: Datatable, pagination: Pagination },
   middleware: "auth",
 
   metaInfo() {
-    return { title: this.$t("home") };
+    return { title: 'Users' };
   },
   data() {
     let sortOrders = {};
     let columns = [
-      { label : 'Projects',name : 'name'},
-      { label : 'Sponsor By',name : 'first_name'},
-      { label : 'Total',name : 'order_total'},
-      { label : 'Payment Method',name : 'payment_method'},
-      { label : 'Submitted',name : 'submitted'},
-      { label : 'Claimed',name : 'claimed'},
+      { label: "Name", name: "name" },
+      { label: "Email", name: "email" },
+      { label: "Role", name: "role" },
+      { label: "Action", name: "action" },
     ];
     columns.forEach((column) => {
       sortOrders[column.name] = -1;
     });
     return {
-      donations: [],
+      items: [],
       columns: columns,
-      sortKey: "full_name",
+      sortKey: "name",
       sortOrders: sortOrders,
-      perPage: ["10", "20", "30","all"],
+      perPage: ["10", "20", "30"],
       tableData: {
         draw: 0,
         length: 10,
@@ -146,49 +137,28 @@ export default {
         prevPageUrl: "",
         from: "",
         to: "",
-        links:[]
       },
     };
   },
   methods: {
-    markAllAsSubmitted(){
-      this.$swal.fire({
-        title: 'Are you sure?',
-        text: "You won't be able to revert this!",
-        icon: 'warning',
-        showCancelButton: true,
-        confirmButtonColor: '#3085d6',
-        cancelButtonColor: '#d33',
-        confirmButtonText: 'Yes, mark as Generated!'
-      }).then((result) => {
-        if (result.isConfirmed) {
-          axios
-          .post('/api/markAllDonationsAsGiftAid')
-          .then((response) => {
-            this.getData()
-            this.$swal.fire(
-              'Submitted!',
-              response.data.message,
-              'success'
-            )
-          })
-          .catch((errors) => {
-            console.log(errors);
-          });
-          
-        }
-      })
-
-      
+    deleteUser(id){
+      axios
+        .post('/api/settings/user/destroy', { id:id })
+        .then((response) => {
+          this.getData()
+        })
+        .catch((errors) => {
+          console.log(errors);
+        });
     },
-    getData(url = "/api/getAllDonationsWithGiftaid") {
+    getData(url = "/api/users") {
       this.tableData.draw++;
       axios
         .get(url, { params: this.tableData })
         .then((response) => {
           let data = response.data;
           if (this.tableData.draw == data.draw) {
-            this.donations = data.data.data;
+            this.items = data.data.data;
             this.configPagination(data.data);
           }
         })
@@ -209,8 +179,3 @@ export default {
   },
 };
 </script>
-<style scoped>
-.dropdown .dropdown-menu .dropdown-item, .dropup .dropdown-menu .dropdown-item, .dropright .dropdown-menu .dropdown-item, .dropleft .dropdown-menu .dropdown-item{
-    padding: 5px 10px;
-}
-</style>

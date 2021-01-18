@@ -60,9 +60,9 @@
                         <span class="menu-title">Giftaid Reports</span>
                     </router-link>
                 </li>
-                <li class=" nav-item" v-if="isPermitted('reports')">
-                    <router-link :to="{ name:'users'}"><i class="feather icon-home"></i>
-                        <span class="menu-title">Reporting</span>
+                <li class=" nav-item" v-if="isPermitted('gocardless')">
+                    <router-link :to="{ name:'gocardless.webhooks'}"><i class="feather icon-home"></i>
+                        <span class="menu-title">Gocardless</span>
                     </router-link>
                 </li>
                  <li class=" nav-item" v-if="isPermitted('settings')">

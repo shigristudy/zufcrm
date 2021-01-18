@@ -16,6 +16,7 @@ use App\Http\Controllers\Auth\RegisterController;
 use App\Http\Controllers\Auth\ResetPasswordController;
 use App\Http\Controllers\Auth\UserController;
 use App\Http\Controllers\Auth\VerificationController;
+use App\Http\Controllers\GocardlessController;
 use App\Http\Controllers\Settings\PasswordController;
 use App\Http\Controllers\Settings\ProfileController;
 use Illuminate\Support\Facades\Log;
@@ -122,26 +123,27 @@ Route::group(['middleware' => 'guest:api'], function () {
 });
 
 
+Route::post('gocardless_webhook', [GocardlessController::class, 'updateWebhook']);
+Route::post('gocardless_create_customer', [GocardlessController::class, 'gocardless_create_customer']);
+// Route::post('gocardless_webhook', function (Request $request) {
 
-Route::post('gocardless_webhook', function (Request $request) {
+//     // payment
+//     // mandate
+//     // payer_authorisation
+//     // payout
+//     // refund
+//     // subscription
+//     // instalment_schedule
+//     // creditor
+//     // dd($request->all());
+//     Log::info($request->header('Webhook-Signature'));
+//     Log::info($request->all());
+//     return 'hello';
+// });
 
-    // payment
-    // mandate
-    // payer_authorisation
-    // payout
-    // refund
-    // subscription
-    // instalment_schedule
-    // creditor
-    // dd($request->all());
-    Log::info($request->header('Webhook-Signature'));
-    Log::info($request->all());
-    return 'hello';
-});
-
-Route::post('gocardless_create_customer', function (Request $request) {
-    // dd($request->all());
-    Log::info($request->header('Webhook-Signature'));
-    Log::info($request->all());
-    return 'hello';
-});
+// Route::post('gocardless_create_customer', function (Request $request) {
+//     // dd($request->all());
+//     Log::info($request->header('Webhook-Signature'));
+//     Log::info($request->all());
+//     return 'hello';
+// });

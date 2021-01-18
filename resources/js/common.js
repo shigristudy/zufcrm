@@ -197,13 +197,16 @@ export default {
             
             // Shift back
             value = value.toString().split('e');
-            return (+(value[0] + 'e' + (value[1] ? (+value[1] - 2) : -2))).toFixed(2);
+            return "£"+ (+(value[0] + 'e' + (value[1] ? (+value[1] - 2) : -2))).toFixed(2);
         },
         formatePostal(mystring){
             mystring = mystring.replace(/\s/g, '');
             mystring = mystring.split("").reverse().join("")
             mystring = mystring.substr(0,3) + " " + mystring.substr(3)
             return mystring.split("").reverse().join("").toUpperCase()
+        },
+        capitalize(s){
+            return s[0].toUpperCase() + s.slice(1);
         }
 
     },

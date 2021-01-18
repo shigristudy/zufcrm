@@ -158,12 +158,12 @@
                 <tbody>
                     <tr v-for="item in donations" :key="item.id">
                       <td>
-                        <div class="badge badge-pill badge-glow badge-info mr-1 mb-1" v-for="product in item.items" :key="'product_id'+product.id">{{ product.product.name }}</div>
+                        <div class="mr-1 mb-1 d-inline" v-for="product in item.items" :key="'product_id'+product.id">{{ product.product.name }}</div>
                       </td>
                       <td>{{ item.first_name + " " + item.last_name }}</td>
                       <td><div class="badge badge-pill badge-glow badge-success mr-1 mb-1">{{ item.gift_aid }}</div></td>
-                      <td>{{ item.donation_date }}</td>
-                      <td>{{ item.payment_method }}</td>
+                      <td>{{ formattedDateDDMMYY(item.donation_date) }}</td>
+                      <td>{{ (item.payment_method == 'ppec_paypal') ? 'Paypal' : capitalize(item.payment_method) }}</td>
                       <td>{{ round2Fixed(item.order_total) }}</td>
                      
                       
@@ -174,6 +174,7 @@
                               </button>
                               <div class="dropdown-menu dropdown-menu-right" x-placement="bottom-end" style="position: absolute; transform: translate3d(263px, 36px, 0px); top: 0px; left: 0px; will-change: transform;">
                                 <router-link class="dropdown-item" :to="{ name:'donation.view',params:{ id:item.id } }">View</router-link>
+                                <router-link class="dropdown-item" :to="{ name:'donation.edit',params:{ id:item.id } }">Edit</router-link>
                               </div>
                           </div>
                       </td>
@@ -324,5 +325,9 @@ export default {
 <style scoped>
 .dropdown .dropdown-menu .dropdown-item, .dropup .dropdown-menu .dropdown-item, .dropright .dropdown-menu .dropdown-item, .dropleft .dropdown-menu .dropdown-item{
     padding: 5px 10px;
+}
+.btn.btn-sm.btn-icon {
+    padding: 10px;
+    font-size: 15px;
 }
 </style>

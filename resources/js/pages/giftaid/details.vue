@@ -60,7 +60,7 @@
                 <tbody>
                     <tr v-for="item in donations" :key="item.id">
                       <td>
-                        <div class="badge badge-pill badge-glow badge-success mr-1 mb-1" v-for="product in item.items" :key="'product_id'+product.id">{{ product.name }}</div>
+                        <div class="d-inline mr-1 mb-1" v-for="product in item.items" :key="'product_id'+product.id">{{ product.name }}</div>
                       </td>
                       <td>{{ item.first_name + ' ' + item.last_name }}</td>
                       <td>{{ round2Fixed(item.order_total) }}</td>

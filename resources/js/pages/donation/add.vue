@@ -229,6 +229,9 @@
                                         <td>
                                             <fieldset class="form-group">
                                                 <select :class="{ 'is-invalid': form.errors.has(`donationsArray.${index}.project`) }" class="form-control" v-model="form.donationsArray[index].project">
+                                                    <option value="">
+                                                        <strong>Select Project</strong>
+                                                    </option>
                                                     <option v-for="p in wooProducts" :key="'woo_project'+p.product_id" 
                                                             :value="p.product_id">
                                                         <strong>{{ p.name }}</strong>
@@ -242,6 +245,9 @@
                                                 <select
                                                     :class="{ 'is-invalid': form.errors.has(`donationsArray.${index}.donation_type`) }" 
                                                     class="form-control" v-model="form.donationsArray[index].donation_type">
+                                                    <option value="">
+                                                        <strong>Select Type</strong>
+                                                    </option>
                                                     <option value="Sadaqahh">Sadaqahh</option>
                                                     <option value="Zakat">Zakat</option>
                                                     <option value="Fitrana">Fitrana</option>

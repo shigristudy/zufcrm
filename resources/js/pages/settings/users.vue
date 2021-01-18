@@ -34,7 +34,7 @@
                     >Show <select
                       class="custom-select custom-select-sm form-control form-control-sm"
                       v-model="tableData.length"
-                      @change="getProjects()"
+                      @change="getData()"
                     >
                       <option
                         v-for="(records, index) in perPage"
@@ -55,7 +55,7 @@
                                 type="search"
                                 v-model="tableData.search"
                                 placeholder="Search Table"
-                                @input="getProjects()"
+                                @input="getData()"
                             />
                     </label>
                 </div>
