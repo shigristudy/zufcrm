@@ -62,18 +62,13 @@
                 >
                 <tbody>
                     <tr v-for="item in items" :key="item.id">
-                      <td>{{ item.name }}</td>
-                      <td>{{ item.email }}</td>
-                      <td>{{ item.role || 'none' }}</td>
-                      <td class="text-center">
-                           <div class="dropdown">
-                                <button class="btn-icon btn btn-primary btn-round btn-sm dropdown-toggle waves-effect waves-light" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Action</button>
-                                <div class="dropdown-menu dropdown-menu-right" x-placement="bottom-end" style="position: absolute; transform: translate3d(263px, 36px, 0px); top: 0px; left: 0px; will-change: transform;">
-                                    <router-link class="dropdown-item" :to="{ name:'settings.user.edit',params:{ record_id:item.id } }">Edit</router-link>
-                                    <a class="dropdown-item" @click="deleteUser(item.id)">Delete</a>
-                                </div>
-                            </div>
-                       </td>
+                      <td>
+                        <div v-if="item.action == 'failed'" class="badge badge-pill badge-glow badge-danger mr-1 mb-1">Failed</div>
+                        <div v-else class="badge badge-pill badge-glow badge-success mr-1 mb-1">Paid Out</div>
+                      </td>
+                      <td>{{ item.order_id }}</td>
+                      <td>{{ JSON.parse(item.payload).details.description }}</td>
+                      
                     </tr>
                 </tbody>
                 </datatable>
@@ -102,15 +97,14 @@ export default {
   middleware: "auth",
 
   metaInfo() {
-    return { title: 'Users' };
+    return { title: 'Webhooks' };
   },
   data() {
     let sortOrders = {};
     let columns = [
-      { label: "Name", name: "name" },
-      { label: "Email", name: "email" },
-      { label: "Role", name: "role" },
+      { label: "Order ID", name: "order_id" },
       { label: "Action", name: "action" },
+      { label: "Description", name: "description" },
     ];
     columns.forEach((column) => {
       sortOrders[column.name] = -1;
@@ -118,7 +112,7 @@ export default {
     return {
       items: [],
       columns: columns,
-      sortKey: "name",
+      sortKey: "order_id",
       sortOrders: sortOrders,
       perPage: ["10", "20", "30"],
       tableData: {
@@ -127,6 +121,7 @@ export default {
         search: "",
         column: 0,
         dir: "desc",
+        webhook_type:'successfull'
       },
       pagination: {
         lastPage: "",
@@ -141,17 +136,7 @@ export default {
     };
   },
   methods: {
-    deleteUser(id){
-      axios
-        .post('/api/settings/user/destroy', { id:id })
-        .then((response) => {
-          this.getData()
-        })
-        .catch((errors) => {
-          console.log(errors);
-        });
-    },
-    getData(url = "/api/users") {
+    getData(url = "/api/getWebhooks") {
       this.tableData.draw++;
       axios
         .get(url, { params: this.tableData })
@@ -175,6 +160,7 @@ export default {
     },
   },
   created() {
+    // this.tableData.webhook_type = this.getSearchParameters().type
     this.getData();
   },
 };

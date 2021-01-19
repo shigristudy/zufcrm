@@ -14,6 +14,10 @@ class WooOrder extends Model
         return $this->hasMany(OrderItem::class,'order_id','id');
     }
 
+    public function webhooks(){
+        return $this->hasMany(GocardlessWebhook::class,'order_id','order_id');
+    }
+
     public function sponsor_items(){
         return $this->hasMany(OrderItem::class,'order_id','id')->whereIn('order_items.product_id',[11863, 11864, 11814, 11815, 11816]);
     }

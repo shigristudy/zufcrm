@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\GocardlessController;
 use App\Models\OrderItem;
 use App\Models\WooOrder;
 use App\Models\WooProduct;
@@ -115,3 +116,7 @@ Route::get('/import-products', function () {
     }
     
 });
+
+
+
+Route::get('gocardless_testing',[GocardlessController::class,'gocardless_testing']);

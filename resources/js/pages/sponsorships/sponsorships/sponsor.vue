@@ -20,7 +20,7 @@
                                <label for="donations">Donations</label>
                                <multiselect v-model="form.selectedDonations" 
                                             deselect-label="Can't remove this value" 
-                                            track-by="first_name" :custom-label="customLabel"
+                                            track-by="id" :custom-label="customLabel"
                                             placeholder="Select Donations to Fund" 
                                             :options="options" 
                                             :searchable="true"
@@ -30,7 +30,7 @@
                                             :allow-empty="true">
                                             <template slot="option" slot-scope="props">
                                                 <div class="option__desc">
-                                                    <span class="option__title">{{ props.option.order.first_name + props.option.order.last_name + ' -- ' + props.option.name }} ( {{ props.option.total }} )</span>
+                                                    <span class="option__title">{{ props.option.order.first_name + ' ' + props.option.order.last_name + ' - ' + props.option.name }} ( {{ props.option.total }} )</span>
                                                    
                                                 </div>
                                             </template>
@@ -73,8 +73,9 @@ export default {
       this.getDonations()
   },
   methods:{ 
-    customLabel( {name,first_name,last_name,total} ){
-        return `${name} — ${first_name} - ${last_name} - ${total}`
+    customLabel( {name,order,total} ){
+        
+        return `${name} — ${order.first_name} - ${order.last_name} - ${total}`
     },
     getDonations(){
         

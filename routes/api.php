@@ -104,6 +104,9 @@ Route::group(['middleware' => 'auth:api'], function () {
 
     });
    
+
+    Route::get('getWebhooks', [GocardlessController::class,'getWebhooks']);
+
 });
 
 Route::group(['middleware' => 'guest:api'], function () {
@@ -120,6 +123,8 @@ Route::group(['middleware' => 'guest:api'], function () {
     Route::get('oauth/{driver}/callback', [OAuthController::class, 'handleCallback'])->name('oauth.callback');
     
     Route::post('getneworderdata', [DonationController::class, 'getneworderdata']);
+
+    
 });
 
 

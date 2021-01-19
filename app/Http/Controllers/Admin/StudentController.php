@@ -123,7 +123,7 @@ class StudentController extends Controller
 
 
     public function getSingleStudent( $id ){
-        $student = Student::with('donations.order')->find($id);
+        $student = Student::with(['donations.order.webhooks'])->find($id);
         return response()->json($student);
     }
 }

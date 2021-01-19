@@ -60,9 +60,14 @@
                         <span class="menu-title">Giftaid Reports</span>
                     </router-link>
                 </li>
-                <li class=" nav-item" v-if="isPermitted('gocardless')">
-                    <router-link :to="{ name:'gocardless.webhooks'}"><i class="feather icon-home"></i>
-                        <span class="menu-title">Gocardless</span>
+                <li class=" nav-item" v-if="isPermitted('gocardless.successfull')">
+                    <router-link :to="{ name:'gocardless.webhooks' }"><i class="feather icon-home"></i>
+                        <span class="menu-title">Gocardless Successfull</span>
+                    </router-link>
+                </li>
+                <li class=" nav-item" v-if="isPermitted('gocardless.failed')">
+                    <router-link :to="{ name:'gocardless.webhooks.failed' }"><i class="feather icon-home"></i>
+                        <span class="menu-title">Gocardless Failed</span>
                     </router-link>
                 </li>
                  <li class=" nav-item" v-if="isPermitted('settings')">

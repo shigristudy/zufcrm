@@ -45,6 +45,7 @@ export default [
   
   // Reporting Section Routes
   { path: '/webhooks', name: 'gocardless.webhooks', component: page('gocardless/webhooks.vue') },
+  { path: '/webhooks_failed', name: 'gocardless.webhooks.failed', component: page('gocardless/webhooks_failed.vue') },
   { path: '/webhooks/:id', name: 'gocardless.webhooks.details', component: page('gocardless/webhooks_details.vue') },
   // General Section Routes
   {

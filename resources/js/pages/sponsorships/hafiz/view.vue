@@ -106,25 +106,72 @@
                 </div>
             </div>
         </section>
-        <section id="description" class="card" v-if="student.donations && student.donations.length>0">
-            <div class="card-header">
-                <h4 class="card-title">Sponsor</h4>
-            </div>
-            <div class="card-content">
-                <div class="card-body">
-                    <table class="table table-bordered">
-                        <tr v-for="donation in student.donations" :key="donation.id">
-                            <th>
-                                Sponsored By: {{ donation.order.first_name + " " + donation.order.last_name + ' , Through Project' + donation.order.name}}
-                            </th>
-                            <td>
-                                {{ donation.order.total}}
-                            </td>
-                        </tr>
-                    </table>
+        
+        <section id="collapsible">
+            <div class="row">
+                <div class="col-sm-12">
+                    <div class="card collapse-icon accordion-icon-rotate">
+                        <div class="card-header">
+                            <h4 class="card-title">Sponsorships Details</h4>
+                        </div>
+                        <div class="card-content">
+                            <div class="card-body" v-if="student.donations && student.donations.length>0">
+                                <div class="default-collapse collapse-bordered">
+                                    <div class="card collapse-header" v-for="donation in student.donations" :key="donation.id" >
+                                        <div :id="'headingCollapse'+donation.id" class="card-header collapsed" 
+                                            data-toggle="collapse" role="button" 
+                                            :data-target="'#collapse'+donation.id" 
+                                            aria-expanded="false" :aria-controls="'collapse'+donation.id">
+                                            <span class="lead collapse-title">
+                                                <strong>Sponsored By: </strong> {{ donation.order.first_name + " " + donation.order.last_name }}
+                                            </span>
+                                        </div>
+                                        <div :id="'collapse'+donation.id" role="tabpanel" :aria-labelledby="'headingCollapse'+donation.id" class="collapse" style="">
+                                            <div class="card-content">
+                                                <div class="card-body">
+                                                    
+                                                    <div v-if="donation.order.webhooks.length>0">
+                                                        <div class="table-responsive">
+                                                            <table class="table table-hover-animation mb-0">
+                                                                <thead>
+                                                                    <tr>
+                                                                        <th scope="col">Resource Type</th>
+                                                                        <th scope="col">Order ID</th>
+                                                                        <th scope="col">Action</th>
+                                                                        <th scope="col">Reason/Description</th>
+                                                                    </tr>
+                                                                </thead>
+                                                                <tbody>
+                                                                    <tr v-for="webhook in donation.order.webhooks" :key="'webhook'+webhook.id">
+                                                                        <th scope="row">{{webhook.resource_type}}</th>
+                                                                        <td>{{ webhook.order_id }}</td>
+                                                                        <td>
+                                                                            <div v-if="webhook.action == 'failed'" class="badge badge-pill badge-glow badge-danger mr-1 mb-1">Failed</div>
+                                                                            <div v-else class="badge badge-pill badge-glow badge-success mr-1 mb-1">Paid Out</div>
+                                                                        </td>
+                                                                        <td>{{ JSON.parse(webhook.payload).details.description }}</td>
+                                                                    </tr>
+                                                                </tbody>
+                                                            </table>
+                                                        </div>
+                                                    </div>
+                                                    <div v-else>
+                                                        Nothing to Show
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                   
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
         </section>
+
+
     </div>
   </div>
 </template>

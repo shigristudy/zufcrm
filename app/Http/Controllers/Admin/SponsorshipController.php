@@ -13,7 +13,7 @@ use Illuminate\Support\Facades\DB;
 class SponsorshipController extends Controller
 {
     public function getAllUnAllocatedDonations(){
-        $donations = OrderItem::with(['order'])
+        $donations = OrderItem::with(['order','product'])
                     ->whereIn('product_id',[11863, 11864, 11814, 11815, 11816])
                     ->get();
         return response()->json($donations);
