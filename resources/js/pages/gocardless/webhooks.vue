@@ -62,11 +62,11 @@
                 >
                 <tbody>
                     <tr v-for="item in items" :key="item.id">
+                      <td>{{ item.order_id }}</td>
                       <td>
                         <div v-if="item.action == 'failed'" class="badge badge-pill badge-glow badge-danger mr-1 mb-1">Failed</div>
                         <div v-else class="badge badge-pill badge-glow badge-success mr-1 mb-1">Paid Out</div>
                       </td>
-                      <td>{{ item.order_id }}</td>
                       <td>{{ JSON.parse(item.payload).details.description }}</td>
                       
                     </tr>
