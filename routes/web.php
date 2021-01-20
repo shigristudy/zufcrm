@@ -28,7 +28,7 @@ Route::get('/testing', function () {
     // dd(1);
    
     $client = new Client();
-    $response = $client->request('GET', 'https://www.ziaulummahfoundation.org.uk/wp-json/getdonations/v1/get_all_donations');
+    $response = $client->request('GET', 'https://www.staging5.ziaulummahfoundation.org.uk//wp-json/getdonations/v1/get_all_donations');
     DB::beginTransaction();
     try {
         foreach(json_decode($response->getBody(),true) as $value){
@@ -89,7 +89,7 @@ Route::get('/import-products', function () {
 
     try {
         $client = new Client();
-        $response = $client->request('GET', 'https://www.ziaulummahfoundation.org.uk/wp-json/wc/v3/products?per_page=100',[
+        $response = $client->request('GET', 'https://www.staging5.ziaulummahfoundation.org.uk/wp-json/wc/v3/products?per_page=100',[
                         'auth' => [
                             'ck_4202435a3ffa2878c84d3064e2e5463f7a234589', 
                             'cs_91b6f3fd2894b1a818f8c38e912ca56756b88ba6'
