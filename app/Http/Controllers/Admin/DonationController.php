@@ -220,47 +220,50 @@ class DonationController extends Controller
         DB::beginTransaction();
         try {
             $value = $request->all();
-              
-            $woo = new WooOrder();
-            $woo->order_id                  = $value['order_id'];
-            $woo->order_total               = $value['order_total'];
-            $woo->is_sponsor_count          = $value['is_sponsor_count'];
-            $woo->title                     = $value['title'];
-            $woo->donation_date             = $value['donation_date'];
-            $woo->number_of_items           = $value['number_of_items'];
-            $woo->gift_aid                  = ($value['gift_aid'] == 'Yes') ? "Yes" : "No";
-            $woo->title                     = $value['billing_title'];
-            $woo->first_name                = $value['first_name'];
-            $woo->last_name                 = $value['last_name'];
-            $woo->company                   = $value['company'];
-            $woo->address_1                 = $value['address_1'];
-            $woo->address_2                 = $value['address_2'];
-            $woo->city                      = $value['city'];
-            $woo->state                     = $value['state'];
-            $woo->postcode                  = $value['postcode'];
-            $woo->country                   = $value['country'];
-            $woo->email                     = $value['email'];
-            $woo->phone                     = $value['phone'];
-            $woo->payment_method            = $value['payment_method'];
-            $woo->payment_method_title      = $value['payment_method_title'];
-            
-            $woo->save();
+            $check = WooOrder::where('order_id',$value['order_id'])->first();
+            if(!$check){
 
-            // insert order items
-            foreach($value['order_items'] as $item ){
+                $woo = new WooOrder();
+                $woo->order_id                  = $value['order_id'];
+                $woo->order_total               = $value['order_total'];
+                $woo->is_sponsor_count          = $value['is_sponsor_count'];
+                $woo->title                     = $value['title'];
+                $woo->donation_date             = $value['donation_date'];
+                $woo->number_of_items           = $value['number_of_items'];
+                $woo->gift_aid                  = ($value['gift_aid'] == 'Yes') ? "Yes" : "No";
+                $woo->title                     = $value['billing_title'];
+                $woo->first_name                = $value['first_name'];
+                $woo->last_name                 = $value['last_name'];
+                $woo->company                   = $value['company'];
+                $woo->address_1                 = $value['address_1'];
+                $woo->address_2                 = $value['address_2'];
+                $woo->city                      = $value['city'];
+                $woo->state                     = $value['state'];
+                $woo->postcode                  = $value['postcode'];
+                $woo->country                   = $value['country'];
+                $woo->email                     = $value['email'];
+                $woo->phone                     = $value['phone'];
+                $woo->payment_method            = $value['payment_method'];
+                $woo->payment_method_title      = $value['payment_method_title'];
                 
-                $Orderitem = new OrderItem();
-                $Orderitem->order_id         = $woo->id;
-                $Orderitem->woo_order_id     = $item['order_id'];
-                $Orderitem->product_id       = $item['product_id'];
-                $Orderitem->name             = $item['name'];
-                $Orderitem->quantity         = $item['quantity'];
-                $Orderitem->total            = $item['total'];
-                $Orderitem->type             = $item['type'];
-                $Orderitem->is_sponsor       = $item['is_sponsor'];
-                $Orderitem->donation_type    = $item['donation_type'];
-                $Orderitem->save();
-            }
+                $woo->save();
+    
+                // insert order items
+                foreach($value['order_items'] as $item ){
+                    
+                    $Orderitem = new OrderItem();
+                    $Orderitem->order_id         = $woo->id;
+                    $Orderitem->woo_order_id     = $item['order_id'];
+                    $Orderitem->product_id       = $item['product_id'];
+                    $Orderitem->name             = $item['name'];
+                    $Orderitem->quantity         = $item['quantity'];
+                    $Orderitem->total            = $item['total'];
+                    $Orderitem->type             = $item['type'];
+                    $Orderitem->is_sponsor       = $item['is_sponsor'];
+                    $Orderitem->donation_type    = $item['donation_type'];
+                    $Orderitem->save();
+                }
+            }  
         
             DB::commit();
             
