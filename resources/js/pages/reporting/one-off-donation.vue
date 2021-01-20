@@ -112,6 +112,7 @@ export default {
         { label: "Postcode", name:'postcode' }, 
         { label: "Donation Date", name:'donation_date' }, 
         { label: "Total", name:'total' }, 
+        { label: "Allocated", name:'allocated' },
     ];
     columns.forEach((column) => {
       sortOrders[column.name] = -1;
