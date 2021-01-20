@@ -16,4 +16,12 @@ class OrderItem extends Model
     public function order(){
         return $this->belongsTo(WooOrder::class,'order_id','id');
     }
+
+    public function scopeSimpleProduct($query){
+        return $query->with('product')->paginate()->where('type','simple');
+    }
+
+    public function scopeMonthlyProduct($query){
+        return $query->with('product')->paginate()->where('type','subscription');
+    }
 }

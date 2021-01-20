@@ -4,22 +4,20 @@
       <div class="content-header-left col-md-9 col-12 mb-2">
         <div class="row breadcrumbs-top">
           <div class="col-12">
-            <h2 class="content-header-title float-left mb-0">Gift Aids Claimed</h2>
+            <h2 class="content-header-title float-left mb-0">One Off Donations</h2>
+           
           </div>
         </div>
       </div>
-     
     </div>
     <div class="content-body">
       <section id="description" class="card">
         <div class="card-content">
           <div class="card-body">
-         
             <div class="row dataTables_wrapper mb-1">
               <div class="col-sm-12 col-md-6">
-                <div class="dataTables_length">
-                  <label
-                    >Show <select
+                <div class="dataTables_length" id="DataTables_Table_0_length">
+                  <label>Show <select
                       class="custom-select custom-select-sm form-control form-control-sm"
                       v-model="tableData.length"
                       @change="getData()"
@@ -27,8 +25,7 @@
                       <option
                         v-for="(records, index) in perPage"
                         :key="index"
-                        :value="records"
-                      >
+                        :value="records">
                         {{ records }}
                       </option>
                     </select> entries
@@ -36,9 +33,8 @@
                 </div>
               </div>
               <div class="col-sm-12 col-md-6">
-                <div class="dataTables_filter">
-                  <label
-                    >Search:<input
+                <div id="DataTables_Table_0_filter" class="dataTables_filter">
+                  <label>Search:<input
                                 class="form-control form-control-sm"
                                 type="search"
                                 v-model="tableData.search"
@@ -58,19 +54,21 @@
                 @sort="sortBy"
                 >
                 <tbody>
-                    <tr v-for="item in donations" :key="item.id">
+                    <tr v-for="item in items" :key="item.id">
+                      <td>{{ item.product.type }}</td>
+                      <td>{{ item.product.name }}</td>
+                      <td>{{ item.donation_type }}</td>
+                      <td>{{ item.order.first_name + " " + item.order.last_name }}</td>
+                      <td>{{ item.order.email }}</td>
+                      <td>{{ item.order.phone }}</td>
+                      <td>{{ item.order.city }}</td>
+                      <td>{{ item.order.postcode }}</td>
+                      <td>{{ formattedDateDDMMYY(item.order.donation_date) }}</td>
+                      <td>{{ round2Fixed(item.total) }}</td>
                       <td>
-                        <div class="d-inline mr-1 mb-1" v-for="product in item.items" :key="'product_id'+product.id">{{ product.product.name }}</div>
+                          <div v-if="item.allocated_at == null" class="badge badge-pill badge-glow badge-danger mr-1 mb-1">No Allocated</div>
+                          <div v-else class="badge badge-pill badge-glow badge-success mr-1 mb-1">Allocated</div>
                       </td>
-                      <td>{{ item.first_name + ' ' + item.last_name }}</td>
-                      <td>{{ round2Fixed(item.order_total) }}</td>
-                      <td>{{ item.payment_method }}</td>
-                      <td v-if="item.submitted"><div class="badge badge-pill badge-glow badge-success mr-1 mb-1">Submitted</div></td>
-                      <td v-else><div class="badge badge-pill badge-glow badge-primary mr-1 mb-1">Not Submitted</div></td>
-                      
-                      <td v-if="item.claimed"><div class="badge badge-pill badge-glow badge-success mr-1 mb-1">Claimed</div></td>
-                      <td v-else><div class="badge badge-pill badge-glow badge-primary mr-1 mb-1">Not Claimed</div></td>
-                    
                     </tr>
                 </tbody>
                 </datatable>
@@ -93,39 +91,43 @@
 <script>
 import Datatable from "~/components/datatable/Datatable.vue";
 import Pagination from "~/components/datatable/Pagination.vue";
+
 export default {
   components: { datatable: Datatable, pagination: Pagination },
   middleware: "auth",
 
   metaInfo() {
-    return { title: 'Gift Aids' };
+    return { title: 'Customers' };
   },
   data() {
     let sortOrders = {};
     let columns = [
-      { label : 'Projects',name : 'name'},
-      { label : 'Sponsor By',name : 'first_name'},
-      { label : 'Total',name : 'order_total'},
-      { label : 'Payment Method',name : 'payment_method'},
-      { label : 'Submitted',name : 'submitted'},
-      { label : 'Claimed',name : 'claimed'},
+        { label: "Type", name:'type' }, 
+        { label: "Name", name:'name' }, 
+        { label: "Donation_type", name:'donation_type' }, 
+        { label: "Donar", name:'first_name' }, 
+        { label: "Email", name:'email' }, 
+        { label: "Phone", name:'phone' }, 
+        { label: "City", name:'city' }, 
+        { label: "Postcode", name:'postcode' }, 
+        { label: "Donation Date", name:'donation_date' }, 
+        { label: "Total", name:'total' }, 
     ];
     columns.forEach((column) => {
       sortOrders[column.name] = -1;
     });
     return {
-      donations: [],
+      items: [],
       columns: columns,
-      sortKey: "full_name",
+      sortKey: "order_id",
       sortOrders: sortOrders,
-      perPage: ["10", "20", "30",'All'],
+      perPage: ["10", "20", "30"],
       tableData: {
         draw: 0,
         length: 10,
         search: "",
         column: 0,
         dir: "desc",
-        id:this.$route.params.id
       },
       pagination: {
         lastPage: "",
@@ -136,19 +138,18 @@ export default {
         prevPageUrl: "",
         from: "",
         to: "",
-        links:[]
       },
     };
   },
   methods: {
-    getData(url = "/api/getAllClaimedDonations") {
+    getData(url = "/api/one_off_donations") {
       this.tableData.draw++;
       axios
         .get(url, { params: this.tableData })
         .then((response) => {
           let data = response.data;
           if (this.tableData.draw == data.draw) {
-            this.donations = data.data.data;
+            this.items = data.data.data;
             this.configPagination(data.data);
           }
         })
@@ -165,12 +166,8 @@ export default {
     },
   },
   created() {
+    // this.tableData.webhook_type = this.getSearchParameters().type
     this.getData();
   },
 };
 </script>
-<style scoped>
-.dropdown .dropdown-menu .dropdown-item, .dropup .dropdown-menu .dropdown-item, .dropright .dropdown-menu .dropdown-item, .dropleft .dropdown-menu .dropdown-item{
-    padding: 5px 10px;
-}
-</style>

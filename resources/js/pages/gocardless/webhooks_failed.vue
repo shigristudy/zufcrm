@@ -4,7 +4,9 @@
       <div class="content-header-left col-md-9 col-12 mb-2">
         <div class="row breadcrumbs-top">
           <div class="col-12">
-            <h2 class="content-header-title float-left mb-0">Gocardless Updates</h2>
+            <h2 class="content-header-title float-left mb-0">
+              Gocardless Updates
+            </h2>
             <div class="breadcrumb-wrapper col-12">
               <ol class="breadcrumb">
                 <li class="breadcrumb-item"><a href="#">Webhooks</a></li>
@@ -22,7 +24,8 @@
               <div class="col-sm-12 col-md-6">
                 <div class="dataTables_length" id="DataTables_Table_0_length">
                   <label
-                    >Show <select
+                    >Show
+                    <select
                       class="custom-select custom-select-sm form-control form-control-sm"
                       v-model="tableData.length"
                       @change="getData()"
@@ -34,7 +37,8 @@
                       >
                         {{ records }}
                       </option>
-                    </select> entries
+                    </select>
+                    entries
                   </label>
                 </div>
               </div>
@@ -42,36 +46,56 @@
                 <div id="DataTables_Table_0_filter" class="dataTables_filter">
                   <label
                     >Search:<input
-                                class="form-control form-control-sm"
-                                type="search"
-                                v-model="tableData.search"
-                                placeholder="Search Table"
-                                @input="getData()"
-                            />
-                    </label>
+                      class="form-control form-control-sm"
+                      type="search"
+                      v-model="tableData.search"
+                      placeholder="Search Table"
+                      @input="getData()"
+                    />
+                  </label>
                 </div>
               </div>
             </div>
             <div class="table-responsive">
-                <datatable
+              <datatable
                 class="table-striped"
                 :columns="columns"
                 :sortKey="sortKey"
                 :sortOrders="sortOrders"
                 @sort="sortBy"
-                >
+              >
                 <tbody>
-                    <tr v-for="item in items" :key="item.id">
-                      <td>{{ item.order_id }}</td>
-                      <td>
-                        <div v-if="item.action == 'failed'" class="badge badge-pill badge-glow badge-danger mr-1 mb-1">Failed</div>
-                        <div v-else class="badge badge-pill badge-glow badge-success mr-1 mb-1">Paid Out</div>
-                      </td>
-                      <td>{{ JSON.parse(item.payload).details.description }}</td>
-                      
-                    </tr>
+                  <tr v-for="item in items" :key="item.id">
+                    <td>{{ item.order_id }}</td>
+                    
+                    <td>
+                      {{ item.order.first_name + " " + item.order.last_name }}
+                    </td>
+                    <td>{{ item.order.email }}</td>
+                    <td>{{ item.order.phone }}</td>
+                    <td>{{ item.order.city }}</td>
+                    <td>{{ item.order.postcode }}</td>
+                    <td>{{ item.order.gift_aid }}</td>
+                    <td>{{ round2Fixed(item.order.order_total) }}</td>
+                    <td>{{ formattedDateDDMMYY(item.order.donation_date) }}</td>
+                    <td>
+                      <div
+                        v-if="item.action == 'failed'"
+                        class="badge badge-pill badge-glow badge-danger mr-1 mb-1"
+                      >
+                        Failed
+                      </div>
+                      <div
+                        v-else
+                        class="badge badge-pill badge-glow badge-success mr-1 mb-1"
+                      >
+                        Paid Out
+                      </div>
+                    </td>
+                    <td style="width: 20%;">{{ JSON.parse(item.payload).details.description }}</td>
+                  </tr>
                 </tbody>
-                </datatable>
+              </datatable>
             </div>
             <pagination
               :pagination="pagination"
@@ -97,12 +121,21 @@ export default {
   middleware: "auth",
 
   metaInfo() {
-    return { title: 'Webhooks' };
+    return { title: "Webhooks" };
   },
   data() {
     let sortOrders = {};
+   
     let columns = [
       { label: "Order ID", name: "order_id" },
+      { label: "Name", name: "name" },
+      { label: "Email", name: "email" },
+      { label: "Phone", name: "phone" },
+      { label: "City", name: "city" },
+      { label: "Postcode", name: "postcode" },
+      { label: "Gift Aid", name: "gift_aid" },
+      { label: "Total", name: "total" },
+      { label: "Donation Date", name: "donation_date" },
       { label: "Action", name: "action" },
       { label: "Description", name: "description" },
     ];
@@ -121,7 +154,7 @@ export default {
         search: "",
         column: 0,
         dir: "desc",
-        webhook_type:''
+        webhook_type: "",
       },
       pagination: {
         lastPage: "",

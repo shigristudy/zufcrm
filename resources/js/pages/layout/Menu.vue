@@ -9,12 +9,12 @@
                         <h2 class="brand-text mb-0">ZUF</h2>
                     </router-link>
                 </li>
-                <li class="nav-item nav-toggle">
+                <!-- <li class="nav-item nav-toggle">
                     <a class="nav-link modern-nav-toggle pr-0" data-toggle="collapse">
                         <i class="feather icon-x d-block d-xl-none font-medium-4 primary toggle-icon"></i>
                         <i class="toggle-icon feather icon-disc font-medium-4 d-none d-xl-block primary" data-ticon="icon-disc"></i>
                     </a>
-                </li>
+                </li> -->
             </ul>
         </div>
         <div class="shadow-bottom"></div>
@@ -68,6 +68,21 @@
                 <li class=" nav-item" v-if="isPermitted('gocardless.failed')">
                     <router-link :to="{ name:'gocardless.webhooks.failed' }"><i class="feather icon-home"></i>
                         <span class="menu-title">Gocardless Failed</span>
+                    </router-link>
+                </li>
+                <!-- <li class=" nav-item" v-if="isPermitted('sponsorship.customers')">
+                    <router-link :to="{ name:'sponsorship.customers' }"><i class="feather icon-home"></i>
+                        <span class="menu-title">Sponshorship Customers</span>
+                    </router-link>
+                </li> -->
+                <li class=" nav-item" v-if="isPermitted('one_off_donations.customers')">
+                    <router-link :to="{ name:'one_off_donations.customers' }"><i class="feather icon-home"></i>
+                        <span class="menu-title">One-off Donations</span>
+                    </router-link>
+                </li>
+                <li class=" nav-item" v-if="isPermitted('monthly_donations.customers')">
+                    <router-link :to="{ name:'monthly_donations.customers' }"><i class="feather icon-home"></i>
+                        <span class="menu-title">Monthly Donations</span>
                     </router-link>
                 </li>
                  <li class=" nav-item" v-if="isPermitted('settings')">

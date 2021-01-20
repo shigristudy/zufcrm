@@ -99,14 +99,25 @@ class GiftAidController extends Controller
     }
 
     public function markAllDonationsAsGiftAid(Request $request){
+        // dd($request->all());
+        if(count($request->selectedrows) > 0 ){
+            $ids = $request->selectedrows;
         
-        $giftaids = WooOrder::giftaid()
+            $giftaids = WooOrder::whereIn('id',$ids)
+                        ->update([
+                            'submitted'   => now(),
+                            'claimed'   => null,
+                        ]);
+        }else{
+            $giftaids = WooOrder::giftaid()
                     ->notClaimed()
                     ->notSubmitted()
                     ->update([
                         'submitted'   => now(),
                         'claimed'   => null,
                     ]);
+        }
+        
         return response()->json([
             'success'   => 1,
             'message'   => 'All Donations has been Marked as submitted'
@@ -174,6 +185,11 @@ class GiftAidController extends Controller
             ]);
             $woo_order = WooOrder::find($request->order_id);
             
+            $var = $request->donation_date;//'20/04/2012';
+            $date = str_replace('/', '-', $var);
+            $donation_date = date('Y-m-d', strtotime($date));
+
+            
             $woo_order->title           = $request->title;
             $woo_order->first_name      = $request->first_name;
             $woo_order->last_name       = $request->last_name;
@@ -181,7 +197,7 @@ class GiftAidController extends Controller
             $woo_order->address_2       = $request->address_2;
             $woo_order->postcode        = $request->postcode;
             $woo_order->order_total     = $request->order_total;
-            $woo_order->donation_date   = $request->donation_date;
+            $woo_order->donation_date   = $donation_date;
 
             $woo_order->save();
 

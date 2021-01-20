@@ -108,7 +108,7 @@ class GocardlessController extends Controller
         $dir = $request->input('dir');
         $searchValue = $request->input('search');
         
-        $query = GocardlessWebhook::select('id', 'action', 'order_id', 'payload')->orderBy($columns[$column], $dir);
+        $query = GocardlessWebhook::with(['order'])->select('id', 'action', 'order_id', 'payload')->orderBy($columns[$column], $dir);
         
         if ($searchValue) {
             $query->where(function($query) use ($searchValue) {
@@ -125,6 +125,9 @@ class GocardlessController extends Controller
         return ['data' => $projects, 'draw' => $request->input('draw')];
     }
 
+    public function gocardlessCustomer( Request $request ){
+        
+    }
 
     public function gocardless_testing(){
         

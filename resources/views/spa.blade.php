@@ -98,7 +98,10 @@ table.dataTable thead .sorting:after, table.dataTable thead .sorting_asc:after, 
 table.dataTable thead .sorting:before, table.dataTable thead .sorting_asc:before, table.dataTable thead .sorting_desc:before{
     content: unset !important;
 }
-
+.btn.btn-sm.btn-icon {
+    padding: 10px;
+    font-size: 15px;
+}
     </style>
     <!-- BEGIN: Custom CSS-->
     <link rel="stylesheet" type="text/css" href="{{ asset('assets/css/style.css') }}">

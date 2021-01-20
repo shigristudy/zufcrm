@@ -70,6 +70,7 @@ Route::get('/testing', function () {
                 $Orderitem->total            = $item['total'];
                 $Orderitem->type             = $item['type'];
                 $Orderitem->is_sponsor       = $item['is_sponsor'];
+                $Orderitem->donation_type    = $item['donation_type'];
                 $Orderitem->save();
             }
         }

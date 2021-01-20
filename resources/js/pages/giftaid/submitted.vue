@@ -151,7 +151,7 @@
           <div class="modal-dialog modal-dialog-scrollable" role="document">
               <div class="modal-content">
                   <div class="modal-header">
-                      <h4 class="modal-title">Edit Order</h4>
+                      <h4 class="modal-title">Edit Donar</h4>
                       <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                           <span aria-hidden="true">×</span>
                       </button>
@@ -368,7 +368,7 @@ export default {
       this.order.address_1       = item.address_1
       this.order.address_2       = item.address_2
       this.order.postcode        = item.postcode
-      this.order.donation_date   = item.donation_date
+      this.order.donation_date   = this.formattedDateDDMMYY(item.donation_date)
       this.order.order_total     = item.order_total
       $('#modal_edit_order').modal('show');
     },

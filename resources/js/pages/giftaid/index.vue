@@ -23,7 +23,8 @@
           <div class="card-body">
            <div class="row">
              <div class="col-md-12">
-               <button v-if="donations.length>0" class="btn btn-success" @click="markAllAsSubmitted">Mark as Generated</button>
+                <button v-if="donations.length>0" class="btn btn-success" @click="markAllAsSubmitted()">Mark as Generated</button>
+                <button v-if="form.selectedrows.length>0" class="btn btn-success" @click="markAllAsSubmitted()">Mark Selected Entries as Generated</button>
              </div>
            </div>
             <div class="row dataTables_wrapper mb-1">
@@ -71,7 +72,15 @@
                 <tbody>
                     <tr v-for="item in donations" :key="item.id">
                       <td>
-                        <div class="d-inline mr-1 mb-1" v-for="product in item.items" :key="'product_id'+product.id">{{ product.name }}</div>
+                        <fieldset>
+                            <div class="custom-control custom-checkbox">
+                                <input type="checkbox" class="custom-control-input" v-model="form.selectedrows" :value="item.id" :id="'customCheck'+item.id">
+                                <label class="custom-control-label" :for="'customCheck'+item.id"></label>
+                            </div>
+                        </fieldset>
+                      </td>
+                      <td>
+                        <div class="d-inline mr-1 mb-1" v-for="product in item.items" :key="'product_id'+product.id">{{ product.product.name }}</div>
                       </td>
                       <td>{{ item.first_name + " " + item.last_name }}</td>
                       <td>{{ round2Fixed(item.order_total) }}</td>
@@ -104,6 +113,7 @@
 <script>
 import Datatable from "~/components/datatable/Datatable.vue";
 import Pagination from "~/components/datatable/Pagination.vue";
+import Form from 'vform'  
 export default {
   components: { datatable: Datatable, pagination: Pagination },
   middleware: "auth",
@@ -114,6 +124,7 @@ export default {
   data() {
     let sortOrders = {};
     let columns = [
+      { label : 'Action',name : 'action'},
       { label : 'Projects',name : 'name'},
       { label : 'Sponsor By',name : 'first_name'},
       { label : 'Total',name : 'order_total'},
@@ -125,6 +136,9 @@ export default {
       sortOrders[column.name] = -1;
     });
     return {
+      form: new Form({
+        selectedrows:[]
+      }),
       donations: [],
       columns: columns,
       sortKey: "full_name",
@@ -162,8 +176,10 @@ export default {
         confirmButtonText: 'Yes, mark as Generated!'
       }).then((result) => {
         if (result.isConfirmed) {
-          axios
+          this.form
           .post('/api/markAllDonationsAsGiftAid')
+          // axios
+          // .post('/api/markAllDonationsAsGiftAid',)
           .then((response) => {
             this.getData()
             this.$swal.fire(

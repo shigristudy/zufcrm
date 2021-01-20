@@ -79,6 +79,77 @@ class DonationController extends Controller
         ]);
     }
 
+    public function update( DonationRequest $request ){
+        
+        $is_sponsor_count = 0;
+        foreach($request->donationsArray as $key => $line ){
+            if(in_array($line['project'],[11863, 11864, 11814, 11815, 11816])){
+                $is_sponsor_count++;
+            }
+        }
+        DB::beginTransaction();
+
+        try {
+
+            $var = $request->date_of_donation;//'20/04/2012';
+            $date = str_replace('/', '-', $var);
+            $donation_date = date('Y-m-d', strtotime($date));
+            
+            $woo = WooOrder::find($request->edit_id);
+            $woo->title                     = $request->title;
+            $woo->order_id                  = 0;
+            $woo->first_name                = $request->first_name;
+            $woo->last_name                 = $request->last_name;
+            $woo->order_total               = $request->total_amount;
+            $woo->is_sponsor_count          = $is_sponsor_count;
+            $woo->donation_date             = $donation_date;
+            $woo->number_of_items           = count($request->donationsArray);
+            $woo->gift_aid                  = $request->gift_aid;
+            $woo->address_1                 = $request->address_line1;
+            $woo->address_2                 = $request->address_line2;
+            $woo->city                      = $request->city;
+            $woo->state                     = $request->state;
+            $woo->postcode                  = $request->postal_code;
+            $woo->country                   = $request->country;
+            $woo->email                     = $request->email;
+            $woo->phone                     = $request->contact;
+            $woo->payment_method            = $request->payment_type;
+            $woo->payment_method_title      = $request->payment_type;
+            $woo->donation_type             = 'offline';
+            
+            $woo->save();
+            
+            // Insert Donation Lines 
+            OrderItem::where('order_id',$request->edit_id)->delete();
+            foreach($request->donationsArray as $item ){
+                $is_sponsor = 0;
+                if(in_array($item['project'],[11863, 11864, 11814, 11815, 11816])){
+                    $is_sponsor = 1;
+                }
+                
+                $Orderitem = new OrderItem();
+                $Orderitem->order_id         = $woo->id;
+                $Orderitem->woo_order_id     = 0;
+                $Orderitem->product_id       = $item['project'];
+                $Orderitem->donation_type    = $item['donation_type'];
+                $Orderitem->quantity         = 1;
+                $Orderitem->total            = $item['amount'];
+                $Orderitem->type             = 'simple';
+                $Orderitem->is_sponsor       = $is_sponsor;
+                $Orderitem->save();
+            }
+            DB::commit();
+        
+        } catch (\Exception $e) {
+            DB::rollback();
+            return $e;
+        }
+        return response()->json([
+            'success'   => 1,
+            'message'   => 'Donation Added Successfully!'    
+        ]);
+    }
+
 
     public function getDonations(Request $request){
         

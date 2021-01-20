@@ -74,16 +74,18 @@
                       <td v-if="item.sponsored == 0"><div class="badge badge-pill badge-glow badge-primary mr-1 mb-1">Not Sponsored</div></td>
                       <td v-else><div class="badge badge-pill badge-glow badge-success mr-1 mb-1">Sponsored</div></td>
                     
-                    <td class="text-center">
-                      <div class="dropdown">
-                            <button class="btn-icon btn btn-primary btn-round btn-sm dropdown-toggle waves-effect waves-light" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="feather icon-settings"></i></button>
+                      <td class="text-center">
+                        <div class="dropdown">
+                            <button class="btn-icon btn btn-primary btn-round btn-sm dropdown-toggle waves-effect waves-light" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                              Action
+                            </button>
                             <div class="dropdown-menu dropdown-menu-right" x-placement="bottom-end" style="position: absolute; transform: translate3d(263px, 36px, 0px); top: 0px; left: 0px; will-change: transform;">
                               <router-link class="dropdown-item" :to="{ name:'sponsorships.hafiz.view',params:{id:item.id} }">View</router-link>
-                              <router-link class="dropdown-item" :to="{ name:'sponsorships.sponsorships.sponsor',params:{id:item.id} }">Sponsor</router-link>
+                                <router-link class="dropdown-item" :to="{ name:'sponsorships.sponsorships.sponsor',params:{id:item.id} }">Sponsor One-Off</router-link>
+                                <router-link class="dropdown-item" :to="{ name:'sponsorships.sponsorships.sponsor_montly',params:{id:item.id} }">Sponsor Montly</router-link>
                             </div>
                         </div>
-                       
-                    </td>
+                      </td>
                     </tr>
                 </tbody>
                 </datatable>

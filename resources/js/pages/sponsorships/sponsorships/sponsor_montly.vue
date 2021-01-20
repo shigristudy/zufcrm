@@ -24,7 +24,7 @@
                                             placeholder="Select Donations to Fund" 
                                             :options="options" 
                                             :searchable="true"
-                                            :multiple="true" 
+                                            :multiple="false" 
                                             :close-on-select="false" 
                                             :clear-on-select="false" 
                                             :allow-empty="true">
@@ -35,19 +35,6 @@
                                                 </div>
                                             </template>
                                 </multiselect>
-                            </fieldset>    
-
-                            <fieldset class="form-group">
-                               <label for="end_date"></label>
-                               <input v-model="form.email" 
-                                        :class="{ 'is-invalid': form.errors.has('end_date') }" 
-                                        type="date" 
-                                        class="form-control" 
-                                        id="end_date" 
-                                        name="end_date" 
-                                        placeholder="End Date">
-                                <has-error :form="form" field="end_date" />
-                               
                             </fieldset>     
                  
                             <div class="d-flex justify-content-between">
@@ -78,7 +65,6 @@ export default {
         message:'',
         form: new Form({
             selectedDonations : [],
-            end_date:'',
             student_id: this.$route.params.id
         })
       }
@@ -102,7 +88,7 @@ export default {
         });
     },
     async handleSubmit () {
-      const response = await this.form.post('/api/fund_students')
+      const response = await this.form.post('/api/fund_students_montly')
       this.message = response.data.message
       this.getDonations()
       this.form.reset()

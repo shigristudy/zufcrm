@@ -76,22 +76,16 @@
                     
                     <td class="text-center">
                       <div class="dropdown">
-                            <button class="btn-icon btn btn-primary btn-round btn-sm dropdown-toggle waves-effect waves-light" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="feather icon-settings"></i></button>
-                            <div class="dropdown-menu dropdown-menu-right" x-placement="bottom-end" style="position: absolute; transform: translate3d(263px, 36px, 0px); top: 0px; left: 0px; will-change: transform;">
-                             <router-link class="dropdown-item" :to="{ name:'sponsorships.scholar.view',params:{id:item.id} }">View</router-link>
-                            </div>
-                        </div>
-                        <!-- <div class="btn-group p-0">
-                            <div class="dropdown">
-                                <button class="btn btn-primary dropdown-toggle mr-1 waves-effect waves-light" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                    Action
-                                </button>
-                                <div class="dropdown-menu" aria-labelledby="dropdownMenuButton" x-placement="bottom-start" style="position: absolute; will-change: transform; top: 0px; left: 0px; transform: translate3d(0px, 38px, 0px);">
-                                    <a class="dropdown-item" href="#">Edit</a>
-                                    <router-link class="dropdown-item" :to="{name:'donation.view',params:{id:item.id}}">View</router-link>
-                                </div>
-                            </div>
-                        </div> -->
+                          <button class="btn-icon btn btn-primary btn-round btn-sm dropdown-toggle waves-effect waves-light" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            Action
+                          </button>
+                          <div class="dropdown-menu dropdown-menu-right" x-placement="bottom-end" style="position: absolute; transform: translate3d(263px, 36px, 0px); top: 0px; left: 0px; will-change: transform;">
+                            <router-link class="dropdown-item" :to="{ name:'sponsorships.hafiz.view',params:{id:item.id} }">View</router-link>
+                              <router-link class="dropdown-item" :to="{ name:'sponsorships.sponsorships.sponsor',params:{id:item.id} }">Sponsor One-Off</router-link>
+                              <router-link class="dropdown-item" :to="{ name:'sponsorships.sponsorships.sponsor_montly',params:{id:item.id} }">Sponsor Montly</router-link>
+                          </div>
+                      </div>
+                      
                     </td>
                     </tr>
                 </tbody>

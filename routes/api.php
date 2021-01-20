@@ -51,13 +51,16 @@ Route::group(['middleware' => 'auth:api'], function () {
     
     // Donation Routes Starts 
     Route::post('donation/store', [DonationController::class, 'store']);
+    Route::post('donation/update', [DonationController::class, 'update']);
     Route::get('donation/getDonations', [DonationController::class, 'getDonations']);
     Route::get('donation/getSingleDonation/{id}', [DonationController::class, 'getSingleDonation']);
     Route::get('getProjects', [DonationController::class, 'getProjects']);
 
     // Donation Module Routes
-    Route::get('getAllUnAllocatedDonations',[SponsorshipController::class,'getAllUnAllocatedDonations']);
+    Route::get('getAllUnAllocatedDonationsOneOff',[SponsorshipController::class,'getAllUnAllocatedDonationsOneOff']);
+    Route::get('getAllUnAllocatedDonationsMonthly',[SponsorshipController::class,'getAllUnAllocatedDonationsMonthly']);
     Route::post('fund_students',[SponsorshipController::class,'fund_students']);
+    Route::post('fund_students_montly',[SponsorshipController::class,'fund_students_montly']);
 
     // Gift Aid Section Routes
     Route::get('getAllDonationsWithGiftaid',[GiftAidController::class,'getAllDonationsWithGiftaid']);
@@ -71,6 +74,8 @@ Route::group(['middleware' => 'auth:api'], function () {
 
     // Reporting Routes
     Route::post('reports',[ReportController::class,'reports']);
+    Route::get('one_off_donations',[ReportController::class,'one_off_donations']);
+    Route::get('monthly_donations',[ReportController::class,'monthly_donations']);
     
     Route::prefix('settings')->group(function () {
         
@@ -106,6 +111,7 @@ Route::group(['middleware' => 'auth:api'], function () {
    
 
     Route::get('getWebhooks', [GocardlessController::class,'getWebhooks']);
+    Route::get('gocardlessCustomer', [GocardlessController::class,'gocardlessCustomer']);
 
 });
 

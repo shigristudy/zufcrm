@@ -35,6 +35,7 @@ export default [
   { path: '/sponsorships/scholars/add', name: 'sponsorships.scholar.add', component: page('sponsorships/scholar/add.vue') },
   { path: '/sponsorships/scholars/view/:id', name: 'sponsorships.scholar.view', component: page('sponsorships/scholar/view.vue') },
   { path: '/sponsorships/sponsor/:id', name: 'sponsorships.sponsorships.sponsor', component: page('sponsorships/sponsorships/sponsor.vue') },
+  { path: '/sponsorships/sponsor_montly/:id', name: 'sponsorships.sponsorships.sponsor_montly', component: page('sponsorships/sponsorships/sponsor_montly.vue') },
   
   // Gift Aid Section Routes
   { path: '/gift-aids', name: 'gift_aids', component: page('giftaid/index.vue') },
@@ -46,7 +47,10 @@ export default [
   // Reporting Section Routes
   { path: '/webhooks', name: 'gocardless.webhooks', component: page('gocardless/webhooks.vue') },
   { path: '/webhooks_failed', name: 'gocardless.webhooks.failed', component: page('gocardless/webhooks_failed.vue') },
+  { path: '/customers', name: 'sponsorship.customers', component: page('gocardless/sponsorship_customers.vue') },
   { path: '/webhooks/:id', name: 'gocardless.webhooks.details', component: page('gocardless/webhooks_details.vue') },
+  { path: '/one-off-donations', name: 'one_off_donations.customers', component: page('reporting/one-off-donation.vue') },
+  { path: '/monthly-donations', name: 'monthly_donations.customers', component: page('reporting/monthly-donation.vue') },
   // General Section Routes
   {
     path: '/settings',

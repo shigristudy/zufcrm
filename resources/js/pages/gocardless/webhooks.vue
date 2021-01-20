@@ -62,14 +62,34 @@
                 >
                 <tbody>
                     <tr v-for="item in items" :key="item.id">
-                      <td>{{ item.order_id }}</td>
-                      <td>
-                        <div v-if="item.action == 'failed'" class="badge badge-pill badge-glow badge-danger mr-1 mb-1">Failed</div>
-                        <div v-else class="badge badge-pill badge-glow badge-success mr-1 mb-1">Paid Out</div>
-                      </td>
-                      <td>{{ JSON.parse(item.payload).details.description }}</td>
-                      
-                    </tr>
+                    <td>{{ item.order_id }}</td>
+                    
+                    <td>
+                      {{ item.order.first_name + " " + item.order.last_name }}
+                    </td>
+                    <td>{{ item.order.email }}</td>
+                    <td>{{ item.order.phone }}</td>
+                    <td>{{ item.order.city }}</td>
+                    <td>{{ item.order.postcode }}</td>
+                    <td>{{ item.order.gift_aid }}</td>
+                    <td>{{ round2Fixed(item.order.order_total) }}</td>
+                    <td>{{ formattedDateDDMMYY(item.order.donation_date) }}</td>
+                    <td>
+                      <div
+                        v-if="item.action == 'failed'"
+                        class="badge badge-pill badge-glow badge-danger mr-1 mb-1"
+                      >
+                        Failed
+                      </div>
+                      <div
+                        v-else
+                        class="badge badge-pill badge-glow badge-success mr-1 mb-1"
+                      >
+                        Paid Out
+                      </div>
+                    </td>
+                    <!-- <td style="width: 20%;">{{ JSON.parse(item.payload).details.description }}</td> -->
+                  </tr>
                 </tbody>
                 </datatable>
             </div>
@@ -103,8 +123,15 @@ export default {
     let sortOrders = {};
     let columns = [
       { label: "Order ID", name: "order_id" },
+      { label: "Name", name: "name" },
+      { label: "Email", name: "email" },
+      { label: "Phone", name: "phone" },
+      { label: "City", name: "city" },
+      { label: "Postcode", name: "postcode" },
+      { label: "Gift Aid", name: "gift_aid" },
+      { label: "Total", name: "total" },
+      { label: "Donation Date", name: "donation_date" },
       { label: "Action", name: "action" },
-      { label: "Description", name: "description" },
     ];
     columns.forEach((column) => {
       sortOrders[column.name] = -1;
