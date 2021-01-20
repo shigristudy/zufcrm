@@ -12,6 +12,7 @@ use App\Models\WooProduct;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Log;
 
 class DonationController extends Controller
 {
@@ -215,7 +216,7 @@ class DonationController extends Controller
     }
 
     public function getneworderdata(Request $request){
-
+        Log::info($request->all());
         DB::beginTransaction();
         try {
             $value = $request->all();
