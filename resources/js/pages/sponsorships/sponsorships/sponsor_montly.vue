@@ -79,7 +79,7 @@ export default {
     },
     getDonations(){
         
-        axios.get('/api/getAllUnAllocatedDonationsOneOff')
+        axios.get('/api/getAllUnAllocatedDonationsMonthly')
         .then((response) => {
           let data = response.data;
           this.options = data;
