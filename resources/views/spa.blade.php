@@ -102,6 +102,9 @@ table.dataTable thead .sorting:before, table.dataTable thead .sorting_asc:before
     padding: 10px;
     font-size: 15px;
 }
+.multiselect__content-wrapper{
+    position: relative;
+}
     </style>
     <!-- BEGIN: Custom CSS-->
     <link rel="stylesheet" type="text/css" href="{{ asset('assets/css/style.css') }}">
