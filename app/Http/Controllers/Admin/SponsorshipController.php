@@ -39,7 +39,7 @@ class SponsorshipController extends Controller
         $this->validate($request, [
             'selectedDonations' => 'required',
             'student_id'        => 'required',
-            'date_end'          => 'required'
+            'end_date'          => 'required'
         ]);
         DB::beginTransaction();
 
@@ -53,7 +53,7 @@ class SponsorshipController extends Controller
                 $s_d->order_item_id     = $donation['id'];
                 $s_d->order_id          = $donation['order_id'];
                 $s_d->student_id        = $request->student_id;
-                $s_d->date_end          = $request->date_end;
+                $s_d->date_end          = $request->end_date;
                 $s_d->save();
 
                 $order_item = OrderItem::find($donation['id']);
