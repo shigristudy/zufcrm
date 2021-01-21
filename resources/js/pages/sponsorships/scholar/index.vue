@@ -4,7 +4,7 @@
       <div class="content-header-left col-md-9 col-12 mb-2">
         <div class="row breadcrumbs-top">
           <div class="col-12">
-            <h2 class="content-header-title float-left mb-0">Hafiz Students</h2>
+            <h2 class="content-header-title float-left mb-0">Scholar Students</h2>
           </div>
         </div>
       </div>
@@ -12,7 +12,7 @@
         class="content-header-right text-md-right col-md-3 col-12 d-md-block d-none"
       >
         <div class="form-group breadcrum-right">
-            <router-link :to="{ name:'sponsorships.hafiz.add' }"  class="btn btn-primary mr-1 mb-1 waves-effect waves-light">Add Hafiz Student</router-link>
+            <router-link :to="{ name:'sponsorships.scholar.add' }"  class="btn btn-primary mr-1 mb-1 waves-effect waves-light">Add Scholar Student</router-link>
         </div>
       </div>
     </div>
