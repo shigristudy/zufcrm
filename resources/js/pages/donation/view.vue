@@ -36,18 +36,18 @@
                             </div>
                             <div class="mt-1 px-2">
                                 <h6 class="mb-1">Gift Aid Claimed?:</h6>
-                                <div v-if="donation.giftaid_claimed == 0" class="badge badge-pill badge-glow badge-primary mr-1 mb-1">Not Claimed</div>
+                                <div v-if="donation.claimed == null" class="badge badge-pill badge-glow badge-primary mr-1 mb-1">Not Claimed</div>
                                 <div v-else class="badge badge-pill badge-glow badge-success mr-1 mb-1">Claimed</div>
                             </div>
                         </div>
                         <div class="col-6 col-md-6">
-                            <div class="mt-1 px-2">
-                                <h6 class="mb-0">Postal:</h6>
-                                <p>{{ donation.postcode }}</p>
-                            </div>
+                            
                             <div class="mt-1 px-2">
                                 <h6 class="mb-0">Address:</h6>
-                                <p>{{ donation.address_1 }},<br>{{ donation.address_2 }} </p>
+                                <p class="mb-0">{{ donation.address_1 }}</p>
+                                <p class="mb-0">{{ donation.address_2 }} </p>
+                                <p class="mb-0">{{ donation.city }}</p>
+                                <p class="mb-0">{{ donation.postcode }}</p>
                             </div>
                             <div class="mt-1 px-2">
                                 <h6 class="mb-1">Gift Aid?:</h6>

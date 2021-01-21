@@ -377,7 +377,7 @@ export default {
     },
     async handleSubmit () {
       const response = await this.form.post('/api/donation/store')
-      console.log(response)
+      
       this.message = response.data.message
       this.form.reset()
     }

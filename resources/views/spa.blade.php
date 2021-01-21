@@ -105,6 +105,17 @@ table.dataTable thead .sorting:before, table.dataTable thead .sorting_asc:before
 .multiselect__content-wrapper{
     position: relative !important;
 }
+
+.main-menu .navbar-header .navbar-brand .brand-logo {
+    background: url(https://www.staging5.ziaulummahfoundation.org.uk/wp-content/uploads/2020/03/zuu-logo-green-100x100.png) no-repeat;
+    background-position: center;
+    height: 65px;
+    width: 50px;
+    background-size: contain;
+}
+.main-menu .navbar-header .navbar-brand {
+    margin-top: unset;
+}
     </style>
     <!-- BEGIN: Custom CSS-->
     <link rel="stylesheet" type="text/css" href="{{ asset('assets/css/style.css') }}">

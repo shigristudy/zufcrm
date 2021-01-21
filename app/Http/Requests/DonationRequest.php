@@ -35,7 +35,7 @@ class DonationRequest extends FormRequest
             "contact"                           => 'required',
             "email"                             => 'required',
             "address_line1"                     => 'required',
-            "address_line2"                     => 'required',
+            // "address_line2"                     => 'required',
             'donationsArray.*.project'          => 'required',
             'donationsArray.*.donation_type'    => 'required',
             'donationsArray.*.amount'           => 'required',

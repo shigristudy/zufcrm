@@ -204,7 +204,7 @@
                                         class="form-control" 
                                         id="address_line2" 
                                         name="address_line2" 
-                                        placeholder="Address Line 3">
+                                        placeholder="Address Line 2">
                                 <has-error :form="form" field="address_line2" />
                             </fieldset>
 
@@ -388,9 +388,10 @@ export default {
     },
     async handleSubmit () {
       const response = await this.form.post('/api/donation/update')
-      console.log(response)
       this.message = response.data.message
-    //   this.form.reset()
+      
+      this.$router.push({name: 'donations'})
+      // this.form.reset()
     }
   },
 };
