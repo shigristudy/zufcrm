@@ -24,6 +24,19 @@ use Illuminate\Support\Facades\Route;
 //     Log::info($request);
 //     return 'hello';
 // })->withoutMiddleware(['csrf']);
+Route::get('/shigri',function (){
+    $donations = OrderItem::with(['order','product'])
+                ->whereHas('product',function($q){
+                   return $q->where('type','simple');        
+                })
+                ->whereIn('product_id',[11863, 11864, 11814, 11815, 11816])
+
+                ->get();
+                
+    return response()->json($donations);
+});
+
+
 Route::get('/testing', function () {
     // dd(1);
    

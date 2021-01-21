@@ -15,7 +15,7 @@ class SponsorshipController extends Controller
     public function getAllUnAllocatedDonationsOneOff(){
         $donations = OrderItem::with(['order','product'])
                     ->whereHas('product',function($q){
-                        $q->where('type','simple');        
+                        return $q->where('type','simple');        
                     })
                     ->whereIn('product_id',[11863, 11864, 11814, 11815, 11816])
                     ->get();
@@ -27,7 +27,7 @@ class SponsorshipController extends Controller
     public function getAllUnAllocatedDonationsMonthly(){
         $donations = OrderItem::with(['order','product'])
                         ->whereHas('product',function($q){
-                            $q->where('type','subscription');        
+                            return $q->where('type','subscription');        
                         })
                         ->whereIn('product_id',[11863, 11864, 11814, 11815, 11816])
                         ->get();
