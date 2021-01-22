@@ -81,7 +81,7 @@
                         </fieldset>
                       </td>
                       <td>
-                        <div class="d-inline mr-1 mb-1" v-for="product in item.items" :key="'product_id'+product.id">{{ product.product.name }}</div>
+                        <div class="d-inline mr-1 mb-1" v-for="product in item.items" :key="'product_id'+product.id">{{ (product.product) ? product.product.name : "" }}</div>
                       </td>
                       <td>{{ item.first_name + " " + item.last_name }}</td>
                       <td>{{ round2Fixed(item.order_total) }}</td>
