@@ -11,7 +11,7 @@
   /*** TABLE SCROLLBAR ***/
 }
 .aggrid .ag-icon-checkbox-checked, .aggrid .ag-icon-checkbox-indeterminate {
-  color : #7367F0 !important;
+  color : #4d8135 !important;
 }
 .aggrid .ag-root-wrapper-body {
   min-height : calc(100% - 56px);
@@ -59,7 +59,7 @@
   opacity : 0.5 !important;
 }
 .aggrid .ag-paging-panel span[ref='lbCurrent'] {
-  background-color : #7367F0;
+  background-color : #4d8135;
 }
 .aggrid .ag-paging-panel span[ref='lbTotal'] {
   background-color : #DAE1E7;

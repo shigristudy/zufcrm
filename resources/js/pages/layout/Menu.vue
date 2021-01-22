@@ -46,27 +46,27 @@
                     </ul>
                 </li>
                 <li class=" nav-item" v-if="isPermitted('gift_aids')">
-                    <router-link :to="{ name:'gift_aids'}"><i class="feather icon-home"></i>
+                    <router-link :to="{ name:'gift_aids'}"><i class="feather icon-check"></i>
                         <span class="menu-title">Gift Aid</span>
                     </router-link>
                 </li>
                 <li class=" nav-item" v-if="isPermitted('gift_aids_submitted')">
-                    <router-link :to="{ name:'gift_aids_submitted'}"><i class="feather icon-home"></i>
+                    <router-link :to="{ name:'gift_aids_submitted'}"><i class="feather icon-check-circle"></i>
                         <span class="menu-title">Giftaid Generated</span>
                     </router-link>
                 </li>
                 <li class=" nav-item" v-if="isPermitted('gift_aids_reports')">
-                    <router-link :to="{ name:'gift_aids_reports'}"><i class="feather icon-home"></i>
+                    <router-link :to="{ name:'gift_aids_reports'}"><i class="feather icon-lock"></i>
                         <span class="menu-title">Giftaid Reports</span>
                     </router-link>
                 </li>
                 <li class=" nav-item" v-if="isPermitted('gocardless.successfull')">
-                    <router-link :to="{ name:'gocardless.webhooks' }"><i class="feather icon-home"></i>
+                    <router-link :to="{ name:'gocardless.webhooks' }"><i class="feather icon-cloud"></i>
                         <span class="menu-title">Gocardless Successfull</span>
                     </router-link>
                 </li>
                 <li class=" nav-item" v-if="isPermitted('gocardless.failed')">
-                    <router-link :to="{ name:'gocardless.webhooks.failed' }"><i class="feather icon-home"></i>
+                    <router-link :to="{ name:'gocardless.webhooks.failed' }"><i class="feather icon-cloud-off"></i>
                         <span class="menu-title">Gocardless Failed</span>
                     </router-link>
                 </li>
@@ -76,12 +76,12 @@
                     </router-link>
                 </li> -->
                 <li class=" nav-item" v-if="isPermitted('one_off_donations.customers')">
-                    <router-link :to="{ name:'one_off_donations.customers' }"><i class="feather icon-home"></i>
+                    <router-link :to="{ name:'one_off_donations.customers' }"><i class="feather icon-trending-up"></i>
                         <span class="menu-title">One-off Donations</span>
                     </router-link>
                 </li>
                 <li class=" nav-item" v-if="isPermitted('monthly_donations.customers')">
-                    <router-link :to="{ name:'monthly_donations.customers' }"><i class="feather icon-home"></i>
+                    <router-link :to="{ name:'monthly_donations.customers' }"><i class="feather icon-repeat"></i>
                         <span class="menu-title">Monthly Donations</span>
                     </router-link>
                 </li>

@@ -341,29 +341,6 @@ export default {
         }).catch((errors) => {
             console.log(errors);
         });
-        // Fetch Woocommerce Project
-        // await this.$store.dispatch('projects/fetchProjects')
-
-        // let instance = this
-        // axios.get('https://www.ziaulummahfoundation.org.uk/wp-json/wc/v3/products?per_page=100',{
-        //     auth: {
-        //         username :'ck_4202435a3ffa2878c84d3064e2e5463f7a234589', 
-        //         password :'cs_91b6f3fd2894b1a818f8c38e912ca56756b88ba6'
-        //     }
-        // }).then(function (response) {
-        //     response.data.map(p => {
-        //         let project = {
-        //             id : p.id,
-        //             name : p.name,
-        //             type : p.type,
-        //             price : p.price,
-        //         };
-        //         if(p.type != 'grouped'){
-        //             instance.wooProducts.push(project)
-        //         }
-        //     })
-            
-        // })
     },
     addNewRow(){
         this.form.donationsArray.push({

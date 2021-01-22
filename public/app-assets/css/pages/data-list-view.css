@@ -200,8 +200,8 @@ table.data-list-view.dataTable thead .dt-checkboxes-select-all input:before, tab
   position : absolute;
 }
 table.data-list-view.dataTable thead .dt-checkboxes-select-all input:after, table.data-thumb-view.dataTable thead .dt-checkboxes-select-all input:after {
-  background-color : #7367F0;
-  border : 2px solid #7367F0;
+  background-color : #4d8135;
+  border : 2px solid #4d8135;
   font-family : 'feather';
   content : '\e83f';
   font-size : 0.75rem;
@@ -227,7 +227,7 @@ table.data-list-view.dataTable thead .dt-checkboxes-select-all input:active:chec
           transform : translate(3px);
 }
 table.data-list-view.dataTable thead .dt-checkboxes-select-all input:checked:before, table.data-thumb-view.dataTable thead .dt-checkboxes-select-all input:checked:before {
-  border : 2px solid #7367F0;
+  border : 2px solid #4d8135;
   -webkit-transform : rotate(0deg);
       -ms-transform : rotate(0deg);
           transform : rotate(0deg);
@@ -302,7 +302,7 @@ table.data-list-view.dataTable tbody td.dt-checkboxes-cell input:before, table.d
           transition : all 0.2s ease;
 }
 table.data-list-view.dataTable tbody td.dt-checkboxes-cell input:after, table.data-thumb-view.dataTable tbody td.dt-checkboxes-cell input:after {
-  background-color : #7367F0;
+  background-color : #4d8135;
   font-family : 'feather';
   content : '\e83f';
   font-size : 0.75rem;
@@ -331,7 +331,7 @@ table.data-list-view.dataTable tbody td.dt-checkboxes-cell input:checked:before,
   -webkit-transform : rotate(0deg);
       -ms-transform : rotate(0deg);
           transform : rotate(0deg);
-  border : 2px solid #7367F0;
+  border : 2px solid #4d8135;
   -webkit-transition : all 0.2s ease;
           transition : all 0.2s ease;
 }

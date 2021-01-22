@@ -9,7 +9,7 @@
 
 $(window).on("load", function(){
 
-  var $primary = '#7367F0';
+  var $primary = '#4d8135';
   var $danger = '#EA5455';
   var $warning = '#FF9F43';
   var $info = '#00cfe8';

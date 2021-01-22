@@ -42,18 +42,22 @@ class ReportController extends Controller
 
         $query = OrderItem::with(['order','product'])->select($columns)
                     ->whereHas('product',function($q){
-                        $q->where('type','simple');        
+                        return $q->where('type','simple');        
                     })
                     ->orderBy($columns[$column], $dir);
 
         if ($searchValue) {
             $query->where(function($query) use ($searchValue,$columns) {
+                
                 foreach($columns as $c){
                     $query->orWhere($c, 'like', '%' . $searchValue . '%');
                 }
+                $query->orWhereHas('order',function($q) use ($searchValue){
+                    return $q->orWhere('postcode',$searchValue);        
+                });
             });
         }
-
+        // dd($query->toSql());
         $projects = $query->paginate($length);
         return ['data' => $projects, 'draw' => $request->input('draw')];
 
@@ -69,7 +73,7 @@ class ReportController extends Controller
 
         $query = OrderItem::with(['order','product'])->select($columns)
                     ->whereHas('product',function($q){
-                        $q->where('type','subscription');        
+                        return $q->where('type','subscription');        
                     })
                     ->orderBy($columns[$column], $dir);
 

@@ -69,14 +69,14 @@
   border : none;
   border-radius : 50%;
   background : #FFFFFF;
-  border : 5px solid #7367F0;
+  border : 5px solid #4d8135;
 }
 .noUi-handle:after, .noUi-handle:before {
   display : none;
 }
 
 .circle-filled .noUi-handle {
-  background : #7367F0;
+  background : #4d8135;
   border-radius : 50%;
 }
 .circle-filled .noUi-handle:after, .circle-filled .noUi-handle:before {
@@ -84,7 +84,7 @@
 }
 
 .square .noUi-handle {
-  background : #7367F0;
+  background : #4d8135;
   border-radius : 3px;
 }
 .square .noUi-handle:before {
@@ -147,7 +147,7 @@
 }
 
 .noUi-connect {
-  background : #7367F0;
+  background : #4d8135;
   box-shadow : none;
 }
 
@@ -163,7 +163,7 @@
   left : -6px;
 }
 .noUi-vertical.square .noUi-handle {
-  background : #7367F0;
+  background : #4d8135;
   border-radius : 3px;
 }
 .noUi-vertical.square .noUi-handle:before {

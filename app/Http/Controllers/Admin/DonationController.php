@@ -276,7 +276,7 @@ class DonationController extends Controller
 
 
     public function getProjects(){
-        $projects = WooProduct::all();
+        $projects = WooProduct::whereIn('type',['simple','subscription'])->get();
         return response()->json($projects);
     }
 

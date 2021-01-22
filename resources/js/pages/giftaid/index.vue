@@ -68,6 +68,7 @@
                 :sortKey="sortKey"
                 :sortOrders="sortOrders"
                 @sort="sortBy"
+                @selectall="selectall"
                 >
                 <tbody>
                     <tr v-for="item in donations" :key="item.id">
@@ -124,7 +125,7 @@ export default {
   data() {
     let sortOrders = {};
     let columns = [
-      { label : 'Action',name : 'action'},
+      { label : 'Action',name : 'action',checkable:true},
       { label : 'Projects',name : 'name'},
       { label : 'Sponsor By',name : 'first_name'},
       { label : 'Total',name : 'order_total'},
@@ -165,6 +166,16 @@ export default {
     };
   },
   methods: {
+    selectall(select_all) {
+      var instance = this
+      if(select_all){
+       this.form.selectedrows = [] 
+      }else{
+        this.donations.forEach(function(record) {
+          instance.form.selectedrows.push(record.id);
+        });
+      }
+    },
     markAllAsSubmitted(){
       this.$swal.fire({
         title: 'Are you sure?',

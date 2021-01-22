@@ -135,6 +135,7 @@ export default {
             return new_date;
         },
         configPagination(data) {
+            console.log('in pagination function')
             this.pagination.lastPage = data.last_page;
             this.pagination.currentPage = data.current_page;
             this.pagination.total = data.total;

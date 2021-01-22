@@ -38,7 +38,7 @@
                             </fieldset>    
 
                             <fieldset class="form-group">
-                               <label for="end_date"></label>
+                               <label for="end_date">Sponsorship End Date</label>
                                <input v-model="form.end_date" 
                                         :class="{ 'is-invalid': form.errors.has('end_date') }" 
                                         type="date" 

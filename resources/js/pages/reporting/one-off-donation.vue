@@ -9,15 +9,18 @@
           </div>
         </div>
       </div>
+      
     </div>
     <div class="content-body">
+      <!-- Description -->
       <section id="description" class="card">
         <div class="card-content">
           <div class="card-body">
             <div class="row dataTables_wrapper mb-1">
               <div class="col-sm-12 col-md-6">
-                <div class="dataTables_length" id="DataTables_Table_0_length">
-                  <label>Show <select
+                <div class="dataTables_length">
+                  <label
+                    >Show <select
                       class="custom-select custom-select-sm form-control form-control-sm"
                       v-model="tableData.length"
                       @change="getData()"
@@ -25,7 +28,8 @@
                       <option
                         v-for="(records, index) in perPage"
                         :key="index"
-                        :value="records">
+                        :value="records"
+                      >
                         {{ records }}
                       </option>
                     </select> entries
@@ -33,8 +37,9 @@
                 </div>
               </div>
               <div class="col-sm-12 col-md-6">
-                <div id="DataTables_Table_0_filter" class="dataTables_filter">
-                  <label>Search:<input
+                <div class="dataTables_filter">
+                  <label
+                    >Search:<input
                                 class="form-control form-control-sm"
                                 type="search"
                                 v-model="tableData.search"
@@ -66,18 +71,18 @@
                       <td>{{ formattedDateDDMMYY(item.order.donation_date) }}</td>
                       <td>{{ round2Fixed(item.total) }}</td>
                       <td>
-                          <div v-if="item.allocated_at == null" class="badge badge-pill badge-glow badge-danger mr-1 mb-1">No Allocated</div>
-                          <div v-else class="badge badge-pill badge-glow badge-success mr-1 mb-1">Allocated</div>
+                        <div v-if="item.allocated_at == null" class="badge badge-pill badge-glow badge-danger mr-1 mb-1">No Allocated</div>
+                        <div v-else class="badge badge-pill badge-glow badge-success mr-1 mb-1">Allocated</div>
                       </td>
                     </tr>
                 </tbody>
                 </datatable>
             </div>
             <pagination
-              :pagination="pagination"
-              @getpageData="getData"
-              @prev="getData(pagination.prevPageUrl)"
-              @next="getData(pagination.nextPageUrl)"
+                :pagination="pagination"
+                @getpageData="getData"
+                @prev="getData(pagination.prevPageUrl)"
+                @next="getData(pagination.nextPageUrl)"
             >
             </pagination>
           </div>
@@ -97,7 +102,7 @@ export default {
   middleware: "auth",
 
   metaInfo() {
-    return { title: 'Customers' };
+    return { title: 'Permissions' };
   },
   data() {
     let sortOrders = {};
@@ -112,7 +117,7 @@ export default {
         { label: "Postcode", name:'postcode' }, 
         { label: "Donation Date", name:'donation_date' }, 
         { label: "Total", name:'total' }, 
-        { label: "Allocated", name:'allocated' },
+        { label: "Allocated", name:'allocated' }, 
     ];
     columns.forEach((column) => {
       sortOrders[column.name] = -1;
@@ -120,7 +125,7 @@ export default {
     return {
       items: [],
       columns: columns,
-      sortKey: "order_id",
+      sortKey: "name",
       sortOrders: sortOrders,
       perPage: ["10", "20", "30"],
       tableData: {
@@ -139,6 +144,7 @@ export default {
         prevPageUrl: "",
         from: "",
         to: "",
+        links:[]
       },
     };
   },
@@ -167,8 +173,12 @@ export default {
     },
   },
   created() {
-    // this.tableData.webhook_type = this.getSearchParameters().type
     this.getData();
   },
 };
 </script>
+<style scoped>
+.dropdown .dropdown-menu .dropdown-item, .dropup .dropdown-menu .dropdown-item, .dropright .dropdown-menu .dropdown-item, .dropleft .dropdown-menu .dropdown-item{
+    padding: 5px 10px;
+}
+</style>

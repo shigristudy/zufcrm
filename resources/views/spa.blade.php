@@ -21,20 +21,20 @@ $config = [
     <link href="https://fonts.googleapis.com/css?family=Montserrat:300,400,500,600" rel="stylesheet">
 
     <!-- BEGIN: Vendor CSS-->
-    <link rel="stylesheet" type="text/css" href="{{ asset('app-assets/vendors/css/vendors.min.css') }}">
-    <link rel="stylesheet" type="text/css" href="{{ asset('app-assets/vendors/css/ui/prism.min.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{ asset('app-assets/vendors/css/vendors.min.css?ver=1.1') }}">
+    <link rel="stylesheet" type="text/css" href="{{ asset('app-assets/vendors/css/ui/prism.min.css?ver=1.1') }}">
     <!-- END: Vendor CSS-->
 
     <!-- BEGIN: Theme CSS-->
-    <link rel="stylesheet" type="text/css" href="{{ asset('app-assets/css/bootstrap.css') }}">
-    <link rel="stylesheet" type="text/css" href="{{ asset('app-assets/css/bootstrap-extended.css') }}">
-    <link rel="stylesheet" type="text/css" href="{{ asset('app-assets/css/colors.css') }}">
-    <link rel="stylesheet" type="text/css" href="{{ asset('app-assets/css/components.css') }}">
-    <link rel="stylesheet" type="text/css" href="{{ asset('app-assets/css/themes/dark-layout.css') }}">
-    <link rel="stylesheet" type="text/css" href="{{ asset('app-assets/css/themes/semi-dark-layout.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{ asset('app-assets/css/bootstrap.css?ver=1.1') }}">
+    <link rel="stylesheet" type="text/css" href="{{ asset('app-assets/css/bootstrap-extended.css?ver=1.1') }}">
+    <link rel="stylesheet" type="text/css" href="{{ asset('app-assets/css/colors.css?ver=1.1') }}">
+    <link rel="stylesheet" type="text/css" href="{{ asset('app-assets/css/components.css?ver=1.1') }}">
+    <link rel="stylesheet" type="text/css" href="{{ asset('app-assets/css/themes/dark-layout.css?ver=1.1') }}">
+    <link rel="stylesheet" type="text/css" href="{{ asset('app-assets/css/themes/semi-dark-layout.css?ver=1.1') }}">
 
     <!-- BEGIN: Page CSS-->
-    <link rel="stylesheet" type="text/css" href="{{ asset('app-assets/css/core/menu/menu-types/vertical-menu.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{ asset('app-assets/css/core/menu/menu-types/vertical-menu.css?ver=1.1') }}">
     <!-- END: Page CSS-->
     <style>
 
@@ -142,6 +142,6 @@ table.dataTable thead .sorting:before, table.dataTable thead .sorting_asc:before
   {{-- <script src="{{ asset('app-assets/js/core/app-menu.js') }}"></script> --}}
   <script src="{{ asset('app-assets/js/core/app.js') }}"></script>
   {{-- Load the application scripts --}}
-  <script src="{{ asset('dist/js/app.js') }}"></script>
+  <script src="{{ asset('dist/js/app.js?version=1.1') }}"></script>
 </body>
 </html>

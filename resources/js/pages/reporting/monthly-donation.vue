@@ -4,20 +4,80 @@
       <div class="content-header-left col-md-9 col-12 mb-2">
         <div class="row breadcrumbs-top">
           <div class="col-12">
-            <h2 class="content-header-title float-left mb-0">One Off Donations</h2>
+            <h2 class="content-header-title float-left mb-0">Monthly/Recurring Donations</h2>
            
           </div>
         </div>
       </div>
+      
     </div>
     <div class="content-body">
+      <!-- <div id="accordionWrapa50" class="card" role="tablist" aria-multiselectable="true">
+        <div class="accordion" id="accordionExample0" data-toggle-hover="true">
+          <div class="collapse-border-item collapse-header card collapse-bordered">
+              <div class="card-header collapsed" id="heading200" data-toggle="collapse" role="button" data-target="#collapse200" aria-expanded="false" aria-controls="collapse200">
+                  <span class="lead collapse-title">
+                      Advance Filter
+                  </span>
+              </div>
+
+              <div id="collapse200" class="collapse" aria-labelledby="heading200" data-parent="#accordionExample0" style="">
+                  <div class="card-body">
+                      <form @submit.prevent="handleSubmit" @keydown="tableData.form.onKeydown($event)">
+                        <div class="row">
+                          <div class="col-md-3">
+                            <fieldset class="form-group">
+                                <label for="basicInput">Project</label>
+                                <select class="form-control" v-model="tableData.form.project">
+                                    <option value="Bank">Bank</option>
+                                    <option value="Cash">Cash</option>
+                                    <option value="Cheque">Cheque</option>
+                                </select>
+                            </fieldset>
+                          </div>
+                          <div class="col-md-3">
+                            <fieldset class="form-group">
+                                <label for="basicInput">Donation Type</label>
+                                <select class="form-control" v-model="tableData.form.donation_type">
+                                    <option value="online">On-line</option>
+                                    <option value="offline">Off-Line</option>
+                                </select>
+                            </fieldset>
+                          </div>
+                          <div class="col-md-3">
+                            <fieldset class="form-group">
+                                <label for="basicInput">Payment Method</label>
+                                <select class="form-control" v-model="tableData.form.payment_method">
+                                    <option value="Bank">Bank</option>
+                                    <option value="Cash">Cash</option>
+                                    <option value="Cheque">Cheque</option>
+                                    <option value="stripe">Stripe</option>
+                                    <option value="ppec_paypal">Paypal</option>
+                                    <option value="Eazy Collect">Eazy Collect</option>
+                                </select>
+                            </fieldset>
+                          </div>
+                        </div>
+                        
+                        <div class="d-flex justify-content-between">
+                          <button type="submit" class="btn btn-secondary mr-1 mb-1 waves-effect waves-light" @click="clearFilters()">Clear</button>
+                          <v-button :loading="tableData.form.busy" type="primary">Filter</v-button>
+                        </div>
+                      </form>
+                  </div>
+              </div>
+          </div>
+      </div>
+    </div> -->
+      <!-- Description -->
       <section id="description" class="card">
         <div class="card-content">
           <div class="card-body">
             <div class="row dataTables_wrapper mb-1">
               <div class="col-sm-12 col-md-6">
-                <div class="dataTables_length" id="DataTables_Table_0_length">
-                  <label>Show <select
+                <div class="dataTables_length">
+                  <label
+                    >Show <select
                       class="custom-select custom-select-sm form-control form-control-sm"
                       v-model="tableData.length"
                       @change="getData()"
@@ -25,7 +85,8 @@
                       <option
                         v-for="(records, index) in perPage"
                         :key="index"
-                        :value="records">
+                        :value="records"
+                      >
                         {{ records }}
                       </option>
                     </select> entries
@@ -33,8 +94,9 @@
                 </div>
               </div>
               <div class="col-sm-12 col-md-6">
-                <div id="DataTables_Table_0_filter" class="dataTables_filter">
-                  <label>Search:<input
+                <div class="dataTables_filter">
+                  <label
+                    >Search:<input
                                 class="form-control form-control-sm"
                                 type="search"
                                 v-model="tableData.search"
@@ -55,7 +117,7 @@
                 >
                 <tbody>
                     <tr v-for="item in items" :key="item.id">
-                      <td>{{ item.product.type }}</td>
+                      <!-- <td>{{ item.product.type }}</td> -->
                       <td>{{ item.product.name }}</td>
                       <td>{{ item.donation_type }}</td>
                       <td>{{ item.order.first_name + " " + item.order.last_name }}</td>
@@ -74,10 +136,10 @@
                 </datatable>
             </div>
             <pagination
-              :pagination="pagination"
-              @paginate="getData(page)"
-              @prev="getData(pagination.prevPageUrl)"
-              @next="getData(pagination.nextPageUrl)"
+                :pagination="pagination"
+                @getpageData="getData"
+                @prev="getData(pagination.prevPageUrl)"
+                @next="getData(pagination.nextPageUrl)"
             >
             </pagination>
           </div>
@@ -97,12 +159,12 @@ export default {
   middleware: "auth",
 
   metaInfo() {
-    return { title: 'Customers' };
+    return { title: 'Recurring Donations' };
   },
   data() {
     let sortOrders = {};
     let columns = [
-        { label: "Type", name:'type' }, 
+        // { label: "Type", name:'type' }, 
         { label: "Name", name:'name' }, 
         { label: "Donation_type", name:'donation_type' }, 
         { label: "Donar", name:'first_name' }, 
@@ -120,7 +182,7 @@ export default {
     return {
       items: [],
       columns: columns,
-      sortKey: "order_id",
+      sortKey: "name",
       sortOrders: sortOrders,
       perPage: ["10", "20", "30"],
       tableData: {
@@ -139,6 +201,7 @@ export default {
         prevPageUrl: "",
         from: "",
         to: "",
+        links:[]
       },
     };
   },
@@ -167,8 +230,12 @@ export default {
     },
   },
   created() {
-    // this.tableData.webhook_type = this.getSearchParameters().type
     this.getData();
   },
 };
 </script>
+<style scoped>
+.dropdown .dropdown-menu .dropdown-item, .dropup .dropdown-menu .dropdown-item, .dropright .dropdown-menu .dropdown-item, .dropleft .dropdown-menu .dropdown-item{
+    padding: 5px 10px;
+}
+</style>

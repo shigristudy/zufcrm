@@ -12,72 +12,72 @@
   var $html = $("html");
   var $body = $("body");
   var $danger = "#ea5455";
-  var $primary = "#7367f0";
+  var $primary = "#4d8135";
   var $textcolor = "#4e5154";
 
   $(window).on("load", function () {
-    var rtl;
-    var compactMenu = false; // Set it to true, if you want default menu to be compact
+    // var rtl;
+    // var compactMenu = false; // Set it to true, if you want default menu to be compact
 
-    if ($body.hasClass("menu-collapsed")) {
-      compactMenu = true;
-    }
+    // if ($body.hasClass("menu-collapsed")) {
+    //   compactMenu = true;
+    // }
 
-    if ($("html").data("textdirection") == "rtl") {
-      rtl = true;
-    }
+    // if ($("html").data("textdirection") == "rtl") {
+    //   rtl = true;
+    // }
 
-    setTimeout(function () {
-      $html.removeClass("loading").addClass("loaded");
-    }, 1200);
+    // setTimeout(function () {
+    //   $html.removeClass("loading").addClass("loaded");
+    // }, 1200);
 
-    $.app.menu.init(compactMenu);
+    // //$.app.menu.init(compactMenu);
 
-    // Navigation configurations
-    var config = {
-      speed: 300 // set speed to expand / collpase menu
-    };
-    if ($.app.nav.initialized === false) {
-      $.app.nav.init(config);
-    }
+    // // Navigation configurations
+    // var config = {
+    //   speed: 300 // set speed to expand / collpase menu
+    // };
+    // if ($.app.nav.initialized === false) {
+    //   $.app.nav.init(config);
+    // }
 
-    Unison.on("change", function (bp) {
-      $.app.menu.change();
-    });
+    // Unison.on("change", function (bp) {
+    //   $.app.menu.change();
+    // });
 
-    // Tooltip Initialization
-    $('[data-toggle="tooltip"]').tooltip({
-      container: "body"
-    });
+    // // Tooltip Initialization
+    // $('[data-toggle="tooltip"]').tooltip({
+    //   container: "body"
+    // });
 
-    // Top Navbars - Hide on Scroll
-    if ($(".navbar-hide-on-scroll").length > 0) {
-      $(".navbar-hide-on-scroll.fixed-top").headroom({
-        offset: 205,
-        tolerance: 5,
-        classes: {
-          // when element is initialised
-          initial: "headroom",
-          // when scrolling up
-          pinned: "headroom--pinned-top",
-          // when scrolling down
-          unpinned: "headroom--unpinned-top"
-        }
-      });
-      // Bottom Navbars - Hide on Scroll
-      $(".navbar-hide-on-scroll.fixed-bottom").headroom({
-        offset: 205,
-        tolerance: 5,
-        classes: {
-          // when element is initialised
-          initial: "headroom",
-          // when scrolling up
-          pinned: "headroom--pinned-bottom",
-          // when scrolling down
-          unpinned: "headroom--unpinned-bottom"
-        }
-      });
-    }
+    // // Top Navbars - Hide on Scroll
+    // if ($(".navbar-hide-on-scroll").length > 0) {
+    //   $(".navbar-hide-on-scroll.fixed-top").headroom({
+    //     offset: 205,
+    //     tolerance: 5,
+    //     classes: {
+    //       // when element is initialised
+    //       initial: "headroom",
+    //       // when scrolling up
+    //       pinned: "headroom--pinned-top",
+    //       // when scrolling down
+    //       unpinned: "headroom--unpinned-top"
+    //     }
+    //   });
+    //   // Bottom Navbars - Hide on Scroll
+    //   $(".navbar-hide-on-scroll.fixed-bottom").headroom({
+    //     offset: 205,
+    //     tolerance: 5,
+    //     classes: {
+    //       // when element is initialised
+    //       initial: "headroom",
+    //       // when scrolling up
+    //       pinned: "headroom--pinned-bottom",
+    //       // when scrolling down
+    //       unpinned: "headroom--unpinned-bottom"
+    //     }
+    //   });
+    // }
 
     // Collapsible Card
     $('a[data-action="collapse"]').on("click", function (e) {
@@ -174,22 +174,22 @@
       }
     );
 
-    // Add sidebar group active class to active menu
-    $(".main-menu-content").find("li.active").parents("li").addClass("sidebar-group-active");
+    // // Add sidebar group active class to active menu
+    // $(".main-menu-content").find("li.active").parents("li").addClass("sidebar-group-active");
 
-    // Add open class to parent list item if subitem is active except compact menu
-    var menuType = $body.data("menu");
-    if (menuType != "horizontal-menu" && compactMenu === false) {
-      $(".main-menu-content").find("li.active").parents("li").addClass("open");
-    }
-    if (menuType == "horizontal-menu") {
-      $(".main-menu-content").find("li.active").parents("li:not(.nav-item)").addClass("open");
-      $(".main-menu-content").find('li.active').closest('li.nav-item').addClass('sidebar-group-active open');
-      // $(".main-menu-content")
-      //   .find("li.active")
-      //   .parents("li")
-      //   .addClass("active");
-    }
+    // // Add open class to parent list item if subitem is active except compact menu
+    // var menuType = $body.data("menu");
+    // if (menuType != "horizontal-menu" && compactMenu === false) {
+    //   $(".main-menu-content").find("li.active").parents("li").addClass("open");
+    // }
+    // if (menuType == "horizontal-menu") {
+    //   $(".main-menu-content").find("li.active").parents("li:not(.nav-item)").addClass("open");
+    //   $(".main-menu-content").find('li.active').closest('li.nav-item').addClass('sidebar-group-active open');
+    //   // $(".main-menu-content")
+    //   //   .find("li.active")
+    //   //   .parents("li")
+    //   //   .addClass("active");
+    // }
 
     //card heading actions buttons small screen support
     $(".heading-elements-toggle").on("click", function () {
@@ -461,7 +461,7 @@
 
   // Update manual scroller when window is resized
   $(window).resize(function () {
-    $.app.menu.manualScroller.updateHeight();
+    // $.app.menu.manualScroller.updateHeight();
   });
 
   $("#sidebar-page-navigation").on("click", "a.nav-link", function (e) {

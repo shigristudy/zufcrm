@@ -133,7 +133,7 @@ $(window).on("load", function(){
                 type: 'pie',
                 radius : '55%',
                 center: ['50%', '60%'],
-                color: ['#FF9F43','#28C76F','#EA5455','#87ceeb','#7367F0'],
+                color: ['#FF9F43','#28C76F','#EA5455','#87ceeb','#4d8135'],
                 data: [
                   {value: 335, name: 'Direct interview'},
                   {value: 310, name: 'Email marketing'},
