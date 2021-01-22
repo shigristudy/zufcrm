@@ -33,6 +33,7 @@ class ReportController extends Controller
     }
 
     public function one_off_donations(Request $request){
+        // dd($request->all());
         $columns = ['id','order_id','woo_order_id','product_id','name','donation_type','quantity','total','type','is_sponsor','allocated_at'];
         
         $length = $request->input('length');
@@ -45,16 +46,52 @@ class ReportController extends Controller
                         return $q->where('type','simple');        
                     })
                     ->orderBy($columns[$column], $dir);
+        if($request->filtering){
 
+            $filters = json_decode($request->form,true);
+            $project            = $filters["product_id"];
+            $date_from          = ($filters["date_from"]);
+            $date_to            = ($filters["date_to"]);
+            $donation_type      = ($filters["donation_type"]);
+            
+            if($date_from || $date_to){
+                
+                if($date_from && $date_to){
+                    $query->whereHas('order',function($q) use($date_from,$date_to){
+                        return $q->whereBetween('donation_date',[$date_from,$date_to]);        
+                    });
+                    // $query->whereBetween('donation_date',[$date_from,$date_to]);
+                }else if($date_from){
+                    $query->whereHas('order',function($q) use($date_from,$date_to){
+                        return $q->whereDate('donation_date','>',$date_from);       
+                    });
+                    // $query->whereDate('donation_date','>',$date_from);
+                }else{
+                    $query->whereHas('order',function($q) use($date_from,$date_to){
+                        return $q->whereDate('donation_date','<',$date_to);       
+                    });
+                    // $query->whereDate('donation_date','<',$date_to);
+                }
+            }
+            if($project){
+                $query->where('product_id',$project);
+            }
+
+            if($donation_type){
+                $query->where('donation_type', 'like', '%' . $donation_type . '%');
+            }
+        }
+        // dd($query->toSql());
+        // select `id`, `order_id`, `woo_order_id`, `product_id`, `name`, `donation_type`, `quantity`, `total`, `type`, `is_sponsor`, `allocated_at` from `order_items` where exists (select * from `woo_products` where `order_items`.`product_id` = `woo_products`.`product_id` and `type` = ?) order by `id` desc
         if ($searchValue) {
             $query->where(function($query) use ($searchValue,$columns) {
                 
                 foreach($columns as $c){
                     $query->orWhere($c, 'like', '%' . $searchValue . '%');
                 }
-                $query->orWhereHas('order',function($q) use ($searchValue){
-                    return $q->orWhere('postcode',$searchValue);        
-                });
+                // $query->whereHas('order',function($q) use ($searchValue){
+                //     return $q->where('postcode',$searchValue);        
+                // });
             });
         }
         // dd($query->toSql());
@@ -77,10 +114,42 @@ class ReportController extends Controller
                     })
                     ->orderBy($columns[$column], $dir);
 
+        if($request->filtering){
+
+            $filters = json_decode($request->form,true);
+            $project            = $filters["product_id"];
+            $date_from          = ($filters["date_from"]);
+            $date_to            = ($filters["date_to"]);
+            $donation_type      = ($filters["donation_type"]);
+            
+            if($date_from || $date_to){
+                
+                if($date_from && $date_to){
+                    $query->whereHas('order',function($q) use($date_from,$date_to){
+                        return $q->whereBetween('donation_date',[$date_from,$date_to]);        
+                    });
+                }else if($date_from){
+                    $query->whereHas('order',function($q) use($date_from,$date_to){
+                        return $q->whereDate('donation_date','>',$date_from);       
+                    });
+                }else{
+                    $query->whereHas('order',function($q) use($date_from,$date_to){
+                        return $q->whereDate('donation_date','<',$date_to);       
+                    });
+                }
+            }
+            if($project){
+                $query->where('product_id',$project);
+            }
+
+            if($donation_type){
+                $query->where('donation_type', 'like', '%' . $donation_type . '%');
+            }
+        }
         if ($searchValue) {
             $query->where(function($query) use ($searchValue,$columns) {
                 foreach($columns as $c){
-                    $query->orWhere($c, 'like', '%' . $searchValue . '%');
+                    $query->where($c, 'like', '%' . $searchValue . '%');
                 }
             });
         }

@@ -23,8 +23,8 @@
           <div class="card-body">
            <div class="row">
              <div class="col-md-12">
-                <button v-if="donations.length>0" class="btn btn-success" @click="markAllAsSubmitted()">Mark as Generated</button>
-                <button v-if="form.selectedrows.length>0" class="btn btn-success" @click="markAllAsSubmitted()">Mark Selected Entries as Generated</button>
+                <button v-if="form.selectedrows.length>0" class="btn btn-success" @click="markAllAsSubmitted()">Mark as Generated</button>
+                <!-- <button v-if="form.selectedrows.length>0" class="btn btn-success" @click="markAllAsSubmitted()">Mark Selected Entries as Generated</button> -->
              </div>
            </div>
             <div class="row dataTables_wrapper mb-1">

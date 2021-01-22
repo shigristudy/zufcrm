@@ -114,11 +114,13 @@ Route::get('/import-products', function () {
 
         foreach(json_decode($response->getBody(),true) as $value){
             $woo = new WooProduct();
-            $woo->product_id    = $value['id'];
-            $woo->name          = $value['name'];
-            $woo->type          = $value['type'];
-            $woo->price         = ($value['price'] && $value['price'] != '') ?? 0;
-            $woo->childs        = ( isset($value['_children']) ) ? json_encode($value['_children']) : null;
+            $woo->product_id            = $value['id'];
+            $woo->name                  = $value['name'];
+            $woo->type                  = $value['type'];
+            $woo->price                 = ($value['price'] && $value['price'] != '') ?? 0;
+            $woo->childs                = ( isset($value['_children']) ) ? json_encode($value['_children']) : null;
+            $woo->project_page_id       = ( isset($value['meta_data']) && isset($value['meta_data']['project_pages_list']) ) ? $value['meta_data']['project_pages_list'] : 0;
+            $woo->project_page_title    = ( isset($value['meta_data']) && isset($value['meta_data']['project_pages_list']) ) ? $value['meta_data']['project_pages_list'] : 0;
             $woo->save();
         }
 
