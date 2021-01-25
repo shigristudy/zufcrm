@@ -234,7 +234,8 @@
                                                     </option>
                                                     <option v-for="p in wooProducts" :key="'woo_project'+p.product_id" 
                                                             :value="p.product_id">
-                                                        <strong>{{ p.name + ' - ' + p.project_page }}</strong>
+                                                        <strong v-if="p.project_page != null && p.project_page != ''">{{ '('+ p.type +') ' + p.name + ' - ' + p.project_page }}</strong>
+                                                        <strong v-else>{{ '('+ p.type +') ' + p.name }}</strong>
                                                     </option>
                                                 </select>
                                                 <has-error :form="form" :field="`donationsArray.${index}.project`"/>
