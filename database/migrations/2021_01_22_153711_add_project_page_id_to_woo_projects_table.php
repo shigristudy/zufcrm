@@ -14,7 +14,7 @@ class AddProjectPageIdToWooProjectsTable extends Migration
     public function up()
     {
         Schema::table('woo_products', function (Blueprint $table) {
-            $table->integer('project_page_id')->nullable();
+            $table->text('project_page')->nullable();
         });
     }
 
@@ -26,7 +26,7 @@ class AddProjectPageIdToWooProjectsTable extends Migration
     public function down()
     {
         Schema::table('woo_products', function (Blueprint $table) {
-            $table->dropColumn('project_page_id');
+            $table->dropColumn('project_page');
         });
     }
 }
