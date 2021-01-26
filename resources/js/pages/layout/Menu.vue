@@ -96,7 +96,7 @@
                
                <li class=" nav-item" v-if="isPermitted('donations')">
                     <router-link :to="{ name:'donations'}"><i class="feather icon-plus-square"></i>
-                        <span class="menu-title" data-i18n="Donation">Reports</span>
+                        <span class="menu-title" data-i18n="Donation">Reporting</span>
                     </router-link>
                 </li>
                 <li class=" nav-item" v-if="isPermitted('settings')">
