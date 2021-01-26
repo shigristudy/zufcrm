@@ -11,18 +11,18 @@ use Illuminate\Support\Facades\DB;
 class GiftAidController extends Controller
 {
     public function getAllDonationsWithGiftaid(Request $request){
-        $columns = ['id','order_total','gift_aid','first_name','last_name','email','phone','payment_method','submitted','claimed','is_allocated'];
-        
+        $columns = ['id','gift_aid','first_name','order_total','last_name','email','phone','payment_method','submitted','claimed','is_allocated'];
         $length = $request->input('length');
         $column = $request->input('column'); //Index
         $dir = $request->input('dir');
         $searchValue = $request->input('search');
-
+        
         $query = WooOrder::with('items.product')
                     ->giftaid()
                     ->where('claimed',null)
                     ->where('submitted',null)
                     ->orderBy($columns[$column], $dir);
+                    
 
         if ($searchValue) {
             $query->where(function($query) use ($searchValue,$columns) {
@@ -41,7 +41,8 @@ class GiftAidController extends Controller
     }
 
     public function submittedGiftAidsList(Request $request){
-        $columns = ['id','order_total','gift_aid','first_name','last_name','email','phone','payment_method','submitted','claimed','is_allocated'];
+        // dd($request->all());
+        $columns = ['id','is_allocated','gift_aid','first_name','last_name','email','phone','payment_method','donation_date','order_total','claimed'];
         
         $length = $request->input('length');
         $column = $request->input('column'); //Index
@@ -53,7 +54,7 @@ class GiftAidController extends Controller
                     ->where('claimed',null)
                     ->where('submitted','!=',null)
                     ->orderBy($columns[$column], $dir);
-
+                    // dd($query->toSql());
         if ($searchValue) {
             $query->where(function($query) use ($searchValue,$columns) {
                 foreach($columns as $c){

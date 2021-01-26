@@ -295,8 +295,8 @@ export default {
       { label : 'Postcode',name : 'postcode'},
       { label : 'Aggregated donations',name : 'aggregated_donation'},
       { label : 'Sponsored event',name : 'event'},
-      { label : 'Donation Date',name : 'donation_date'},
-      { label : 'Amount',name : 'order_total'},
+      { label : 'Donation Date',name : 'donation_date',sortable:true},
+      { label : 'Amount',name : 'order_total',sortable:true},
       { label : 'Edit',name : 'edit'},
     ];
     columns.forEach((column) => {

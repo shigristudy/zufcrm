@@ -39,6 +39,10 @@
                                 <div v-if="donation.claimed == null" class="badge badge-pill badge-glow badge-primary mr-1 mb-1">Not Claimed</div>
                                 <div v-else class="badge badge-pill badge-glow badge-success mr-1 mb-1">Claimed</div>
                             </div>
+                            <div class="mt-1 px-2">
+                                <h6 class="mb-1">Date of Donation:</h6>
+                                <p>{{ donation.donation_date }}</p>
+                            </div>
                         </div>
                         <div class="col-6 col-md-6">
                             

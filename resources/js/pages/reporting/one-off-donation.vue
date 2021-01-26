@@ -172,7 +172,7 @@ export default {
         { label: "City", name:'city' }, 
         { label: "Postcode", name:'postcode' }, 
         { label: "Donation Date", name:'donation_date' }, 
-        { label: "Total", name:'total' }, 
+        { label: "Total", name:'total',sortable:true }, 
         { label: "Allocated", name:'allocated' }, 
     ];
     columns.forEach((column) => {

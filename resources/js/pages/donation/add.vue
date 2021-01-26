@@ -249,9 +249,7 @@
                                                     <option value="">
                                                         <strong>Select Type</strong>
                                                     </option>
-                                                    <option value="Sadaqahh">Sadaqahh</option>
-                                                    <option value="Zakat">Zakat</option>
-                                                    <option value="Fitrana">Fitrana</option>
+                                                    <option v-for="(d_type,d_index) in donation_type_arr" :key="'d_type'+d_index" :value="d_type">{{ capitalize(d_type) }}</option>
                                                 </select>
                                                 <has-error :form="form" :field="`donationsArray.${index}.donation_type`"/>
                                             </fieldset>
@@ -320,10 +318,12 @@ export default {
                 donation_type:'',
                 amount:0
             }],
-        })
+        }),
+        donation_type_arr:[]
       }
   },
   created(){
+      this.donation_type_arr = window.config.options.find(x => x.key === 'donation_types').value.split(',')
     this.getProjects() 
   },
   methods:{

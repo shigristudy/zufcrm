@@ -5,6 +5,8 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Models\OrderItem;
 use App\Models\Report;
+use App\Models\WooOrder;
+use App\Models\WooProduct;
 use Illuminate\Http\Request;
 
 class ReportController extends Controller
@@ -34,7 +36,7 @@ class ReportController extends Controller
 
     public function one_off_donations(Request $request){
         // dd($request->all());
-        $columns = ['id','order_id','woo_order_id','product_id','name','donation_type','quantity','total','type','is_sponsor','allocated_at'];
+        $columns = ['id','order_id','woo_order_id','product_id','name','donation_type','quantity','type','total','is_sponsor','allocated_at'];
         
         $length = $request->input('length');
         $column = $request->input('column'); //Index
@@ -81,27 +83,29 @@ class ReportController extends Controller
                 $query->where('donation_type', 'like', '%' . $donation_type . '%');
             }
         }
-        // dd($query->toSql());
-        // select `id`, `order_id`, `woo_order_id`, `product_id`, `name`, `donation_type`, `quantity`, `total`, `type`, `is_sponsor`, `allocated_at` from `order_items` where exists (select * from `woo_products` where `order_items`.`product_id` = `woo_products`.`product_id` and `type` = ?) order by `id` desc
+
+
         if ($searchValue) {
-            $query->where(function($query) use ($searchValue,$columns) {
-                
-                foreach($columns as $c){
-                    $query->orWhere($c, 'like', '%' . $searchValue . '%');
-                }
-                // $query->whereHas('order',function($q) use ($searchValue){
-                //     return $q->where('postcode',$searchValue);        
-                // });
-            });
+            $orderinfo_ids = WooOrder::where('first_name','like', '%' .$searchValue . '%')
+                                ->orWhere('last_name','like', '%' .$searchValue . '%')        
+                                ->orWhere('email','like', '%' .$searchValue . '%')        
+                                ->orWhere('postcode','like', '%' .$searchValue . '%')        
+                                ->orWhere('city','like', '%' .$searchValue . '%')        
+                                ->orWhere('phone','like', '%' .$searchValue . '%')        
+                                ->orWhere('address_1','like', '%' .$searchValue . '%')        
+                                ->orWhere('address_2','like', '%' .$searchValue . '%')->get()->pluck('order_id');
+
+            $query->whereIn('woo_order_id',$orderinfo_ids);
+            $query->orWhere('name','like','%'. $searchValue .'%')->orWhere('donation_type','like','%'. $searchValue .'%');            
         }
-        // dd($query->toSql());
+
         $projects = $query->paginate($length);
         return ['data' => $projects, 'draw' => $request->input('draw')];
 
     }
 
     public function monthly_donations(Request $request){
-        $columns = ['id','order_id','woo_order_id','product_id','name','donation_type','quantity','total','type','is_sponsor','allocated_at'];
+        $columns = ['id','order_id','woo_order_id','product_id','name','donation_type','quantity','type','total','is_sponsor','allocated_at'];
         
         $length = $request->input('length');
         $column = $request->input('column'); //Index
@@ -147,11 +151,17 @@ class ReportController extends Controller
             }
         }
         if ($searchValue) {
-            $query->where(function($query) use ($searchValue,$columns) {
-                foreach($columns as $c){
-                    $query->where($c, 'like', '%' . $searchValue . '%');
-                }
-            });
+            $orderinfo_ids = WooOrder::where('first_name','like', '%' .$searchValue . '%')
+                                ->orWhere('last_name','like', '%' .$searchValue . '%')        
+                                ->orWhere('email','like', '%' .$searchValue . '%')        
+                                ->orWhere('postcode','like', '%' .$searchValue . '%')        
+                                ->orWhere('city','like', '%' .$searchValue . '%')        
+                                ->orWhere('phone','like', '%' .$searchValue . '%')        
+                                ->orWhere('address_1','like', '%' .$searchValue . '%')        
+                                ->orWhere('address_2','like', '%' .$searchValue . '%')->get()->pluck('order_id');
+
+            $query->whereIn('woo_order_id',$orderinfo_ids);
+            $query->orWhere('name','like','%'. $searchValue .'%')->orWhere('donation_type','like','%'. $searchValue .'%');            
         }
 
         $projects = $query->paginate($length);

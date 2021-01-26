@@ -10,7 +10,13 @@
                             <label class="custom-control-label" for="select_all_checkbox"></label>
                         </div>
                     </span>
-                    <span v-else @click="$emit('sort', column.name)">
+                   
+                    <span v-else-if="column.sortable" @click="$emit('sort', column.name)">
+                        <i class="feather icon-chevrons-down" :class="(sortOrders[column.name] == 1) ? 'icon-chevrons-down' : 'icon-chevrons-up'"></i>
+                        {{column.label}}
+                    </span>
+
+                    <span v-else>
                         {{column.label}}
                     </span>
                 </th>
@@ -27,6 +33,7 @@
             return {
                 select_all:false
             }
-        }
+        },
+        
     }
 </script>

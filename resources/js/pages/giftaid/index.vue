@@ -128,7 +128,7 @@ export default {
       { label : 'Action',name : 'action',checkable:true},
       { label : 'Projects',name : 'name'},
       { label : 'Sponsor By',name : 'first_name'},
-      { label : 'Total',name : 'order_total'},
+      { label : 'Total',name : 'order_total',sortable:true},
       { label : 'Payment Method',name : 'payment_method'},
       { label : 'Submitted',name : 'submitted'},
       { label : 'Claimed',name : 'claimed'},

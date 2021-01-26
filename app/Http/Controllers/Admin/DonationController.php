@@ -155,7 +155,7 @@ class DonationController extends Controller
     public function getDonations(Request $request){
         
         // $columns = ['id','payment_type','date_of_donation','full_name','gift_aid','city','postal_code','contact','email','address_line1','address_line2','status'];
-        $columns = ['id','order_total','gift_aid','first_name','last_name','email','phone','payment_method','submitted','claimed','is_allocated'];
+        $columns = ['id','gift_aid','first_name','last_name','email','order_total','phone','payment_method','submitted','claimed','is_allocated'];
         $length = $request->input('length');
         $column = $request->input('column'); //Index
         $dir = $request->input('dir');
@@ -197,15 +197,22 @@ class DonationController extends Controller
                 }
             }
         }
-
         if ($searchValue) {
-            $query->where(function($query) use ($searchValue,$columns) {
-                foreach($columns as $c){
-                    $query->orWhere($c, 'like', '%' . $searchValue . '%');
-                }
-            });
+            $woo_products = WooProduct::where('name','like','%' . $searchValue . '%')->get()->pluck('product_id');
+            
+            if(count($woo_products) > 0){
+                $query->whereHas('items',function($q) use ($searchValue,$woo_products){
+                    return $q->whereIn('product_id', $woo_products);
+                });
+            }else{
+                $query->where(function($query) use ($searchValue,$columns) {
+                    foreach($columns as $c){
+                        $query->orWhere($c, 'like', '%' . $searchValue . '%');
+                    }
+                });
+            }
         }
-
+        // dd($query->toSql());
         $projects = $query->paginate($length);
         return ['data' => $projects, 'draw' => $request->input('draw')];
     }

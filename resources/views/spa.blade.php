@@ -4,6 +4,7 @@ $config = [
     'locale' => $locale = app()->getLocale(),
     'locales' => config('app.locales'),
     'githubAuth' => config('services.github.client_id'),
+    'options' => \App\Models\Option::all()
 ];
 @endphp
 <!DOCTYPE html>

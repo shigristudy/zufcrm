@@ -4,7 +4,7 @@
       <div class="content-header-left col-md-9 col-12 mb-2">
         <div class="row breadcrumbs-top">
           <div class="col-12">
-            <h2 class="content-header-title float-left mb-0">Donations</h2>
+            <h2 class="content-header-title float-left mb-0">Reports</h2>
           </div>
         </div>
       </div>
@@ -163,7 +163,7 @@
                       <td>{{ item.first_name + " " + item.last_name }}</td>
                       <td><div class="badge badge-pill badge-glow badge-success mr-1 mb-1">{{ item.gift_aid }}</div></td>
                       <td>{{ formattedDateDDMMYY(item.donation_date) }}</td>
-                      <td>{{ (item.payment_method == 'ppec_paypal') ? 'Paypal' : capitalize(item.payment_method) }}</td>
+                      <td>{{ (item.payment_method == 'ppec_paypal') ? 'Paypal' : capitalize(item.payment_method ) }}</td>
                       <td>{{ round2Fixed(item.order_total) }}</td>
                      
                       
@@ -216,7 +216,7 @@ export default {
       { label : 'Giftaid',name : 'gift_aid'},
       { label : 'Donation Date',name : 'donation_date'},
       { label : 'Payment Method',name : 'payment_method'},
-      { label : 'Total',name : 'order_total'},
+      { label : 'Total',name : 'order_total',sortable:true},
       { label : 'Action',name : 'action'},
     ];
     columns.forEach((column) => {
@@ -295,6 +295,7 @@ export default {
     //     })
     // },
     getData(url = "/api/donation/getDonations") {
+      // this.datatable_debounce()
       this.tableData.draw++;
       axios
         .get(url, { params: this.tableData })

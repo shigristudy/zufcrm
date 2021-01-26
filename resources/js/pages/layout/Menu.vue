@@ -26,15 +26,40 @@
                     </router-link>
                 </li>
                 <li class=" nav-item" v-if="isPermitted('donations')">
-                    <router-link :to="{ name:'donations'}"><i class="feather icon-plus-square"></i>
-                        <span class="menu-title" data-i18n="Donation">Donations</span>
+                    <router-link :to="{ name:'donation.add' }"><i class="feather icon-plus-square"></i>
+                        <span class="menu-title" data-i18n="Donation">Add Donation</span>
                     </router-link>
                 </li>
-                <li class=" nav-item" v-if="isPermitted('customproject')">
-                    <router-link :to="{ name:'customproject'}"><i class="feather icon-plus-square"></i>
-                        <span class="menu-title" data-i18n="Custom Project">Custom Project</span>
-                    </router-link>
+                <li class=" nav-item" v-if="isPermitted('donations')">
+                    <a href="#">
+                        <i class="feather icon-sliders"></i>
+                        <span class="menu-title" data-i18n="Sponsorships">Donations</span>
+                    </a>
+                    <ul class="menu-content">
+                        <li class="nav-item" v-if="isPermitted('one_off_donations.customers')">
+                            <router-link :to="{ name:'one_off_donations.customers' }"><i class="feather icon-trending-up"></i>
+                                <span class="menu-title">One-off Donations</span>
+                            </router-link>
+                        </li>
+                        <li class="nav-item" v-if="isPermitted('monthly_donations.customers')">
+                            <router-link :to="{ name:'monthly_donations.customers' }"><i class="feather icon-repeat"></i>
+                                <span class="menu-title">Live DDs</span>
+                            </router-link>
+                        </li>
+                         <li class="nav-item" v-if="isPermitted('gocardless.successfull')">
+                            <router-link :to="{ name:'gocardless.webhooks' }"><i class="feather icon-cloud"></i>
+                                <span class="menu-title">Gocardless Successfull</span>
+                            </router-link>
+                        </li>
+                        <li class="nav-item" v-if="isPermitted('gocardless.failed')">
+                            <router-link :to="{ name:'gocardless.webhooks.failed' }"><i class="feather icon-cloud-off"></i>
+                                <span class="menu-title">Gocardless Failed</span>
+                            </router-link>
+                        </li>
+                    </ul>
                 </li>
+                
+               
                 <li class=" nav-item" v-if="isPermitted('sponsorships')">
                     <a href="#">
                         <i class="feather icon-sliders"></i>
@@ -46,46 +71,35 @@
                     </ul>
                 </li>
                 <li class=" nav-item" v-if="isPermitted('gift_aids')">
-                    <router-link :to="{ name:'gift_aids'}"><i class="feather icon-check"></i>
-                        <span class="menu-title">Gift Aid</span>
+                    <a href="#">
+                        <i class="feather icon-sliders"></i>
+                        <span class="menu-title" data-i18n="Sponsorships">Gift Aid</span>
+                    </a>
+                    <ul class="menu-content">
+                         <li class=" nav-item" v-if="isPermitted('gift_aids')">
+                            <router-link :to="{ name:'gift_aids'}"><i class="feather icon-check"></i>
+                                <span class="menu-title">Unclaimed Gift Aid</span>
+                            </router-link>
+                        </li>
+                        <li class=" nav-item" v-if="isPermitted('gift_aids_submitted')">
+                            <router-link :to="{ name:'gift_aids_submitted'}"><i class="feather icon-check-circle"></i>
+                                <span class="menu-title">Make A Claim</span>
+                            </router-link>
+                        </li>
+                        <li class=" nav-item" v-if="isPermitted('gift_aids_reports')">
+                            <router-link :to="{ name:'gift_aids_reports'}"><i class="feather icon-lock"></i>
+                                <span class="menu-title">Claimed</span>
+                            </router-link>
+                        </li>
+                    </ul>
+                </li>
+               
+               <li class=" nav-item" v-if="isPermitted('donations')">
+                    <router-link :to="{ name:'donations'}"><i class="feather icon-plus-square"></i>
+                        <span class="menu-title" data-i18n="Donation">Reports</span>
                     </router-link>
                 </li>
-                <li class=" nav-item" v-if="isPermitted('gift_aids_submitted')">
-                    <router-link :to="{ name:'gift_aids_submitted'}"><i class="feather icon-check-circle"></i>
-                        <span class="menu-title">Giftaid Generated</span>
-                    </router-link>
-                </li>
-                <li class=" nav-item" v-if="isPermitted('gift_aids_reports')">
-                    <router-link :to="{ name:'gift_aids_reports'}"><i class="feather icon-lock"></i>
-                        <span class="menu-title">Giftaid Reports</span>
-                    </router-link>
-                </li>
-                <li class=" nav-item" v-if="isPermitted('gocardless.successfull')">
-                    <router-link :to="{ name:'gocardless.webhooks' }"><i class="feather icon-cloud"></i>
-                        <span class="menu-title">Gocardless Successfull</span>
-                    </router-link>
-                </li>
-                <li class=" nav-item" v-if="isPermitted('gocardless.failed')">
-                    <router-link :to="{ name:'gocardless.webhooks.failed' }"><i class="feather icon-cloud-off"></i>
-                        <span class="menu-title">Gocardless Failed</span>
-                    </router-link>
-                </li>
-                <!-- <li class=" nav-item" v-if="isPermitted('sponsorship.customers')">
-                    <router-link :to="{ name:'sponsorship.customers' }"><i class="feather icon-home"></i>
-                        <span class="menu-title">Sponshorship Customers</span>
-                    </router-link>
-                </li> -->
-                <li class=" nav-item" v-if="isPermitted('one_off_donations.customers')">
-                    <router-link :to="{ name:'one_off_donations.customers' }"><i class="feather icon-trending-up"></i>
-                        <span class="menu-title">One-off Donations</span>
-                    </router-link>
-                </li>
-                <li class=" nav-item" v-if="isPermitted('monthly_donations.customers')">
-                    <router-link :to="{ name:'monthly_donations.customers' }"><i class="feather icon-repeat"></i>
-                        <span class="menu-title">Monthly Donations</span>
-                    </router-link>
-                </li>
-                 <li class=" nav-item" v-if="isPermitted('settings')">
+                <li class=" nav-item" v-if="isPermitted('settings')">
                     <a href="#">
                         <i class="feather icon-settings"></i>
                         <span class="menu-title" data-i18n="settings_items">Settings</span>
@@ -120,7 +134,7 @@ export default {
                 $(this).addClass('active');
             })
         })
-        console.log('mounted')
+
         
     }
 }

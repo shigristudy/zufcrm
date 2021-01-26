@@ -123,8 +123,6 @@ export default {
 
             const res = await this.callApi('get',this.AdminBaseUrl + 'user/getUserInformations');
             if(res.status == 200){
-                console.log(res.data.extraData)
-                console.log(res.data.extraData.notifications.notifications)
                 this.usernotifications = res.data.extraData.notifications.notifications
             }
         },
@@ -135,7 +133,7 @@ export default {
             return new_date;
         },
         configPagination(data) {
-            console.log('in pagination function')
+            // console.log('in pagination function')
             this.pagination.lastPage = data.last_page;
             this.pagination.currentPage = data.current_page;
             this.pagination.total = data.total;
@@ -207,6 +205,9 @@ export default {
             return mystring.split("").reverse().join("").toUpperCase()
         },
         capitalize(s){
+            if(s == null || s == ''){
+                return s;
+            }
             return s[0].toUpperCase() + s.slice(1);
         },
         getSearchParameters() {
@@ -221,7 +222,8 @@ export default {
                 params[tmparr[0]] = tmparr[1];
             }
             return params;
-        }
+        },
+       
 
     },
 

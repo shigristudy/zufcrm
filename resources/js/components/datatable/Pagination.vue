@@ -18,10 +18,7 @@
 <script>
     export default {
         props: ['pagination', 'filtered'],
-        created(){
-            console.log(this.pagination)
-            console.log(this.pagination.links)
-        },
+        created(){},
         methods: {
             isCurrentPage(page) {
                 return this.pagination.currentPage === page;
