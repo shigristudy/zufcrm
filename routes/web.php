@@ -25,6 +25,14 @@ use Illuminate\Support\Facades\Route;
 //     return 'hello';
 // })->withoutMiddleware(['csrf']);
 Route::get('/shigri',function (){
+
+    
+    $order = WooOrder::where('order_id',13383)
+                                ->update([
+                                    'submitted' => null,
+                                    'claimed'   => null,
+                                ]);
+    dd($order);
     $donations = OrderItem::with(['order','product'])
                 ->whereHas('product',function($q){
                    return $q->where('type','simple');        

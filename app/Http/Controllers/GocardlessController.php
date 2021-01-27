@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\GocardlessInfo;
 use App\Models\GocardlessWebhook;
+use App\Models\WooOrder;
 use GuzzleHttp\Client;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
@@ -35,6 +36,11 @@ class GocardlessController extends Controller
                         $webhook->payload           = json_encode($event);
                         $webhook->save();
                         
+                        WooOrder::where('order_id',$customer['metadata']['order_id'])
+                                ->update([
+                                    'submitted' => null,
+                                    'claimed'   => null,
+                                ]);
                     }
                 }
             }
