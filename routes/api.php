@@ -100,7 +100,7 @@ Route::group(['middleware' => 'auth:api'], function () {
         // Admin Options Routes
         Route::get('options',[OptionsController::class,'fetch']);
         Route::post('option/store',[OptionsController::class,'store']);
-        Route::get('option/edit',[OptionsController::class,'edit']);
+        Route::post('option/edit',[OptionsController::class,'edit']);
 
         // Admin Options Routes
         Route::post('user/store',[UserController::class,'store']);

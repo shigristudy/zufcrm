@@ -24,12 +24,78 @@
                 <div class="card-body">
                     <form @submit.prevent="handleSubmit" @keydown="form.onKeydown($event)">
                         <alert-success :form="form" :message="message" />
+                         <div class="row">
+                             <div class="col-md-12">
+                            <fieldset class="form-group">
+                                <label>Title</label>
+                                <select class="form-control" v-model="form.title">
+                                    <option value="Miss">
+                                    <option value="Mr">
+                                    <option value="Mrs">
+                                    <option value="Ms">
+                                    <option value="Dr"></option>
+                                </select>
+                            </fieldset>
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <fieldset class="form-group">
+                                        <label for="first_name">First Name</label>
+                                        <input v-model="form.first_name" 
+                                                :class="{ 'is-invalid': form.errors.has('first_name') }" 
+                                                type="text" 
+                                                class="form-control" 
+                                                id="first_name" 
+                                                name="first_name" 
+                                                placeholder="First Name">
+                                        <has-error :form="form" field="first_name" />
+                                    </fieldset>
+                                </div>
+                                <div class="col-md-6">
+                                    <fieldset class="form-group">
+                                        <label for="last_name">Last Name</label>
+                                        <input v-model="form.last_name" 
+                                                :class="{ 'is-invalid': form.errors.has('last_name') }" 
+                                                type="text" 
+                                                class="form-control" 
+                                                id="last_name" 
+                                                name="last_name" 
+                                                placeholder="Last Name">
+                                        <has-error :form="form" field="last_name" />
+                                    </fieldset>
+                                </div>
+                            </div>
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                        </div>
+                                        <div class="col-md-6">
+                                            <fieldset class="form-group">
+                                                <label>Gift Aid</label>
+                                                <select class="form-control" v-model="form.gift_aid">
+                                                    <option value="">Please select Gift Aid Type</option>
+                                                    <option value="no">No</option>
+                                                    <!-- <option value="verbal">Verbal</option> -->
+                                                    <option value="written">Written</option>
+                                                    <!-- <option value="online">Online</option> -->
+                                                </select>
+                                            </fieldset>
+                                        </div>
+                                    </div>
+                                    
+                                </div>
+                                <div class="col-md-6 ">
+                                    
+                                </div>
+                                
+                                
+                            </div>   
+
                             <div class="row">
                                 <div class="col-md-6">
                                     <fieldset class="form-group">
                                         <label for="basicInput">Payment Type</label>
                                         <select class="form-control" v-model="form.payment_type">
-                                            <option value="Bank">Bank</option>
+                                            <option value="">Please Select a Payment Type</option>
+                                            <option value="Bank">Bank Transfer</option>
                                             <option value="Cash">Cash</option>
                                             <option value="Cheque">Cheque</option>
                                         </select>
@@ -50,65 +116,7 @@
                                 </div>
                             </div>
 
-                            <div class="row">
-                                <div class="col-md-6 ">
-                                    <div class="row">
-
-                                        <div class="col-md-6">
-                                            <fieldset class="form-group">
-                                                <label for="first_name">First Name</label>
-                                                <input v-model="form.first_name" 
-                                                        :class="{ 'is-invalid': form.errors.has('first_name') }" 
-                                                        type="text" 
-                                                        class="form-control" 
-                                                        id="first_name" 
-                                                        name="first_name" 
-                                                        placeholder="First Name">
-                                                <has-error :form="form" field="first_name" />
-                                            </fieldset>
-                                        </div>
-                                        <div class="col-md-6">
-                                            <fieldset class="form-group">
-                                                <label for="last_name">Last Name</label>
-                                                <input v-model="form.last_name" 
-                                                        :class="{ 'is-invalid': form.errors.has('last_name') }" 
-                                                        type="text" 
-                                                        class="form-control" 
-                                                        id="last_name" 
-                                                        name="last_name" 
-                                                        placeholder="Last Name">
-                                                <has-error :form="form" field="last_name" />
-                                            </fieldset>
-                                        </div>
-                                    </div>
-                                </div>
-                                
-                                <div class="col-md-6">
-                                    <div class="row">
-                                        <div class="col-md-6">
-                                            <fieldset class="form-group">
-                                                <label>Title</label>
-                                                <select class="form-control" v-model="form.title">
-                                                    <option value="Mr">Mr</option>
-                                                    <option value="Ms">Ms</option>
-                                                </select>
-                                            </fieldset>
-                                        </div>
-                                        <div class="col-md-6">
-                                            <fieldset class="form-group">
-                                                <label>Gift Aid</label>
-                                                <select class="form-control" v-model="form.gift_aid">
-                                                    <option value="no">No</option>
-                                                    <option value="verbal">Verbal</option>
-                                                    <option value="written">Written</option>
-                                                    <option value="online">Online</option>
-                                                </select>
-                                            </fieldset>
-                                        </div>
-                                    </div>
-                                    
-                                </div>
-                            </div>           
+                                   
                             
                             <div class="row">
                                 <div class="col-md-6">
@@ -144,7 +152,7 @@
                                 </div>
                                 <div class="col-md-6">
                                     <fieldset class="form-group">
-                                        <label for="postal_code">Post code</label>
+                                        <label for="postal_code">Postcode</label>
                                         <input v-model="form.postal_code" 
                                                 :class="{ 'is-invalid': form.errors.has('postal_code') }" 
                                                 type="text" 
