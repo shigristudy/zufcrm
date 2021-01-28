@@ -12,7 +12,7 @@ use Illuminate\Http\Request;
 
 class ReportController extends Controller
 {
-    public function dashoard(Request $request){
+    public function dashboard(Request $request){
 
         $not_claimed_count = WooOrder::giftaid()
                     ->notClaimed()
@@ -30,7 +30,7 @@ class ReportController extends Controller
         
         $hafiz_students = Student::where('student_type','hafiz')->count();
         $scolar_students = Student::where('student_type','scolar')->count();
-        
+
         $response = [
             'not_claimed_count' => $not_claimed_count,
             'claimed_count'     => $claimed_count,
