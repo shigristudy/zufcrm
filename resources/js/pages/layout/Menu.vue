@@ -117,7 +117,9 @@
     <!-- END: Main Menu-->
 </template>
 <script>
+
 export default {
+    
     mounted(){
         this.$nextTick(() => {
             $(document).on('mouseover','#main-menu-navigation .nav-item',function(){

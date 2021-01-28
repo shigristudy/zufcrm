@@ -5,12 +5,43 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Models\OrderItem;
 use App\Models\Report;
+use App\Models\Student;
 use App\Models\WooOrder;
 use App\Models\WooProduct;
 use Illuminate\Http\Request;
 
 class ReportController extends Controller
 {
+    public function dashoard(Request $request){
+
+        $not_claimed_count = WooOrder::giftaid()
+                    ->notClaimed()
+                    ->notSubmitted()
+                    ->count();
+        $claimed_count = WooOrder::giftaid()
+                    ->claimed()
+                    ->submitted()
+                    ->count();
+        $submitted_count = WooOrder::giftaid()
+                    ->notClaimed()
+                    ->submitted()
+                    ->count();
+        $reports_count =   Report::count();   
+        
+        $hafiz_students = Student::where('student_type','hafiz')->count();
+        $scolar_students = Student::where('student_type','scolar')->count();
+        
+        $response = [
+            'not_claimed_count' => $not_claimed_count,
+            'claimed_count'     => $claimed_count,
+            'submitted_count'   => $submitted_count,
+            'reports_count'     => $reports_count,
+            'hafiz_students'    => $hafiz_students,
+            'scolar_students'   => $scolar_students,
+        ];
+        return response()->json($response);
+    }
+
     public function reports(Request $request){
 
         $query = Report::where('title', '!=', 'hell');

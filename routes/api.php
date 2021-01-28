@@ -74,6 +74,7 @@ Route::group(['middleware' => 'auth:api'], function () {
 
     // Reporting Routes
     Route::post('reports',[ReportController::class,'reports']);
+    Route::post('dashboard',[ReportController::class,'dashboard']);
     Route::get('one_off_donations',[ReportController::class,'one_off_donations']);
     Route::get('monthly_donations',[ReportController::class,'monthly_donations']);
     
