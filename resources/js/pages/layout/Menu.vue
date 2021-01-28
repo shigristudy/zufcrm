@@ -30,7 +30,7 @@
                         <span class="menu-title" data-i18n="Donation">Add Donation</span>
                     </router-link>
                 </li>
-                <li class=" nav-item" v-if="isPermitted('donations')">
+                <li class=" nav-item has-sub" v-if="isPermitted('donations')">
                     <a href="#">
                         <i class="feather icon-sliders"></i>
                         <span class="menu-title" data-i18n="Sponsorships">Donations</span>
@@ -60,7 +60,7 @@
                 </li>
                 
                
-                <li class=" nav-item" v-if="isPermitted('sponsorships')">
+                <li class=" nav-item has-sub" v-if="isPermitted('sponsorships')">
                     <a href="#">
                         <i class="feather icon-sliders"></i>
                         <span class="menu-title" data-i18n="Sponsorships">Sponsorships</span>
@@ -70,7 +70,7 @@
                         <li v-if="isPermitted('sponsorships.scholar')"><router-link :to="{ name:'sponsorships.scholar'}"><i></i><span class="menu-item" data-i18n="Sponsorships">Scholar Students</span></router-link></li>
                     </ul>
                 </li>
-                <li class=" nav-item" v-if="isPermitted('gift_aids')">
+                <li class=" nav-item has-sub" v-if="isPermitted('gift_aids')">
                     <a href="#">
                         <i class="feather icon-sliders"></i>
                         <span class="menu-title" data-i18n="Sponsorships">Gift Aid</span>
@@ -99,7 +99,7 @@
                         <span class="menu-title" data-i18n="Donation">Reporting</span>
                     </router-link>
                 </li>
-                <li class=" nav-item" v-if="isPermitted('settings')">
+                <li class=" nav-item has-sub" v-if="isPermitted('settings')">
                     <a href="#">
                         <i class="feather icon-settings"></i>
                         <span class="menu-title" data-i18n="settings_items">Settings</span>
