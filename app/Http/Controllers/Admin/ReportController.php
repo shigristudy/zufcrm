@@ -37,7 +37,7 @@ class ReportController extends Controller
             'submitted_count'   => $submitted_count,
             'reports_count'     => $reports_count,
             'hafiz_students'    => $hafiz_students,
-            'scolar_students'   => $scolar_students,
+            'scholar_students'   => $scolar_students,
         ];
         return response()->json($response);
     }
