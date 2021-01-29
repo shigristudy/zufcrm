@@ -98,7 +98,7 @@ export default {
   middleware: "auth",
 
   metaInfo() {
-    return { title: 'Gift Aids' };
+    return { title: 'Claimed Details' };
   },
   data() {
     let sortOrders = {};

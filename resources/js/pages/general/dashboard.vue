@@ -148,7 +148,7 @@ export default {
       }
   },
   metaInfo() {
-    return { title: this.$t("home") };
+    return { title: 'Dashboard' };
   },
   methods:{
       fetchData(){

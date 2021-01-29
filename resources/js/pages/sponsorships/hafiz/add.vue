@@ -250,7 +250,7 @@ export default {
   middleware: "auth",
 
   metaInfo() {
-    return { title: this.$t("home") };
+    return { title: 'Add Hafiz Student' };
   },
   data() {
     return {

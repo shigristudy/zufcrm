@@ -121,7 +121,7 @@ export default {
   middleware: "auth",
 
   metaInfo() {
-    return { title: "Webhooks" };
+    return { title: "Failed DD Payments" };
   },
   data() {
     let sortOrders = {};

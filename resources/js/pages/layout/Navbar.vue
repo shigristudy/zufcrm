@@ -36,7 +36,7 @@
                                 <!-- <span class="user-status">Available</span> -->
                                 </div>
                                 <span>
-                                    <img class="round" :src="BaseUrl+'/app-assets/images/portrait/small/avatar-s-11.jpg'" alt="avatar" height="40" width="40"></span>
+                                    <img class="round" src="https://www.staging5.ziaulummahfoundation.org.uk/wp-content/uploads/2020/03/zuu-logo-green-100x100.png" alt="avatar" height="40" width="40"></span>
                             </a>
                             <div class="dropdown-menu dropdown-menu-right">
                                 <!-- <a class="dropdown-item" href="#"><i class="feather icon-user"></i> Edit Profile</a>

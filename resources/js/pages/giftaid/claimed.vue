@@ -50,7 +50,7 @@ export default {
   middleware: "auth",
 
   metaInfo() {
-    return { title: 'Gift Aids' };
+    return { title: 'Claimed' };
   },
   data() {
     let sortOrders = {};

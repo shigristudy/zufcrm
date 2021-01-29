@@ -191,7 +191,7 @@ export default {
   middleware: "auth",
 
   metaInfo() {
-    return { title: 'View Scholar Student' };
+    return { title: 'View Hafiz Student' };
   },
 
   data() {

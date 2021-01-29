@@ -282,7 +282,7 @@ export default {
   middleware: "auth",
 
   metaInfo() {
-    return { title: this.$t("home") };
+    return { title: 'Make A Claim' };
   },
   data() {
     let sortOrders = {};
@@ -325,7 +325,7 @@ export default {
       }),
       donations: [],
       columns: columns,
-      sortKey: "full_name",
+      sortKey: "donation_date",
       sortOrders: sortOrders,
       perPage: ["10", "20", "30","all"],
       tableData: {

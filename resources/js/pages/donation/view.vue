@@ -26,36 +26,62 @@
                     
                     <div class="row">
                         <div class="col-6 col-md-6">
+                            <h3 class="ml-2">Donor Details</h3>
                             <div class="mt-1 px-2">
-                                <h6 class="mb-0">Name:</h6>
-                                <p>{{ donation.first_name + " " +donation.last_name }}</p>
+                                <strong class="mb-0 d-inline">Title:</strong>
+                                <p class="d-inline">{{ donation.title }}</p>
                             </div>
                             <div class="mt-1 px-2">
-                                <h6 class="mb-0">Email:</h6>
-                                <p>{{ donation.email }}</p>
+                                <h6 class="mb-0 d-inline">Name:</h6>
+                                <p class="d-inline">{{ donation.first_name + " " +donation.last_name }}</p>
                             </div>
                             <div class="mt-1 px-2">
-                                <h6 class="mb-1">Gift Aid Claimed?:</h6>
-                                <div v-if="donation.claimed == null" class="badge badge-pill badge-glow badge-primary mr-1 mb-1">Not Claimed</div>
-                                <div v-else class="badge badge-pill badge-glow badge-success mr-1 mb-1">Claimed</div>
+                                <h6 class="mb-0 d-inline">City:</h6>
+                                <p class="d-inline">{{ donation.city }}</p>
                             </div>
                             <div class="mt-1 px-2">
-                                <h6 class="mb-1">Date of Donation:</h6>
-                                <p>{{ donation.donation_date }}</p>
+                                <h6 class="mb-0 d-inline">Postcode:</h6>
+                                <p class="d-inline">{{ donation.postcode }}</p>
                             </div>
-                        </div>
-                        <div class="col-6 col-md-6">
-                            
+                            <div class="mt-1 px-2">
+                                <h6 class="mb-0 d-inline">Country:</h6>
+                                <p class="d-inline">{{ donation.country }}</p>
+                            </div>
                             <div class="mt-1 px-2">
                                 <h6 class="mb-0">Address:</h6>
                                 <p class="mb-0">{{ donation.address_1 }}</p>
                                 <p class="mb-0">{{ donation.address_2 }} </p>
-                                <p class="mb-0">{{ donation.city }}</p>
-                                <p class="mb-0">{{ donation.postcode }}</p>
                             </div>
                             <div class="mt-1 px-2">
-                                <h6 class="mb-1">Gift Aid?:</h6>
-                                <div  class="badge badge-pill badge-glow badge-info mr-1 mb-1">{{ donation.gift_aid }}</div>
+                                <h6 class="mb-1 d-inline">Gift Aid Claimed?:</h6>
+                                <div v-if="donation.claimed == null" class="d-inline badge badge-pill badge-glow badge-primary mr-1 mb-1">Not Claimed</div>
+                                <div v-else class="d-inline badge badge-pill badge-glow badge-success mr-1 mb-1">Claimed</div>
+                            </div>
+                            
+                        </div>
+                        <div class="col-6 col-md-6">
+                            <h3 class="ml-2">Contact Details</h3>
+                            <div class="mt-1 px-2">
+                                <h6 class="mb-0 d-inline">Email:</h6>
+                                <p class="d-inline">{{ donation.email }}</p>
+                            </div>
+                            <div class="mt-1 px-2">
+                                <h6 class="mb-0 d-inline">Phone:</h6>
+                                <p class="d-inline">{{ donation.phone }}</p>
+                            </div>
+                            
+                            <h3 class="ml-2">Donation Details</h3>
+                            <div class="mt-1 px-2">
+                                <h6 class="mb-1 d-inline">Date of Donation:</h6>
+                                <p class="d-inline">{{ donation.donation_date }}</p>
+                            </div>
+                            <div class="mt-1 px-2">
+                                <h6 class="mb-1 d-inline">Payment Type:</h6>
+                                <p class="d-inline">{{ donation.payment_method }}</p>
+                            </div>
+                            <div class="mt-1 px-2">
+                                <h6 class="mb-1 d-inline">Gift Aid?:</h6>
+                                <div  class="d-inline badge badge-pill badge-glow badge-info mr-1 mb-1">{{ donation.gift_aid }}</div>
                             </div>
                             
                         </div>
@@ -67,7 +93,7 @@
                                 <table class="table table-borderless">
                                     <thead>
                                         <tr>
-                                            <th>S#</th>
+                                            <!-- <th>S#</th> -->
                                             <th>Project</th>
                                             <th>Donation Type</th>
                                             <th>Amount</th>
@@ -75,7 +101,7 @@
                                     </thead>
                                     <tbody>
                                         <tr v-for="line in donation.items" :key="line.id">
-                                            <td>{{ line.id }}</td>
+                                            <!-- <td>{{ line.id }}</td> -->
                                             <td>{{ line.product.name }}</td>
                                             <td>{{ line.donation_type }}</td>
                                             <td>{{ round2Fixed(line.total) }}</td>
@@ -87,21 +113,21 @@
                     </div>
                     <hr>
                     <div id="invoice-total-details" class="invoice-total-table">
-                            <div class="row">
-                                <div class="col-7 offset-5">
-                                    <div class="table-responsive">
-                                        <table class="table table-bordered table-striped">
-                                            <tbody>
-                                                <tr>
-                                                    <th>TOTAL</th>
-                                                    <td>{{ round2Fixed(totalAmount) }}</td>
-                                                </tr>
-                                            </tbody>
-                                        </table>
-                                    </div>
+                        <div class="row">
+                            <div class="col-7 offset-5">
+                                <div class="table-responsive">
+                                    <table class="table table-bordered table-striped">
+                                        <tbody>
+                                            <tr>
+                                                <th>TOTAL</th>
+                                                <td class="text-center">{{ round2Fixed(totalAmount) }}</td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
                                 </div>
                             </div>
                         </div>
+                    </div>
                 </div>
             </div>
         </section>

@@ -19,11 +19,11 @@
     <div class="content-body">
       <!-- Description -->
       <div id="accordionWrapa50" class="card" role="tablist" aria-multiselectable="true">
-        <div class="accordion" id="accordionExample0" data-toggle-hover="true">
+        <div class="accordion collapse-icon" id="accordionExample0" data-toggle-hover="true">
           <div class="collapse-border-item collapse-header card collapse-bordered">
               <div class="card-header collapsed" id="heading200" data-toggle="collapse" role="button" data-target="#collapse200" aria-expanded="false" aria-controls="collapse200">
                   <span class="lead collapse-title">
-                      Advance Filter
+                      Advanced Filter
                   </span>
               </div>
 
@@ -35,6 +35,7 @@
                             <fieldset class="form-group">
                                 <label for="basicInput">GIFT AID</label>
                                 <select class="form-control" v-model="tableData.form.gift_aid">
+                                    <option value="">Select Gift Aid</option>
                                     <option value="Yes">Yes</option>
                                     <option value="No">No</option>
                                     <option value="written">Written</option>
@@ -47,9 +48,13 @@
                             <fieldset class="form-group">
                                 <label for="basicInput">Project</label>
                                 <select class="form-control" v-model="tableData.form.project">
-                                    <option value="Bank">Bank</option>
-                                    <option value="Cash">Cash</option>
-                                    <option value="Cheque">Cheque</option>
+                                    <option value="">
+                                        <strong>Select Project</strong>
+                                    </option>
+                                    <option v-for="p in wooProducts" :key="'woo_project'+p.product_id" 
+                                            :value="p.product_id">
+                                        <strong>{{ project_name_computed(p) }}</strong>
+                                    </option>
                                 </select>
                             </fieldset>
                           </div>
@@ -57,6 +62,7 @@
                             <fieldset class="form-group">
                                 <label for="basicInput">Donation Type</label>
                                 <select class="form-control" v-model="tableData.form.donation_type">
+                                    <option value="">Select Donation Type</option>
                                     <option value="online">On-line</option>
                                     <option value="offline">Off-Line</option>
                                 </select>
@@ -66,6 +72,7 @@
                             <fieldset class="form-group">
                                 <label for="basicInput">Payment Method</label>
                                 <select class="form-control" v-model="tableData.form.payment_method">
+                                    <option value="">Select Payment Method</option>
                                     <option value="Bank">Bank</option>
                                     <option value="Cash">Cash</option>
                                     <option value="Cheque">Cheque</option>
@@ -94,6 +101,7 @@
                             <fieldset class="form-group">
                                 <label for="basicInput">Has Sponsored?</label>
                                 <select class="form-control" v-model="tableData.form.has_sponsored">
+                                    <option value="">Select Type</option>
                                     <option value="Yes">Yes</option>
                                     <option value="No">No</option>
                                 </select>
@@ -206,7 +214,7 @@ export default {
   middleware: "auth",
 
   metaInfo() {
-    return { title: 'Donations' };
+    return { title: 'Reporting' };
   },
   data() {
     let sortOrders = {};
@@ -269,31 +277,29 @@ export default {
       this.tableData.filtering = true;
       this.getData()
     },
-    // async getProjects(){
-    //     // // Fetch Woocommerce Project
-    //     //   await this.$store.dispatch('projects/fetchProjects')
-
-    //     let instance = this
-    //     axios.get('https://www.ziaulummahfoundation.org.uk/wp-json/wc/v3/products?per_page=100',{
-    //         auth: {
-    //             username :'ck_4202435a3ffa2878c84d3064e2e5463f7a234589', 
-    //             password :'cs_91b6f3fd2894b1a818f8c38e912ca56756b88ba6'
-    //         }
-    //     }).then(function (response) {
-    //         response.data.map(p => {
-    //             let project = {
-    //                 id : p.id,
-    //                 name : p.name,
-    //                 type : p.type,
-    //                 price : p.price,
-    //             };
-    //             if(p.type != 'grouped'){
-    //                 instance.wooProducts.push(project)
-    //             }
-    //         })
-            
-    //     })
-    // },
+    project_name_computed(p){
+        var name = '';
+        var type = '';
+        if(p.type == 'simple'){
+            type = '[One-Off]';
+        }else{
+            type = '[Monthly]';
+        }
+        if(p.project_page != null && p.project_page != ''){
+            name = p.project_page + ' - ' + p.name + ' - ' + type
+        }else{
+            name = p.name + ' - ' + type
+        }
+        return name;
+    },
+    async getProjects(){
+        axios.get('/api/getProjects')
+        .then((response) => {
+            this.wooProducts = response.data
+        }).catch((errors) => {
+            console.log(errors);
+        });
+    },
     getData(url = "/api/donation/getDonations") {
       // this.datatable_debounce()
       this.tableData.draw++;
@@ -320,6 +326,7 @@ export default {
   },
   created() {
     this.getData();
+    this.getProjects();
   },
 };
 </script>

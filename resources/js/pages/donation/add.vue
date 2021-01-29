@@ -24,199 +24,177 @@
                 <div class="card-body">
                     <form @submit.prevent="handleSubmit" @keydown="form.onKeydown($event)">
                         <alert-success :form="form" :message="message" />
-                         <div class="row">
-                             <div class="col-md-12">
-                            <fieldset class="form-group">
-                                <label>Title</label>
-                                <select class="form-control" v-model="form.title">
-                                    <option value="Miss">
-                                    <option value="Mr">
-                                    <option value="Mrs">
-                                    <option value="Ms">
-                                    <option value="Dr"></option>
-                                </select>
-                            </fieldset>
-                            <div class="row">
-                                <div class="col-md-6">
-                                    <fieldset class="form-group">
-                                        <label for="first_name">First Name</label>
-                                        <input v-model="form.first_name" 
-                                                :class="{ 'is-invalid': form.errors.has('first_name') }" 
-                                                type="text" 
-                                                class="form-control" 
-                                                id="first_name" 
-                                                name="first_name" 
-                                                placeholder="First Name">
-                                        <has-error :form="form" field="first_name" />
-                                    </fieldset>
-                                </div>
-                                <div class="col-md-6">
-                                    <fieldset class="form-group">
-                                        <label for="last_name">Last Name</label>
-                                        <input v-model="form.last_name" 
-                                                :class="{ 'is-invalid': form.errors.has('last_name') }" 
-                                                type="text" 
-                                                class="form-control" 
-                                                id="last_name" 
-                                                name="last_name" 
-                                                placeholder="Last Name">
-                                        <has-error :form="form" field="last_name" />
-                                    </fieldset>
-                                </div>
-                            </div>
-                                    <div class="row">
-                                        <div class="col-md-6">
-                                        </div>
-                                        <div class="col-md-6">
-                                            <fieldset class="form-group">
-                                                <label>Gift Aid</label>
-                                                <select class="form-control" v-model="form.gift_aid">
-                                                    <option value="">Please select Gift Aid Type</option>
-                                                    <option value="no">No</option>
-                                                    <!-- <option value="verbal">Verbal</option> -->
-                                                    <option value="written">Written</option>
-                                                    <!-- <option value="online">Online</option> -->
-                                                </select>
-                                            </fieldset>
-                                        </div>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <h3>Donor Details</h3>
+                                <fieldset class="form-group">
+                                    <label>Title</label>
+                                    <select class="form-control" v-model="form.title">
+                                        <option value="Miss">Miss</option>
+                                        <option value="Mr">Mr</option>
+                                        <option value="Mrs">Mrs</option>
+                                        <option value="Ms">Ms</option>
+                                        <option value="Dr">Dr</option>
+                                    </select>
+                                </fieldset>
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <fieldset class="form-group">
+                                            <label for="first_name">First Name</label>
+                                            <input v-model="form.first_name" 
+                                                    :class="{ 'is-invalid': form.errors.has('first_name') }" 
+                                                    type="text" 
+                                                    class="form-control" 
+                                                    id="first_name" 
+                                                    name="first_name" 
+                                                    placeholder="First Name">
+                                            <has-error :form="form" field="first_name" />
+                                        </fieldset>
                                     </div>
-                                    
+                                    <div class="col-md-6">
+                                        <fieldset class="form-group">
+                                            <label for="last_name">Last Name</label>
+                                            <input v-model="form.last_name" 
+                                                    :class="{ 'is-invalid': form.errors.has('last_name') }" 
+                                                    type="text" 
+                                                    class="form-control" 
+                                                    id="last_name" 
+                                                    name="last_name" 
+                                                    placeholder="Last Name">
+                                            <has-error :form="form" field="last_name" />
+                                        </fieldset>
+                                    </div>
                                 </div>
-                                <div class="col-md-6 ">
-                                    
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <fieldset class="form-group">
+                                            <label for="addressline1">Address Line 1</label>
+                                            <input v-model="form.address_line1" 
+                                                    :class="{ 'is-invalid': form.errors.has('address_line1') }" 
+                                                    type="text" 
+                                                    class="form-control" 
+                                                    id="address_line1" 
+                                                    name="address_line1" 
+                                                    placeholder="Address Line 1">
+                                            <has-error :form="form" field="address_line1" />
+                                        </fieldset>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <fieldset class="form-group">
+                                            <label for="addressline2">Address Line 2</label>
+                                            <input v-model="form.address_line2" 
+                                                    :class="{ 'is-invalid': form.errors.has('address_line2') }" 
+                                                    type="text" 
+                                                    class="form-control" 
+                                                    id="address_line2" 
+                                                    name="address_line2" 
+                                                    placeholder="Address Line 3">
+                                            <has-error :form="form" field="address_line2" />
+                                        </fieldset>
+                                    </div>
                                 </div>
-                                
-                                
-                            </div>   
-
-                            <div class="row">
-                                <div class="col-md-6">
-                                    <fieldset class="form-group">
-                                        <label for="basicInput">Payment Type</label>
-                                        <select class="form-control" v-model="form.payment_type">
-                                            <option value="">Please Select a Payment Type</option>
-                                            <option value="Bank">Bank Transfer</option>
-                                            <option value="Cash">Cash</option>
-                                            <option value="Cheque">Cheque</option>
-                                        </select>
-                                    </fieldset>
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <fieldset class="form-group">
+                                            <label for="city">City</label>
+                                            <input v-model="form.city" 
+                                                    :class="{ 'is-invalid': form.errors.has('city') }" 
+                                                    type="text" 
+                                                    class="form-control" 
+                                                    id="city" 
+                                                    name="city" 
+                                                    placeholder="City">
+                                            <has-error :form="form" field="city" />
+                                        </fieldset>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <fieldset class="form-group">
+                                            <label for="postal_code">Postcode</label>
+                                            <input v-model="form.postal_code" 
+                                                    :class="{ 'is-invalid': form.errors.has('postal_code') }" 
+                                                    type="text" 
+                                                    class="form-control" 
+                                                    id="postal_code" 
+                                                    name="postal_code" 
+                                                    placeholder="Postcode">
+                                            <has-error :form="form" field="postal_code" />
+                                        </fieldset>
+                                    </div>
                                 </div>
-                                <div class="col-md-6">
-                                    <fieldset class="form-group">
-                                        <label for="date_of_donation">Date of Donation</label>
-                                        <input v-model="form.date_of_donation" 
-                                                :class="{ 'is-invalid': form.errors.has('date_of_donation') }" 
-                                                type="date" 
-                                                class="form-control" 
-                                                id="date_of_donation" 
-                                                name="date_of_donation" 
-                                                placeholder="Date Of Donation">
-                                        <has-error :form="form" field="date_of_donation" />
-                                    </fieldset>
-                                </div>
+                                <fieldset class="form-group">
+                                    <label for="country">Country</label>
+                                    <input v-model="form.country" 
+                                            :class="{ 'is-invalid': form.errors.has('country') }" 
+                                            type="text" 
+                                            class="form-control" 
+                                            id="country" 
+                                            name="country" 
+                                            placeholder="Country (e.g GB, PK)">
+                                    <has-error :form="form" field="country" />
+                                </fieldset>
                             </div>
-
-                                   
+                            <div class="col-md-6">
+                                <h3>Contact Details</h3>
+                                <fieldset class="form-group">
+                                    <label for="email">Email</label>
+                                    <input v-model="form.email" 
+                                            :class="{ 'is-invalid': form.errors.has('email') }" 
+                                            type="text" 
+                                            class="form-control" 
+                                            id="email" 
+                                            name="email" 
+                                            placeholder="Email">
+                                    <has-error :form="form" field="email" />
+                                </fieldset>
+                                <fieldset class="form-group">
+                                    <label for="contact">Contact</label>
+                                    <input v-model="form.contact" 
+                                            :class="{ 'is-invalid': form.errors.has('contact') }" 
+                                            type="text" 
+                                            class="form-control" 
+                                            id="contact" 
+                                            name="contact" 
+                                            placeholder="Contact">
+                                    <has-error :form="form" field="contact" />
+                                </fieldset>
+                                <h3>Donation Details</h3>
+                                <fieldset class="form-group">
+                                    <label for="date_of_donation">Date of Donation</label>
+                                    <input v-model="form.date_of_donation" 
+                                            :class="{ 'is-invalid': form.errors.has('date_of_donation') }" 
+                                            type="date" 
+                                            class="form-control" 
+                                            id="date_of_donation" 
+                                            name="date_of_donation" 
+                                            placeholder="Date Of Donation">
+                                    <has-error :form="form" field="date_of_donation" />
+                                </fieldset> 
+                                <fieldset class="form-group">
+                                    <label for="basicInput">Payment Type</label>
+                                    <select class="form-control" v-model="form.payment_type">
+                                        <option value="">Please Select a Payment Type</option>
+                                        <option value="Bank">Bank Transfer</option>
+                                        <option value="Cash">Cash</option>
+                                        <option value="Cheque">Cheque</option>
+                                    </select>
+                                </fieldset>
                             
-                            <div class="row">
-                                <div class="col-md-6">
-                                    <div class="row">
-                                        <div class="col-md-6">
-                                            <fieldset class="form-group">
-                                                <label for="city">City</label>
-                                                <input v-model="form.city" 
-                                                        :class="{ 'is-invalid': form.errors.has('city') }" 
-                                                        type="text" 
-                                                        class="form-control" 
-                                                        id="city" 
-                                                        name="city" 
-                                                        placeholder="City">
-                                                <has-error :form="form" field="city" />
-                                            </fieldset>
-                                        </div>
-                                        <div class="col-md-6">
-                                            <fieldset class="form-group">
-                                                <label for="country">Country</label>
-                                                <input v-model="form.country" 
-                                                        :class="{ 'is-invalid': form.errors.has('country') }" 
-                                                        type="text" 
-                                                        class="form-control" 
-                                                        id="country" 
-                                                        name="country" 
-                                                        placeholder="Country( e.g GB,PK)">
-                                                <has-error :form="form" field="country" />
-                                            </fieldset>
-                                        </div>
-                                    </div>
+                            
+                                <fieldset class="form-group">
+                                    <label>Gift Aid</label>
+                                    <select class="form-control" v-model="form.gift_aid">
+                                        <option value="">Please Select Gift Aid</option>
+                                        <option value="no">No</option>
+                                        <!-- <option value="verbal">Verbal</option> -->
+                                        <option value="written">Written</option>
+                                        <!-- <option value="online">Online</option> -->
+                                    </select>
+                                </fieldset>
                                     
-                                </div>
-                                <div class="col-md-6">
-                                    <fieldset class="form-group">
-                                        <label for="postal_code">Postcode</label>
-                                        <input v-model="form.postal_code" 
-                                                :class="{ 'is-invalid': form.errors.has('postal_code') }" 
-                                                type="text" 
-                                                class="form-control" 
-                                                id="postal_code" 
-                                                name="postal_code" 
-                                                placeholder="Postal Code">
-                                        <has-error :form="form" field="postal_code" />
-                                    </fieldset>
-                                </div>
                             </div>
-                            <div class="row">
-                                <div class="col-md-6">
-                                        <fieldset class="form-group">
-                                            <label for="contact">Contact</label>
-                                            <input v-model="form.contact" 
-                                                    :class="{ 'is-invalid': form.errors.has('contact') }" 
-                                                    type="text" 
-                                                    class="form-control" 
-                                                    id="contact" 
-                                                    name="contact" 
-                                                    placeholder="Contact">
-                                            <has-error :form="form" field="contact" />
-                                        </fieldset>
-                                    </div>
-                                <div class="col-md-6">
-                                        <fieldset class="form-group">
-                                            <label for="email">Email</label>
-                                            <input v-model="form.email" 
-                                                    :class="{ 'is-invalid': form.errors.has('email') }" 
-                                                    type="text" 
-                                                    class="form-control" 
-                                                    id="email" 
-                                                    name="email" 
-                                                    placeholder="Email">
-                                            <has-error :form="form" field="email" />
-                                        </fieldset>
-                                </div>
-                            </div>
+                        </div>  
 
-                            <fieldset class="form-group">
-                                <label for="addressline1">Address Line 1</label>
-                                <input v-model="form.address_line1" 
-                                        :class="{ 'is-invalid': form.errors.has('address_line1') }" 
-                                        type="text" 
-                                        class="form-control" 
-                                        id="address_line1" 
-                                        name="address_line1" 
-                                        placeholder="Address Line 1">
-                                <has-error :form="form" field="address_line1" />
-                            </fieldset>
-                            <fieldset class="form-group">
-                                <label for="addressline2">Address Line 2</label>
-                                <input v-model="form.address_line2" 
-                                        :class="{ 'is-invalid': form.errors.has('address_line2') }" 
-                                        type="text" 
-                                        class="form-control" 
-                                        id="address_line2" 
-                                        name="address_line2" 
-                                        placeholder="Address Line 3">
-                                <has-error :form="form" field="address_line2" />
-                            </fieldset>
-
-
+                            
                             <table class="table table-bordered">
                                 <thead style="background: #ebe8e8;">
                                     <tr>
@@ -242,8 +220,7 @@
                                                     </option>
                                                     <option v-for="p in wooProducts" :key="'woo_project'+p.product_id" 
                                                             :value="p.product_id">
-                                                        <strong v-if="p.project_page != null && p.project_page != ''">{{ '('+ p.type +') ' + p.name + ' - ' + p.project_page }}</strong>
-                                                        <strong v-else>{{ '('+ p.type +') ' + p.name }}</strong>
+                                                        <strong>{{ project_name_computed(p) }}</strong>
                                                     </option>
                                                 </select>
                                                 <has-error :form="form" :field="`donationsArray.${index}.project`"/>
@@ -263,10 +240,14 @@
                                             </fieldset>
                                         </td>
                                         <td>
-                                            <fieldset class="form-group">
+                                            <div class="form-label-group position-relative has-icon-left">
                                                 <input @change="calculateTotal()" :class="{ 'is-invalid': form.errors.has(`donationsArray.${index}.amount`) }" type="number" class="form-control" placeholder="Amount" v-model="form.donationsArray[index].amount">
-                                                <has-error :form="form" :field="`donationsArray.${index}.amount`"/>
-                                            </fieldset>
+                                                <div class="form-control-position">
+                                                    <i class="fa fa-gbp"></i>
+                                                </div>
+                                                 <has-error :form="form" :field="`donationsArray.${index}.amount`"/>
+                                            </div>
+                                           
                                         </td>
                                         <td class="text-center">
                                             <fieldset class="form-group">
@@ -276,7 +257,7 @@
                                         </td>
                                     </tr>
                                     <tr>
-                                        <td class="text-right" colspan="4"><strong>Total Amount: </strong>{{ form.total_amount }}</td>
+                                        <td class="text-right" colspan="4"><strong>Total Amount: </strong> <i class="fa fa-gbp"></i>{{ form.total_amount }}</td>
                                     </tr>
                                 </tbody>
                             </table>
@@ -324,24 +305,41 @@ export default {
             donationsArray:[{
                 project:"",
                 donation_type:'',
-                amount:0
+                amount:0.00
             }],
         }),
         donation_type_arr:[]
       }
   },
   created(){
-      this.donation_type_arr = window.config.options.find(x => x.key === 'donation_types').value.split(',')
+    this.donation_type_arr = window.config.options.find(x => x.key === 'donation_types').value.split(',')
     this.getProjects() 
   },
   methods:{
+    project_name_computed(p){
+        var name = '';
+        var type = '';
+        if(p.type == 'simple'){
+            type = '[One-Off]';
+        }else{
+            type = '[Monthly]';
+        }
+        if(p.project_page != null && p.project_page != ''){
+            name = p.project_page + ' - ' + p.name + ' - ' + type
+        }else{
+            name = p.name + ' - ' + type
+        }
+        return name;
+    },
     calculateTotal(){
         var instance = this
         var total = 0;
         this.form.donationsArray.forEach(function(value,index){
-            total += parseFloat(value.amount);
+            instance.form.donationsArray[index].amount = parseFloat(value.amount).toFixed(2)
+            console.log(instance.form.donationsArray[index].value ,parseFloat(value.amount).toFixed(2) )
+            total += parseFloat(parseFloat(value.amount).toFixed(2));
         })
-        this.form.total_amount = total
+        this.form.total_amount = parseFloat(total).toFixed(2)
     },
     async getProjects(){
         axios.get('/api/getProjects')
@@ -355,11 +353,13 @@ export default {
         this.form.donationsArray.push({
             project:"",
             donation_type:'',
-            amount:0
+            amount:0.00
         })
+        this.calculateTotal()
     },
     deleteRow(index){
         this.form.donationsArray.splice(index, 1);
+        this.calculateTotal()
     },
     async handleSubmit () {
       const response = await this.form.post('/api/donation/store')
@@ -370,3 +370,8 @@ export default {
   },
 };
 </script>
+<style scoped>
+h3, .h3 {
+    color: #636363;
+}
+</style>

@@ -65,7 +65,7 @@ export default {
   middleware: "auth",
 
   metaInfo() {
-    return { title: 'Reports' };
+    return { title: 'Claimed' };
   },
   data() {
     return {

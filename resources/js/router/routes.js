@@ -34,6 +34,7 @@ export default [
   { path: '/sponsorships/scholars', name: 'sponsorships.scholar', component: page('sponsorships/scholar/index.vue') },
   { path: '/sponsorships/scholars/add', name: 'sponsorships.scholar.add', component: page('sponsorships/scholar/add.vue') },
   { path: '/sponsorships/scholars/view/:id', name: 'sponsorships.scholar.view', component: page('sponsorships/scholar/view.vue') },
+  { path: '/sponsorships/scholars/edit/:id', name: 'sponsorships.scholar.edit', component: page('sponsorships/scholar/edit.vue') },
   { path: '/sponsorships/sponsor/:id', name: 'sponsorships.sponsorships.sponsor', component: page('sponsorships/sponsorships/sponsor.vue') },
   { path: '/sponsorships/sponsor_montly/:id', name: 'sponsorships.sponsorships.sponsor_montly', component: page('sponsorships/sponsorships/sponsor_montly.vue') },
   

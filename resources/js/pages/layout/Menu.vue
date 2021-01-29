@@ -6,7 +6,7 @@
                 <li class="nav-item mr-auto">
                     <router-link :to="{ name:'dashboard'}" class="navbar-brand">
                         <div class="brand-logo"></div>
-                        <h2 class="brand-text mb-0">ZUF</h2>
+                        <h2 class="brand-text mb-0 d-none">ZUF</h2>
                     </router-link>
                 </li>
                 <!-- <li class="nav-item nav-toggle">
@@ -48,12 +48,12 @@
                         </li>
                          <li class="nav-item" v-if="isPermitted('gocardless.successfull')">
                             <router-link :to="{ name:'gocardless.webhooks' }"><i class="feather icon-cloud"></i>
-                                <span class="menu-title">Gocardless Successfull</span>
+                                <span class="menu-title">Successful DD Payments</span>
                             </router-link>
                         </li>
                         <li class="nav-item" v-if="isPermitted('gocardless.failed')">
                             <router-link :to="{ name:'gocardless.webhooks.failed' }"><i class="feather icon-cloud-off"></i>
-                                <span class="menu-title">Gocardless Failed</span>
+                                <span class="menu-title">Failed DD Payments</span>
                             </router-link>
                         </li>
                     </ul>
@@ -66,8 +66,8 @@
                         <span class="menu-title" data-i18n="Sponsorships">Sponsorships</span>
                     </a>
                     <ul class="menu-content">
-                        <li v-if="isPermitted('sponsorships.hafiz')"><router-link :to="{ name:'sponsorships.hafiz'}"><i></i><span class="menu-item" data-i18n="Sponsorships">Hafiz Students</span></router-link></li>
-                        <li v-if="isPermitted('sponsorships.scholar')"><router-link :to="{ name:'sponsorships.scholar'}"><i></i><span class="menu-item" data-i18n="Sponsorships">Scholar Students</span></router-link></li>
+                        <li v-if="isPermitted('sponsorships.hafiz')"><router-link :to="{ name:'sponsorships.hafiz'}"><i></i><span class="menu-item" data-i18n="Sponsorships">Hafiz</span></router-link></li>
+                        <li v-if="isPermitted('sponsorships.scholar')"><router-link :to="{ name:'sponsorships.scholar'}"><i></i><span class="menu-item" data-i18n="Sponsorships">Scholar</span></router-link></li>
                     </ul>
                 </li>
                 <li class=" nav-item has-sub" v-if="isPermitted('gift_aids')">

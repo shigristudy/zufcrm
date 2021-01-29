@@ -223,6 +223,20 @@ export default {
             }
             return params;
         },
+        onlyForCurrency ($event) {
+            // console.log($event.keyCode); //keyCodes value
+            let keyCode = ($event.keyCode ? $event.keyCode : $event.which);
+       
+            // only allow number and one dot
+            if ((keyCode < 48 || keyCode > 57) && (keyCode !== 46 || this.price.indexOf('.') != -1)) { // 46 is dot
+             $event.preventDefault();
+            }
+       
+            // restrict to 2 decimal places
+            if(this.price!=null && this.price.indexOf(".")>-1 && (this.price.split('.')[1].length > 1)){
+            $event.preventDefault();
+            }
+          }
        
 
     },

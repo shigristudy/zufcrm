@@ -28,11 +28,12 @@
                                 <div class="col-md-6">
                                     <fieldset class="form-group">
                                         <label for="basicInput">Payment Type</label>
-                                        <select class="form-control" v-model="form.payment_type">
+                                        <select class="form-control" v-model="form.payment_type" v-if="form.donation_type == 'offline'">
                                             <option value="Bank">Bank</option>
                                             <option value="Cash">Cash</option>
                                             <option value="Cheque">Cheque</option>
                                         </select>
+                                        <input v-else class="form-control" readonly :value="(form.payment_type == 'ppec_paypal') ? 'Paypal' : capitalize(form.payment_type )">
                                     </fieldset>
                                 </div>
                                 <div class="col-md-6">
@@ -293,7 +294,7 @@ export default {
   middleware: "auth",
 
   metaInfo() {
-    return { title: 'Add Donation' };
+    return { title: 'Edit Donation' };
   },
   data(){
       return {
@@ -302,6 +303,7 @@ export default {
           form: new Form({
             edit_id      :0,   
             payment_type : '',
+            donation_type : '',
             total_amount : 0.00,
             date_of_donation : '',
             last_name : '',
@@ -330,6 +332,7 @@ export default {
         .then((response) => {
             this.form.edit_id = response.data.id
             this.form.payment_type = response.data.payment_method
+            this.form.donation_type = response.data.donation_type
             this.form.total_amount = response.data.total_amount
             this.form.date_of_donation = response.data.donation_date
             this.form.last_name = response.data.last_name

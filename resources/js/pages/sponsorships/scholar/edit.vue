@@ -246,7 +246,7 @@ export default {
   middleware: "auth",
 
   metaInfo() {
-    return { title: this.$t("home") };
+    return { title: 'Edit Scholar Student' };
   },
   data() {
     return {
@@ -269,6 +269,26 @@ export default {
     };
   },
   methods: {
+    getStudentDetails(url) {
+      axios
+        .get(url)
+        .then((response) => {
+          this.form.student_type = response.data.student_type;
+          this.form.full_name = response.data.full_name;
+          this.form.father_name = response.data.father_name;
+          this.form.gender = response.data.gender;
+          this.form.city = response.data.city;
+          this.form.teacher_name = response.data.teacher_name;
+          this.form.class_name = response.data.class_name;
+          this.form.dob = response.data.dob;
+          this.form.student_id = response.data.student_id;
+          this.form.personal_statement = response.data.personal_statement;
+          this.form.status = response.data.status;
+        })
+        .catch((errors) => {
+          console.log(errors);
+        });
+    },
     selectFile(e) {
       const file = e.target.files[0];
       var instance = this;
@@ -280,6 +300,11 @@ export default {
       const response = await this.form.post("/api/student/update");
       this.message = response.data.message
     },
+  },
+  mounted() {
+    this.getStudentDetails(
+      "/api/student/getSingleStudent/" + this.$route.params.id
+    );
   },
   computed: {
     calculatedAge() {

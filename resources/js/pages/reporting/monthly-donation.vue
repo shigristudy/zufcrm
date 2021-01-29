@@ -4,7 +4,7 @@
       <div class="content-header-left col-md-9 col-12 mb-2">
         <div class="row breadcrumbs-top">
           <div class="col-12">
-            <h2 class="content-header-title float-left mb-0">Monthly/Recurring Donations</h2>
+            <h2 class="content-header-title float-left mb-0">Live DDs</h2>
            
           </div>
         </div>
@@ -13,11 +13,11 @@
     </div>
     <div class="content-body">
         <div id="accordionWrapa50" class="card" role="tablist" aria-multiselectable="true">
-        <div class="accordion" id="accordionExample0" data-toggle-hover="true">
+        <div class="accordion collapse-icon"  id="accordionExample0" data-toggle-hover="true">
           <div class="collapse-border-item collapse-header card collapse-bordered">
               <div class="card-header collapsed" id="heading200" data-toggle="collapse" role="button" data-target="#collapse200" aria-expanded="false" aria-controls="collapse200">
                   <span class="lead collapse-title">
-                      Advance Filter
+                      Advanced Filter
                   </span>
               </div>
 
@@ -34,11 +34,12 @@
                                     </option>
                                     <option v-for="p in wooProducts" :key="'woo_project'+p.product_id" 
                                             :value="p.product_id">
-                                        <strong>{{ p.name }}</strong>
+                                        <strong>{{ project_name_computed(p) }}</strong>
                                     </option>
                                 </select>
                             </fieldset>
                           </div>
+                          
                           <div class="col-md-3">
                             <fieldset class="form-group">
                                 <label for="basicInput">Date From</label>
@@ -54,7 +55,15 @@
                           <div class="col-md-3">
                             <fieldset class="form-group">
                                 <label for="basicInput">Donation Type</label>
-                                <input type="text" class="form-control" v-model="tableData.form.donation_type">
+                                <select class="form-control" v-model="tableData.form.donation_type">
+                                    <option value="">
+                                        <strong>Select Donation Type</strong>
+                                    </option>
+                                    <option v-for="d_type in donation_type_arr" :key="'d_type'+d_type" 
+                                            :value="d_type">
+                                        <strong>{{ d_type }}</strong>
+                                    </option>
+                                </select>
                             </fieldset>
                           </div>
                         </div>
@@ -159,7 +168,7 @@ export default {
   middleware: "auth",
 
   metaInfo() {
-    return { title: 'Recurring Donations' };
+    return { title: 'Live DDs' };
   },
   data() {
     let sortOrders = {};
@@ -174,12 +183,13 @@ export default {
         { label: "Postcode", name:'postcode' }, 
         { label: "Donation Date", name:'donation_date' }, 
         { label: "Total", name:'total',sortable:true }, 
-        { label: "Allocated", name:'allocated' }, 
+        { label: "Allocated?", name:'allocated' }, 
     ];
     columns.forEach((column) => {
       sortOrders[column.name] = -1;
     });
     return {
+      donation_type_arr:[],
       wooProducts: [],
       items: [],
       columns: columns,
@@ -223,12 +233,22 @@ export default {
       this.getData()
     },
     async getProjects(){
-        axios.get('/api/getProjects')
+        axios.get('/api/getProjects',{ params:{type:'subscription'} })
         .then((response) => {
             this.wooProducts = response.data
         }).catch((errors) => {
             console.log(errors);
         });
+    },
+     project_name_computed(p){
+        var name = '';
+        
+        if(p.project_page != null && p.project_page != ''){
+            name = p.project_page + ' - ' + p.name
+        }else{
+            name = p.name
+        }
+        return name;
     },
     getData(url = "/api/monthly_donations") {
       this.tableData.draw++;
@@ -254,6 +274,7 @@ export default {
     },
   },
   created() {
+    this.donation_type_arr = window.config.options.find(x => x.key === 'donation_types').value.split(',')
     this.getData();
     this.getProjects()
   },

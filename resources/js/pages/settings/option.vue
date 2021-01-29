@@ -144,7 +144,7 @@ export default {
   middleware: "auth",
 
   metaInfo() {
-    return { title: 'Permissions' };
+    return { title: 'Options' };
   },
   data() {
     let sortOrders = {};
@@ -198,7 +198,10 @@ export default {
       axios
         .post('/api/settings/option/edit', { id:id })
         .then((response) => {
-          this.getData()
+          
+          this.form.key = response.data.data.key
+          this.form.value = response.data.data.value
+          $('#createOptionModal').modal('show')
         })
         .catch((errors) => {
           console.log(errors);

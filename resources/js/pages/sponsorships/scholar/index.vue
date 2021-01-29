@@ -80,7 +80,7 @@
                             Action
                           </button>
                           <div class="dropdown-menu dropdown-menu-right" x-placement="bottom-end" style="position: absolute; transform: translate3d(263px, 36px, 0px); top: 0px; left: 0px; will-change: transform;">
-                            <router-link class="dropdown-item" :to="{ name:'sponsorships.hafiz.view',params:{id:item.id} }">View</router-link>
+                            <router-link class="dropdown-item" :to="{ name:'sponsorships.scholar.view',params:{id:item.id} }">View</router-link>
                               <router-link class="dropdown-item" :to="{ name:'sponsorships.sponsorships.sponsor',params:{id:item.id} }">Sponsor One-Off</router-link>
                               <router-link class="dropdown-item" :to="{ name:'sponsorships.sponsorships.sponsor_montly',params:{id:item.id} }">Sponsor Montly</router-link>
                           </div>
@@ -115,7 +115,7 @@ export default {
   middleware: "auth",
 
   metaInfo() {
-    return { title: this.$t("home") };
+    return { title: 'Scholar Students' };
   },
   data() {
     let sortOrders = {};

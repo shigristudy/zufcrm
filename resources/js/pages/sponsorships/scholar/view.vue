@@ -83,7 +83,7 @@
                                     </tbody></table>
                                 </div>
                                 <div class="col-12">
-                                    <router-link :to="{ name:'sponsorships.hafiz.edit',params:{id:student.id} }" class="btn btn-primary mr-1 waves-effect waves-light"><i class="feather icon-edit-1"></i> Edit</router-link>
+                                    <router-link :to="{ name:'sponsorships.scholar.edit',params:{id:student.id} }" class="btn btn-primary mr-1 waves-effect waves-light"><i class="feather icon-edit-1"></i> Edit</router-link>
                                 </div>
                             </div>
                         </div>

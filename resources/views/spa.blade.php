@@ -143,6 +143,6 @@ table.dataTable thead .sorting:before, table.dataTable thead .sorting_asc:before
   {{-- <script src="{{ asset('app-assets/js/core/app-menu.js') }}"></script> --}}
   <script src="{{ asset('app-assets/js/core/app.js') }}"></script>
   {{-- Load the application scripts --}}
-  <script src="{{ asset('dist/js/app.js?version=1.3') }}"></script>
+  <script src="{{ asset('dist/js/app.js?version=1.4') }}"></script>
 </body>
 </html>
