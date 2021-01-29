@@ -75,7 +75,7 @@ export default {
   },
 
   middleware: 'guest',
-
+  layout:'basic',
   metaInfo () {
     return { title: this.$t('login') }
   },
@@ -125,12 +125,12 @@ export default {
 }
 </script>
 <style scoped>
-.app-content.content{
+/* .app-content.content{
   margin-left: unset !important;
   position: absolute;
   top: 100px;
   left: 0;
   right: 0;
   bottom: 0;
-}
+} */
 </style>
