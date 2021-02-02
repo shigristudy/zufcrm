@@ -5,13 +5,13 @@
         <div class="row breadcrumbs-top">
           <div class="col-12">
             <h2 class="content-header-title float-left mb-0">
-              Edit Hafiz Student
+              Edit Hifz Student
             </h2>
             <div class="breadcrumb-wrapper col-12">
               <ol class="breadcrumb">
                 <li class="breadcrumb-item">
                   <router-link :to="{ name: 'sponsorships.hafiz' }"
-                    >Hafiz Students</router-link
+                    >Hifz Students</router-link
                   >
                 </li>
                 <li class="breadcrumb-item"><a href="#">Edit</a></li>
@@ -250,7 +250,7 @@ export default {
   middleware: "auth",
 
   metaInfo() {
-    return { title: 'Edit Hafiz Student' };
+    return { title: 'Edit Hifz Student' };
   },
   data() {
     return {

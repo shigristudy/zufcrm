@@ -169,7 +169,7 @@
                         <div class="mr-1 mb-1 d-inline" v-for="product in item.items" :key="'product_id'+product.id">{{ product.product.name }}</div>
                       </td>
                       <td>{{ item.first_name + " " + item.last_name }}</td>
-                      <td><div class="badge badge-pill badge-glow badge-success mr-1 mb-1">{{ item.gift_aid }}</div></td>
+                      <td><div class="badge badge-pill  badge-success mr-1 mb-1">{{ item.gift_aid }}</div></td>
                       <td>{{ formattedDateDDMMYY(item.donation_date) }}</td>
                       <td>{{ (item.payment_method == 'ppec_paypal') ? 'Paypal' : capitalize(item.payment_method ) }}</td>
                       <td>{{ round2Fixed(item.order_total) }}</td>

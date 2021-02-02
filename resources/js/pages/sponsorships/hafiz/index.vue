@@ -4,7 +4,7 @@
       <div class="content-header-left col-md-9 col-12 mb-2">
         <div class="row breadcrumbs-top">
           <div class="col-12">
-            <h2 class="content-header-title float-left mb-0">Hafiz Students</h2>
+            <h2 class="content-header-title float-left mb-0">Hifz Students</h2>
           </div>
         </div>
       </div>
@@ -12,11 +12,16 @@
         class="content-header-right text-md-right col-md-3 col-12 d-md-block d-none"
       >
         <div class="form-group breadcrum-right">
-            <router-link :to="{ name:'sponsorships.hafiz.add' }"  class="btn btn-primary mr-1 mb-1 waves-effect waves-light">Add Hafiz Student</router-link>
+            <router-link :to="{ name:'sponsorships.hafiz.add' }"  class="btn btn-primary mr-1 mb-1 waves-effect waves-light">Add Hifz Student</router-link>
         </div>
       </div>
     </div>
     <div class="content-body">
+      <div class="row mb-1">
+        <div class="col-md-12">
+            <success-alert :successful="is_added_successfully" :message="successMessage"></success-alert>
+        </div>
+      </div>
       <!-- Description -->
       <section id="description" class="card">
         <div class="card-content">
@@ -71,8 +76,8 @@
                       <td>{{ item.teacher_name }}</td>
                       <td>{{ item.class_name }}</td>
                       <td>{{ item.student_id }}</td>
-                      <td v-if="item.sponsored == 0"><div class="badge badge-pill badge-glow badge-primary mr-1 mb-1">Not Sponsored</div></td>
-                      <td v-else><div class="badge badge-pill badge-glow badge-success mr-1 mb-1">Sponsored</div></td>
+                      <td v-if="item.sponsored == 0"><div class="badge badge-pill  badge-primary mr-1 mb-1">Not Sponsored</div></td>
+                      <td v-else><div class="badge badge-pill  badge-success mr-1 mb-1">Sponsored</div></td>
                     
                       <td class="text-center">
                         <div class="dropdown">
@@ -108,13 +113,14 @@
 <script>
 import Datatable from "~/components/datatable/Datatable.vue";
 import Pagination from "~/components/datatable/Pagination.vue";
+import SuccessAlert from '~/components/alert/SuccessAlert.vue'
 
 export default {
-  components: { datatable: Datatable, pagination: Pagination },
+  components: { datatable: Datatable, pagination: Pagination , 'success-alert':SuccessAlert},
   middleware: "auth",
 
   metaInfo() {
-    return { title: 'Hafiz Students' };
+    return { title: 'Hifz Students' };
   },
   data() {
     let sortOrders = {};
@@ -132,6 +138,8 @@ export default {
       sortOrders[column.name] = -1;
     });
     return {
+      is_added_successfully:false,
+      successMessage:'',
       students: [],
       columns: columns,
       sortKey: "full_name",
@@ -159,7 +167,6 @@ export default {
   },
   methods: {
     getData(url = "/api/student/getHafizStudents") {
-      console.log(url)
       this.tableData.draw++;
       axios
         .get(url, { params: this.tableData })
@@ -184,6 +191,10 @@ export default {
   },
   created() {
     this.getData();
+    if(this.$route.params.message){
+      this.is_added_successfully = true
+      this.successMessage = this.$route.params.message
+    }
   },
 };
 </script>

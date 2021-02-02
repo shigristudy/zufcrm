@@ -17,7 +17,8 @@ class SponsorshipController extends Controller
                     ->whereHas('product',function($q){
                         return $q->where('type','simple');        
                     })
-                    ->whereIn('product_id',[11863, 11864, 11814, 11815, 11816])
+                    // ->whereIn('product_id',[11863, 11864, 11814, 11815, 11816])
+                    ->where('is_sponsor',1)
                     ->get();
                     
         return response()->json($donations);
@@ -29,10 +30,10 @@ class SponsorshipController extends Controller
                         ->whereHas('product',function($q){
                             return $q->where('type','subscription');        
                         })
-                        ->whereIn('product_id',[11863, 11864, 11814, 11815, 11816])
+                        // ->whereIn('product_id',[11863, 11864, 11814, 11815, 11816])
+                        ->where('is_sponsor',1)
                         ->get();
-        return response()->json($donations);
-        
+        return response()->json($donations); 
     }
 
     public function fund_students(Request $request){

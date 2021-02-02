@@ -5,13 +5,13 @@
         <div class="row breadcrumbs-top">
           <div class="col-12">
             <h2 class="content-header-title float-left mb-0">
-              Add Hafiz Student
+              Add Hifz Student
             </h2>
             <div class="breadcrumb-wrapper col-12">
               <ol class="breadcrumb">
                 <li class="breadcrumb-item">
                   <router-link :to="{ name: 'sponsorships.hafiz' }"
-                    >Hafiz Students</router-link
+                    >Hifz Students</router-link
                   >
                 </li>
                 <li class="breadcrumb-item"><a href="#">Add</a></li>
@@ -250,7 +250,7 @@ export default {
   middleware: "auth",
 
   metaInfo() {
-    return { title: 'Add Hafiz Student' };
+    return { title: 'Add Hifz Student' };
   },
   data() {
     return {
@@ -279,8 +279,13 @@ export default {
       });
     },
     async handleSubmit() {
-      await this.form.post("/api/student/store");
+      const response = await this.form.post("/api/student/store");
       this.form.reset();
+
+      this.$router.push({
+        name: 'sponsorships.hafiz', 
+        params: { message: response.data.message }
+      });
     },
   },
   computed: {

@@ -26,7 +26,7 @@
                             <div class="row">
                                 <div class="users-view-image">
                                     <!-- profile_picture -->
-                                    <img style="width:150px;" :src="AssetsBaseUrl+'project/'+student.profile_picture" class="users-avatar-shadow rounded mb-2 pr-2 ml-1" alt="avatar">
+                                    <img style="width:150px;" :src="BaseUrlPublic+'uploads/project/'+student.profile_picture" class="users-avatar-shadow rounded mb-2 pr-2 ml-1" alt="avatar">
                                 </div>
                                 <div class="col-12 col-sm-9 col-md-6 col-lg-5">
                                     <table>
@@ -77,8 +77,8 @@
                                         </tr>
                                         <tr>
                                             <td class="font-weight-bold">Sponsored?</td>
-                                            <td v-if="student.submitted == 1"><div class="badge badge-pill badge-glow badge-success mr-1 mb-1">Sponsored</div></td>
-                                            <td v-else><div class="badge badge-pill badge-glow badge-success mr-1 mb-1">Not Sponsored</div></td>
+                                            <td v-if="student.submitted == 1"><div class="badge badge-pill  badge-success mr-1 mb-1">Sponsored</div></td>
+                                            <td v-else><div class="badge badge-pill  badge-success mr-1 mb-1">Not Sponsored</div></td>
                                         </tr>
                                     </tbody></table>
                                 </div>

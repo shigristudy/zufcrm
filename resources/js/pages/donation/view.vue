@@ -54,8 +54,8 @@
                             </div>
                             <div class="mt-1 px-2">
                                 <h6 class="mb-1 d-inline">Gift Aid Claimed?:</h6>
-                                <div v-if="donation.claimed == null" class="d-inline badge badge-pill badge-glow badge-primary mr-1 mb-1">Not Claimed</div>
-                                <div v-else class="d-inline badge badge-pill badge-glow badge-success mr-1 mb-1">Claimed</div>
+                                <div v-if="donation.claimed == null" class="d-inline badge badge-pill  badge-primary mr-1 mb-1">Not Claimed</div>
+                                <div v-else class="d-inline badge badge-pill  badge-success mr-1 mb-1">Claimed</div>
                             </div>
                             
                         </div>
@@ -81,7 +81,7 @@
                             </div>
                             <div class="mt-1 px-2">
                                 <h6 class="mb-1 d-inline">Gift Aid?:</h6>
-                                <div  class="d-inline badge badge-pill badge-glow badge-info mr-1 mb-1">{{ donation.gift_aid }}</div>
+                                <div  class="d-inline badge badge-pill  badge-info mr-1 mb-1">{{ donation.gift_aid }}</div>
                             </div>
                             
                         </div>

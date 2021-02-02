@@ -234,7 +234,7 @@
                                                     <option value="">
                                                         <strong>Select Type</strong>
                                                     </option>
-                                                    <option v-for="(d_type,d_index) in donation_type_arr" :key="'d_type'+d_index" :value="d_type">{{ capitalize(d_type) }}</option>
+                                                    <option v-for="(d_type,d_index) in donation_type_arr" :key="'d_type'+d_index" :value="d_type.trim()">{{ capitalize(d_type) }}</option>
                                                 </select>
                                                 <has-error :form="form" :field="`donationsArray.${index}.donation_type`"/>
                                             </fieldset>
@@ -257,13 +257,13 @@
                                         </td>
                                     </tr>
                                     <tr>
-                                        <td class="text-right" colspan="4"><strong>Total Amount: </strong> <i class="fa fa-gbp"></i>{{ form.total_amount }}</td>
+                                        <td class="text-right" colspan="4"><strong>Total Amount: <i class="fa fa-gbp"></i>{{ form.total_amount }}</strong></td>
                                     </tr>
                                 </tbody>
                             </table>
 
                             <div class="d-flex justify-content-between">
-                                <button type="submit" class="btn btn-secondary mr-1 mb-1 waves-effect waves-light">Back</button>
+                                <button type="button" @click="clearForm" class="btn btn-secondary mr-1 mb-1 waves-effect waves-light">Clear</button>
                                 <v-button :loading="form.busy" type="primary">Submit</v-button>
                             </div>
                     </form>
@@ -344,7 +344,7 @@ export default {
     async getProjects(){
         axios.get('/api/getProjects')
         .then((response) => {
-            this.wooProducts = response.data
+            this.wooProducts = response.data;
         }).catch((errors) => {
             console.log(errors);
         });
@@ -366,6 +366,14 @@ export default {
       
       this.message = response.data.message
       this.form.reset()
+
+      this.$router.push({
+        name: 'one_off_donations.customers', 
+        params: { message: this.message }
+      });
+    },
+    clearForm(){
+        this.form.reset()
     }
   },
 };

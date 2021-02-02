@@ -284,9 +284,9 @@ class DonationController extends Controller
 
     public function getProjects(Request $request){
         if($request->type){
-            $projects = WooProduct::where('type',$request->type)->get();
+            $projects = WooProduct::where('type',$request->type)->orderBy('name','asc')->get();
         }else{
-            $projects = WooProduct::whereIn('type',['simple','subscription'])->get();
+            $projects = WooProduct::whereIn('type',['simple','subscription'])->orderBy('name','asc')->get();
         }
         return response()->json($projects);
     }

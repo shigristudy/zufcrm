@@ -117,6 +117,10 @@ table.dataTable thead .sorting:before, table.dataTable thead .sorting_asc:before
 .main-menu .navbar-header .navbar-brand {
     margin-top: unset;
 }
+.main-menu.menu-light .navigation > li.active > a{
+    box-shadow:unset !important;
+}
+
     </style>
     <!-- BEGIN: Custom CSS-->
     <link rel="stylesheet" type="text/css" href="{{ asset('assets/css/style.css') }}">

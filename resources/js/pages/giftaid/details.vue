@@ -65,11 +65,11 @@
                       <td>{{ item.first_name + ' ' + item.last_name }}</td>
                       <td>{{ round2Fixed(item.order_total) }}</td>
                       <td>{{ item.payment_method }}</td>
-                      <td v-if="item.submitted"><div class="badge badge-pill badge-glow badge-success mr-1 mb-1">Submitted</div></td>
-                      <td v-else><div class="badge badge-pill badge-glow badge-primary mr-1 mb-1">Not Submitted</div></td>
+                      <td v-if="item.submitted"><div class="badge badge-pill  badge-success mr-1 mb-1">Submitted</div></td>
+                      <td v-else><div class="badge badge-pill  badge-primary mr-1 mb-1">Not Submitted</div></td>
                       
-                      <td v-if="item.claimed"><div class="badge badge-pill badge-glow badge-success mr-1 mb-1">Claimed</div></td>
-                      <td v-else><div class="badge badge-pill badge-glow badge-primary mr-1 mb-1">Not Claimed</div></td>
+                      <td v-if="item.claimed"><div class="badge badge-pill  badge-success mr-1 mb-1">Claimed</div></td>
+                      <td v-else><div class="badge badge-pill  badge-primary mr-1 mb-1">Not Claimed</div></td>
                     
                     </tr>
                 </tbody>

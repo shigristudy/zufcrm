@@ -17,6 +17,11 @@
       </div>
     </div>
     <div class="content-body">
+      <div class="row mb-1">
+        <div class="col-md-12">
+            <success-alert :successful="is_added_successfully" :message="successMessage"></success-alert>
+        </div>
+      </div>
       <!-- Description -->
       <section id="description" class="card">
         <div class="card-content">
@@ -71,8 +76,8 @@
                       <td>{{ item.teacher_name }}</td>
                       <td>{{ item.class_name }}</td>
                       <td>{{ item.student_id }}</td>
-                      <td v-if="item.sponsored == 0"><div class="badge badge-pill badge-glow badge-primary mr-1 mb-1">Not Sponsored</div></td>
-                      <td v-else><div class="badge badge-pill badge-glow badge-success mr-1 mb-1">Sponsored</div></td>
+                      <td v-if="item.sponsored == 0"><div class="badge badge-pill  badge-primary mr-1 mb-1">Not Sponsored</div></td>
+                      <td v-else><div class="badge badge-pill  badge-success mr-1 mb-1">Sponsored</div></td>
                     
                     <td class="text-center">
                       <div class="dropdown">
@@ -109,15 +114,16 @@
 <script>
 import Datatable from "~/components/datatable/Datatable.vue";
 import Pagination from "~/components/datatable/Pagination.vue";
-
+import SuccessAlert from '~/components/alert/SuccessAlert.vue'
 export default {
-  components: { datatable: Datatable, pagination: Pagination },
+  components: { datatable: Datatable, pagination: Pagination, 'success-alert':SuccessAlert},
   middleware: "auth",
 
   metaInfo() {
     return { title: 'Scholar Students' };
   },
   data() {
+    
     let sortOrders = {};
     let columns = [
       { label: "Full Name",name : 'full_name'},
@@ -133,6 +139,8 @@ export default {
       sortOrders[column.name] = -1;
     });
     return {
+      is_added_successfully:false,
+      successMessage:'',
       students: [],
       columns: columns,
       sortKey: "full_name",
@@ -160,7 +168,6 @@ export default {
   },
   methods: {
     getData(url = "/api/student/getScholarStudents") {
-      console.log(url)
       this.tableData.draw++;
       axios
         .get(url, { params: this.tableData })
@@ -185,6 +192,10 @@ export default {
   },
   created() {
     this.getData();
+    if(this.$route.params.message){
+      this.is_added_successfully = true
+      this.successMessage = this.$route.params.message
+    }
   },
 };
 </script>

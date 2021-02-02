@@ -121,7 +121,7 @@ class GiftAidController extends Controller
         
         return response()->json([
             'success'   => 1,
-            'message'   => 'All Donations has been Marked as submitted'
+            'message'   => 'Selected donations transfered to Make A Claim'
         ]);
     }
 
@@ -163,7 +163,7 @@ class GiftAidController extends Controller
         return response()->json([
             'success'   => 1,
             'data'      => $giftaids,
-            'message'   => 'Selected GiftAids are now Renew again'
+            'message'   => 'Successfully removed selection donations from this claim'
         ]);
     }
 

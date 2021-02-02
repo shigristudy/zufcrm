@@ -50,5 +50,9 @@ class WooOrder extends Model
     public function ScopeOfGiftAidType($query,$type){
         return $query->where('gift_aid', $type);
     }
+
+    public function scopeYear($query,$year){
+        return $query->whereYear('donation_date', '=', $year);
+    }
     
 }

@@ -242,6 +242,7 @@
 
 <script>
 import Form from "vform";
+
 export default {
   middleware: "auth",
 
@@ -275,8 +276,12 @@ export default {
       });
     },
     async handleSubmit() {
-      await this.form.post("/api/student/store");
+      const response = await this.form.post("/api/student/store");
       this.form.reset();
+      this.$router.push({
+        name: 'sponsorships.scholar', 
+        params: { message: response.data.message }
+      });
     },
   },
   computed: {

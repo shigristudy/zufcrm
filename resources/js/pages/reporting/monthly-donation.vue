@@ -28,7 +28,19 @@
                           <div class="col-md-3">
                             <fieldset class="form-group">
                                 <label for="basicInput">Project</label>
-                                <select class="form-control" v-model="tableData.form.product_id">
+                                <multiselect v-model="tableData.form.product_id" 
+                                            deselect-label="Can't remove this value" 
+                                            track-by="id" label="name" 
+                                            placeholder="Select one" 
+                                            :options="wooProducts" 
+                                            :searchable="true"
+                                            :multiple="true" 
+                                            :close-on-select="false"
+                                            :custom-label="customLabel"
+                                            :allow-empty="false">
+                                  <template slot="singleLabel" slot-scope="{ option }"><strong>{{ project_name_computed(option) }}</strong></template>
+                                </multiselect>
+                                <!-- <select class="form-control" v-model="tableData.form.product_id">
                                     <option value="">
                                         <strong>Select Project</strong>
                                     </option>
@@ -36,7 +48,7 @@
                                             :value="p.product_id">
                                         <strong>{{ project_name_computed(p) }}</strong>
                                     </option>
-                                </select>
+                                </select> -->
                             </fieldset>
                           </div>
                           
@@ -60,7 +72,7 @@
                                         <strong>Select Donation Type</strong>
                                     </option>
                                     <option v-for="d_type in donation_type_arr" :key="'d_type'+d_type" 
-                                            :value="d_type">
+                                            :value="d_type.trim()">
                                         <strong>{{ d_type }}</strong>
                                     </option>
                                 </select>
@@ -136,8 +148,8 @@
                       <td>{{ formattedDateDDMMYY(item.order.donation_date) }}</td>
                       <td>{{ round2Fixed(item.total) }}</td>
                       <td>
-                        <div v-if="item.allocated_at == null" class="badge badge-pill badge-glow badge-danger mr-1 mb-1">No Allocated</div>
-                        <div v-else class="badge badge-pill badge-glow badge-success mr-1 mb-1">Allocated</div>
+                        <div v-if="item.allocated_at == null" class="badge badge-pill  badge-danger mr-1 mb-1">No Allocated</div>
+                        <div v-else class="badge badge-pill  badge-success mr-1 mb-1">Allocated</div>
                       </td>
                     </tr>
                 </tbody>
@@ -157,7 +169,7 @@
     </div>
   </div>
 </template>
-
+<style src="vue-multiselect/dist/vue-multiselect.min.css"></style>
 <script>
 import Datatable from "~/components/datatable/Datatable.vue";
 import Pagination from "~/components/datatable/Pagination.vue";
@@ -204,7 +216,7 @@ export default {
         dir: "desc",
         filtering:false,
         form:new Form({
-          product_id:'',
+          product_id:[],
           date_from:'',
           date_to:'',
           donation_type:'',
@@ -224,6 +236,16 @@ export default {
     };
   },
   methods: {
+    customLabel( obj ){
+      var name = '';
+      
+      if(obj.project_page != null && obj.project_page != ''){
+          name = obj.project_page + ' - ' + obj.name
+      }else{
+          name = obj.name
+      }
+      return name;
+    },
     clearFilters(){
       this.tableData.form.reset()
       this.tableData.filtering = false;

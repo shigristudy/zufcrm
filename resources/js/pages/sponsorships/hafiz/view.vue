@@ -7,7 +7,7 @@
                     <h2 class="content-header-title float-left mb-0">View Student</h2>
                     <div class="breadcrumb-wrapper col-12">
                         <ol class="breadcrumb">
-                            <li class="breadcrumb-item"><router-link :to="{ name:'sponsorships.hafiz' }">Hafiz Students</router-link>
+                            <li class="breadcrumb-item"><router-link :to="{ name:'sponsorships.hafiz' }">Hifz Students</router-link>
                             </li>
                             <li class="breadcrumb-item"><a href="#">View</a>
                             </li>
@@ -29,7 +29,7 @@
                             <div class="row">
                                 <div class="users-view-image">
                                     <!-- profile_picture -->
-                                     <img style="width:150px;" :src="AssetsBaseUrl+'project/'+student.profile_picture" class="users-avatar-shadow rounded mb-2 pr-2 ml-1" alt="avatar">
+                                     <img style="width:150px;" :src="BaseUrlPublic+'uploads/project/'+student.profile_picture" class="users-avatar-shadow rounded mb-2 pr-2 ml-1" alt="avatar">
                                 </div>
                                 <div class="col-12 col-sm-9 col-md-6 col-lg-5">
                                     <table>
@@ -80,8 +80,8 @@
                                         </tr>
                                         <tr>
                                             <td class="font-weight-bold">Sponsored?</td>
-                                            <td v-if="student.sponsored == 1"><div class="badge badge-pill badge-glow badge-success mr-1 mb-1">Sponsored</div></td>
-                                            <td v-else><div class="badge badge-pill badge-glow badge-success mr-1 mb-1">Not Sponsored</div></td>
+                                            <td v-if="student.sponsored == 1"><div class="badge badge-pill  badge-success mr-1 mb-1">Sponsored</div></td>
+                                            <td v-else><div class="badge badge-pill  badge-success mr-1 mb-1">Not Sponsored</div></td>
                                         </tr>
                                     </tbody></table>
                                 </div>
@@ -124,8 +124,8 @@
                                             aria-expanded="false" :aria-controls="'collapse'+donation.id">
                                             <span class="lead collapse-title">
                                                 <strong>Sponsored By: </strong> {{ donation.order.first_name + " " + donation.order.last_name }}
-                                                <div v-if="donation.status == 'ends'" class="badge badge-pill badge-glow badge-danger mr-1 mb-1">expanded</div>
-                                                <div v-else class="badge badge-pill badge-glow badge-success mr-1 mb-1">Active</div>
+                                                <div v-if="donation.status == 'ends'" class="badge badge-pill  badge-danger mr-1 mb-1">expanded</div>
+                                                <div v-else class="badge badge-pill  badge-success mr-1 mb-1">Active</div>
                                             </span>
                                         </div>
                                         <div :id="'collapse'+donation.id" role="tabpanel" :aria-labelledby="'headingCollapse'+donation.id" class="collapse" style="">
@@ -152,8 +152,8 @@
                                                                     <tr v-for="webhook in donation.order.webhooks" :key="'webhook'+webhook.id">
                                                                         <td>{{ webhook.order_id }}</td>
                                                                         <td>
-                                                                            <div v-if="webhook.action == 'failed'" class="badge badge-pill badge-glow badge-danger mr-1 mb-1">Failed</div>
-                                                                            <div v-else class="badge badge-pill badge-glow badge-success mr-1 mb-1">Paid Out</div>
+                                                                            <div v-if="webhook.action == 'failed'" class="badge badge-pill  badge-danger mr-1 mb-1">Failed</div>
+                                                                            <div v-else class="badge badge-pill  badge-success mr-1 mb-1">Paid Out</div>
                                                                         </td>
                                                                         <td>{{ donation.order.email }}</td>
                                                                         <td>{{ donation.order.phone }}</td>
@@ -191,7 +191,7 @@ export default {
   middleware: "auth",
 
   metaInfo() {
-    return { title: 'View Hafiz Student' };
+    return { title: 'View Hifz Student' };
   },
 
   data() {

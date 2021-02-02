@@ -147,6 +147,7 @@ export default {
         getIndex(array, key, value) {
             return array.findIndex(i => i[key] == value)
         },
+        
         getBase64(file) {
             return new Promise((resolve, reject) => {
                 const reader = new FileReader();
@@ -155,7 +156,7 @@ export default {
                 reader.onerror = error => reject(error);
             });
          },
-         download_table_as_csv(table_id, separator = ',',exclude_colums=[]) {
+         download_table_as_csv(table_id, separator = ',',exclude_colums=[],type = '.ods') {
             // Select rows from table_id
             var rows = document.querySelectorAll('table#' + table_id + ' tr');
             // Construct csv
@@ -174,7 +175,7 @@ export default {
             }
             var csv_string = csv.join('\n');
             // Download it
-            var filename = 'export_' + table_id + '_' + new Date().toLocaleDateString() + '.ods';
+            var filename = 'export_' + table_id + '_' + new Date().toLocaleDateString() + type;
             var link = document.createElement('a');
             link.style.display = 'none';
             link.setAttribute('target', '_blank');

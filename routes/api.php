@@ -77,6 +77,7 @@ Route::group(['middleware' => 'auth:api'], function () {
     Route::post('dashboard',[ReportController::class,'dashboard']);
     Route::get('one_off_donations',[ReportController::class,'one_off_donations']);
     Route::get('monthly_donations',[ReportController::class,'monthly_donations']);
+    Route::post('includeProductInSponsorhips',[ReportController::class,'includeProductInSponsorhips']);
     
     Route::prefix('settings')->group(function () {
         

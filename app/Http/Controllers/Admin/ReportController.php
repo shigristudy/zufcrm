@@ -9,6 +9,7 @@ use App\Models\Student;
 use App\Models\WooOrder;
 use App\Models\WooProduct;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class ReportController extends Controller
 {
@@ -31,13 +32,31 @@ class ReportController extends Controller
         $hafiz_students = Student::where('student_type','hafiz')->count();
         $scolar_students = Student::where('student_type','scolar')->count();
 
+        // income raised per year *
+        // top project with most donations
+        // pie chart with donation type
+        // number of unallocated sponshorships *
+        // unclaimed gift aid donations (number) *
+
+        $no_of_unallocated_spons = OrderItem::where('is_sponsor',1)->where('allocated_at',null)->count();
+        $total_income_raised_this_year = WooOrder::year(date('Y'))->sum('order_total');
+        $total_income_raised = WooOrder::sum('order_total');
+        $top_projects = OrderItem::with('product')->select(['product_id',DB::raw("SUM(total) as total_amount"), DB::raw("COUNT(product_id) as total_donations")])
+                        ->groupBy('product_id')
+                        ->orderBy('total_donations','desc')
+                        ->limit(5)->get();
+        // dd($top_projects->toArray());
         $response = [
             'not_claimed_count' => $not_claimed_count,
             'claimed_count'     => $claimed_count,
             'submitted_count'   => $submitted_count,
             'reports_count'     => $reports_count,
             'hafiz_students'    => $hafiz_students,
-            'scholar_students'   => $scolar_students,
+            'scholar_students'  => $scolar_students,
+            'top_projects'      => $top_projects,
+            'no_of_unallocated_spons' => $no_of_unallocated_spons,
+            'total_income_raised_this_year' => $total_income_raised_this_year,
+            'total_income_raised' => $total_income_raised,
         ];
         return response()->json($response);
     }
@@ -66,7 +85,7 @@ class ReportController extends Controller
     }
 
     public function one_off_donations(Request $request){
-        // dd($request->all());
+        // dd();
         $columns = ['id','order_id','woo_order_id','product_id','name','donation_type','quantity','type','total','is_sponsor','allocated_at'];
         
         $length = $request->input('length');
@@ -82,7 +101,7 @@ class ReportController extends Controller
         if($request->filtering){
 
             $filters = json_decode($request->form,true);
-            $project            = $filters["product_id"];
+            $projects           = array_column($filters['product_id'], 'product_id');
             $date_from          = ($filters["date_from"]);
             $date_to            = ($filters["date_to"]);
             $donation_type      = ($filters["donation_type"]);
@@ -106,8 +125,8 @@ class ReportController extends Controller
                     // $query->whereDate('donation_date','<',$date_to);
                 }
             }
-            if($project){
-                $query->where('product_id',$project);
+            if(count($projects)>0){
+                $query->whereIn('product_id',$projects);
             }
 
             if($donation_type){
@@ -152,7 +171,7 @@ class ReportController extends Controller
         if($request->filtering){
 
             $filters = json_decode($request->form,true);
-            $project            = $filters["product_id"];
+            $projects           = array_column($filters['product_id'], 'product_id');
             $date_from          = ($filters["date_from"]);
             $date_to            = ($filters["date_to"]);
             $donation_type      = ($filters["donation_type"]);
@@ -173,8 +192,8 @@ class ReportController extends Controller
                     });
                 }
             }
-            if($project){
-                $query->where('product_id',$project);
+            if(count($projects)>0){
+                $query->whereIn('product_id',$projects);
             }
 
             if($donation_type){
@@ -198,5 +217,19 @@ class ReportController extends Controller
         $projects = $query->paginate($length);
         return ['data' => $projects, 'draw' => $request->input('draw')];
 
+    }
+
+    public function includeProductInSponsorhips( Request $request ){
+        
+        $count = count($request->selectedrows);
+
+        OrderItem::whereIn('id',$request->selectedrows)->update([
+            'is_sponsor' => 1
+        ]);
+
+        return response()->json([
+            'success'   => 1,
+            'message'   => "{$count} Donations has been included in Sponsorhips"    
+        ]);
     }
 }

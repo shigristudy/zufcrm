@@ -23,9 +23,12 @@
           <div class="card-body">
            <div class="row">
              <div class="col-md-12">
-                <button v-if="form.selectedrows.length>0" class="btn btn-success" @click="markAllAsSubmitted()">Mark as Generated</button>
+                <button v-if="form.selectedrows.length>0" class="btn btn-success" @click="markAllAsSubmitted()">Trasfer To Claim</button>
                 <!-- <button v-if="form.selectedrows.length>0" class="btn btn-success" @click="markAllAsSubmitted()">Mark Selected Entries as Generated</button> -->
              </div>
+            <div class="col-md-12">
+               <alert-success :form="form" :message="message" />
+            </div>
            </div>
             <div class="row dataTables_wrapper mb-1">
               <div class="col-sm-12 col-md-6">
@@ -86,11 +89,11 @@
                       <td>{{ item.first_name + " " + item.last_name }}</td>
                       <td>{{ round2Fixed(item.order_total) }}</td>
                       <td>{{ item.payment_method }}</td>
-                      <td v-if="item.submitted"><div class="badge badge-pill badge-glow badge-success mr-1 mb-1">Submitted</div></td>
-                      <td v-else><div class="badge badge-pill badge-glow badge-primary mr-1 mb-1">Not Submitted</div></td>
+                      <td v-if="item.submitted"><div class="badge badge-pill  badge-success mr-1 mb-1">Submitted</div></td>
+                      <td v-else><div class="badge badge-pill  badge-primary mr-1 mb-1">Not Submitted</div></td>
                       
-                      <td v-if="item.claimed"><div class="badge badge-pill badge-glow badge-success mr-1 mb-1">Claimed</div></td>
-                      <td v-else><div class="badge badge-pill badge-glow badge-primary mr-1 mb-1">Not Claimed</div></td>
+                      <td v-if="item.claimed"><div class="badge badge-pill  badge-success mr-1 mb-1">Claimed</div></td>
+                      <td v-else><div class="badge badge-pill  badge-primary mr-1 mb-1">Not Claimed</div></td>
                     
                     </tr>
                 </tbody>
@@ -137,6 +140,7 @@ export default {
       sortOrders[column.name] = -1;
     });
     return {
+      message:"",
       form: new Form({
         selectedrows:[]
       }),
@@ -177,36 +181,18 @@ export default {
       }
     },
     markAllAsSubmitted(){
-      this.$swal.fire({
-        title: 'Are you sure?',
-        text: "You won't be able to revert this!",
-        icon: 'warning',
-        showCancelButton: true,
-        confirmButtonColor: '#3085d6',
-        cancelButtonColor: '#d33',
-        confirmButtonText: 'Yes, mark as Generated!'
-      }).then((result) => {
-        if (result.isConfirmed) {
-          this.form
-          .post('/api/markAllDonationsAsGiftAid')
-          // axios
-          // .post('/api/markAllDonationsAsGiftAid',)
-          .then((response) => {
-            this.getData()
-            this.$swal.fire(
-              'Submitted!',
-              response.data.message,
-              'success'
-            )
-          })
-          .catch((errors) => {
-            console.log(errors);
-          });
-          
-        }
-      })
-
-      
+      this.form
+        .post('/api/markAllDonationsAsGiftAid')
+        .then((response) => {
+          this.getData()
+          console.log(response.data)
+          console.log(response)
+          this.message = response.data.message
+          this.form.reset()
+        })
+        .catch((errors) => {
+          console.log(errors);
+        });
     },
     getData(url = "/api/getAllDonationsWithGiftaid") {
       this.tableData.draw++;

@@ -16,10 +16,12 @@
         <div class="card-content">
           <div class="card-body">
             <alert-success :form="order" :message="message" />
+            <success-alert :successful="is_added_successfully" :message="successMessage"></success-alert>
+
             <div class="row">
               <div class="col-md-6">
                   <button class="btn btn-primary" @click="exportCSV()">Export</button>
-                  <button v-if="form.selectedrows.length>0" class="btn btn-success" @click="markSelectedAsRenew()">Renew Items</button>
+                  <button v-if="form.selectedrows.length>0" class="btn btn-success" @click="markSelectedAsRenew()">Remove From This Claim</button>
               </div>
               <div class="col-md-6">
                 <button class="btn btn-primary float-right" @click="openReportSubmitModal()">Close All Donations</button>
@@ -277,8 +279,9 @@
 import Datatable from "~/components/datatable/Datatable.vue";
 import Pagination from "~/components/datatable/Pagination.vue";
 import Form from 'vform'
+import SuccessAlert from '~/components/alert/SuccessAlert.vue'
 export default {
-  components: { datatable: Datatable, pagination: Pagination },
+  components: { datatable: Datatable, pagination: Pagination ,'success-alert':SuccessAlert},
   middleware: "auth",
 
   metaInfo() {
@@ -303,6 +306,8 @@ export default {
       sortOrders[column.name] = -1;
     });
     return {
+      is_added_successfully:false,
+      successMessage:'',
       message:'',
       datatableID:'submitted_gift_aid_table',
       form: new Form({
@@ -376,32 +381,16 @@ export default {
       this.download_table_as_csv(this.datatableID,',',[0,10])
     },
     markSelectedAsRenew(){
-      this.$swal.fire({
-        title: 'Are you sure?',
-        text: "You won't be able to revert this!",
-        icon: 'warning',
-        showCancelButton: true,
-        confirmButtonColor: '#3085d6',
-        cancelButtonColor: '#d33',
-        confirmButtonText: 'Yes, Mark As New!'
-      }).then((result) => {
-        if (result.isConfirmed) {
-          this.form
-          .post('/api/markAllSelectedasNew')
-          .then((response) => {
-            this.getData()
-            this.$swal.fire(
-              'Renewed!',
-              response.data.message,
-              'success'
-            )
-          })
-          .catch((errors) => {
-            console.log(errors);
-          });
-          
-        }
-      })
+      this.form
+        .post('/api/markAllSelectedasNew')
+        .then((response) => {
+          this.getData()
+          this.is_added_successfully = true
+          this.successMessage = response.data.message
+        })
+        .catch((errors) => {
+          console.log(errors);
+        });
     },
     markSelectedAsClaimed(){
       this.$swal.fire({
