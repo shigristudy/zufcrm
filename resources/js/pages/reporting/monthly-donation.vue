@@ -12,6 +12,11 @@
       
     </div>
     <div class="content-body">
+      <div class="row dataTables_wrapper mb-1">
+        <div class="col-md-12">
+            <success-alert :successful="is_added_successfully" :message="successMessage"></success-alert>
+        </div>
+      </div>
         <div id="accordionWrapa50" class="card" role="tablist" aria-multiselectable="true">
         <div class="accordion collapse-icon"  id="accordionExample0" data-toggle-hover="true">
           <div class="collapse-border-item collapse-header card collapse-bordered">
@@ -93,6 +98,12 @@
       <section id="description" class="card">
         <div class="card-content">
           <div class="card-body">
+             <div class="row">
+              <div class="col-md-6">
+                  <button class="btn btn-primary" @click="exportCSV()">Export</button>
+                  <button v-if="form2.selectedrows.length>0" class="btn btn-success" @click="includeInSponsorships()">Include in Sponsorships</button>
+              </div>
+            </div>
             <div class="row dataTables_wrapper mb-1">
               <div class="col-sm-12 col-md-6">
                 <div class="dataTables_length">
@@ -151,6 +162,18 @@
                         <div v-if="item.allocated_at == null" class="badge badge-pill  badge-danger mr-1 mb-1">No Allocated</div>
                         <div v-else class="badge badge-pill  badge-success mr-1 mb-1">Allocated</div>
                       </td>
+                      <td class="text-center">
+                        <div v-if="item.is_sponsor == 1" class="badge badge-pill  badge-success mr-1 mb-1">Included</div>
+                        <div v-else>
+                          <fieldset>
+                            <div class="custom-control custom-checkbox">
+                                <input type="checkbox" class="custom-control-input" v-model="form2.selectedrows" :value="item.id" :id="'customCheck'+item.id">
+                                <label class="custom-control-label" :for="'customCheck'+item.id"></label>
+                            </div>
+                        </fieldset>
+                        </div>
+                      </td>
+                      
                     </tr>
                 </tbody>
                 </datatable>
@@ -173,10 +196,11 @@
 <script>
 import Datatable from "~/components/datatable/Datatable.vue";
 import Pagination from "~/components/datatable/Pagination.vue";
+import SuccessAlert from '~/components/alert/SuccessAlert.vue'  
 import Form from 'vform'
 
 export default {
-  components: { datatable: Datatable, pagination: Pagination },
+  components: { datatable: Datatable, pagination: Pagination,'success-alert':SuccessAlert },
   middleware: "auth",
 
   metaInfo() {
@@ -196,11 +220,15 @@ export default {
         { label: "Donation Date", name:'donation_date' }, 
         { label: "Total", name:'total',sortable:true }, 
         { label: "Allocated?", name:'allocated' }, 
+        { label: "Include in sponsorship?", name:'include' }, 
+        
     ];
     columns.forEach((column) => {
       sortOrders[column.name] = -1;
     });
     return {
+      datatableID:'monthly_donations_table',
+      is_added_successfully:false,
       donation_type_arr:[],
       wooProducts: [],
       items: [],
@@ -222,6 +250,9 @@ export default {
           donation_type:'',
         })
       },
+      form2:new Form({
+        selectedrows:[]
+      }), 
       pagination: {
         lastPage: "",
         currentPage: "",
@@ -236,6 +267,16 @@ export default {
     };
   },
   methods: {
+    exportCSV(){
+      this.download_table_as_csv(this.datatableID,',',[0,10],'.csv')
+    },
+    async includeInSponsorships(){
+      const response = await this.form2.post('/api/includeProductInSponsorhips')
+      this.is_added_successfully = true; 
+      this.successMessage = response.data.message 
+      this.form2.reset()
+      this.getData()
+    },
     customLabel( obj ){
       var name = '';
       

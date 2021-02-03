@@ -277,9 +277,7 @@ export default {
             this.dashboard = res.data
             this.chartOptions.labels = this.dashboard.series_labels
             this.series = this.dashboard.series
-            this.render_chart = true  
-           
-            
+            this.render_chart = true            
         })
         .catch((errors) => {
           console.log(errors);

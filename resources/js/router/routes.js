@@ -12,7 +12,7 @@ export default [
   { path: '/email/verify/:id', name: 'verification.verify', component: page('auth/verification/verify.vue') },
   { path: '/email/resend', name: 'verification.resend', component: page('auth/verification/resend.vue') },
 
-  { path: '/home', name: 'home', component: page('home.vue') },
+  { path: '/home', redirect: { name: 'dashboard' } },
   { path: '/users', name: 'users', component: page('settings/users.vue') },
   { path: '/dashboard', name: 'dashboard', component: page('general/dashboard.vue') },
   // Custom Projects Routes

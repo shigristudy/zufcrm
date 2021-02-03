@@ -164,14 +164,17 @@
                         <div v-else class="badge badge-pill  badge-success mr-1 mb-1">Allocated</div>
                       </td>
                       <td class="text-center">
-                        <fieldset>
+                        <div v-if="item.is_sponsor == 1" class="badge badge-pill  badge-success mr-1 mb-1">Included</div>
+                        <div v-else>
+                          <fieldset>
                             <div class="custom-control custom-checkbox">
                                 <input type="checkbox" class="custom-control-input" v-model="form2.selectedrows" :value="item.id" :id="'customCheck'+item.id">
                                 <label class="custom-control-label" :for="'customCheck'+item.id"></label>
                             </div>
                         </fieldset>
+                        </div>
                       </td>
-
+                     
                     </tr>
                 </tbody>
                 </datatable>
@@ -273,6 +276,7 @@ export default {
       this.is_added_successfully = true; 
       this.successMessage = response.data.message 
       this.form2.reset()
+      this.getData()
     },
     customLabel( obj ){
       var name = '';
