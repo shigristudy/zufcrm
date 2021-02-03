@@ -1,36 +1,57 @@
 <template>
-  <card :title="$t('your_password')">
-    <form @submit.prevent="update" @keydown="form.onKeydown($event)">
-      <alert-success :form="form" :message="$t('password_updated')" />
-
-      <!-- Password -->
-      <div class="form-group row">
-        <label class="col-md-3 col-form-label text-md-right">{{ $t('new_password') }}</label>
-        <div class="col-md-7">
-          <input v-model="form.password" :class="{ 'is-invalid': form.errors.has('password') }" class="form-control" type="password" name="password">
-          <has-error :form="form" field="password" />
+<div class="content-wrapper">
+    <div class="content-header row">
+        <div class="content-header-left col-md-9 col-12 mb-2">
+            <div class="row breadcrumbs-top">
+                <div class="col-12">
+                    <h2 class="content-header-title float-left mb-0">Change Password</h2>
+                </div>
+            </div>
         </div>
-      </div>
+        
+    </div>
+    <div class="content-body">
+        <!-- Description -->
+        <section id="description" class="card">
+            <div class="card-content">
+                <div class="card-body">
+                    <form @submit.prevent="update" @keydown="form.onKeydown($event)">
+                      <alert-success :form="form" :message="$t('password_updated')" />
 
-      <!-- Password Confirmation -->
-      <div class="form-group row">
-        <label class="col-md-3 col-form-label text-md-right">{{ $t('confirm_password') }}</label>
-        <div class="col-md-7">
-          <input v-model="form.password_confirmation" :class="{ 'is-invalid': form.errors.has('password_confirmation') }" class="form-control" type="password" name="password_confirmation">
-          <has-error :form="form" field="password_confirmation" />
-        </div>
-      </div>
+                      <!-- Password -->
+                      <div class="form-group row">
+                        <label class="col-md-3 col-form-label text-md-right">{{ $t('new_password') }}</label>
+                        <div class="col-md-7">
+                          <input v-model="form.password" :class="{ 'is-invalid': form.errors.has('password') }" class="form-control" type="password" name="password">
+                          <has-error :form="form" field="password" />
+                        </div>
+                      </div>
 
-      <!-- Submit Button -->
-      <div class="form-group row">
-        <div class="col-md-9 ml-md-auto">
-          <v-button :loading="form.busy" type="success">
-            {{ $t('update') }}
-          </v-button>
-        </div>
-      </div>
-    </form>
-  </card>
+                      <!-- Password Confirmation -->
+                      <div class="form-group row">
+                        <label class="col-md-3 col-form-label text-md-right">{{ $t('confirm_password') }}</label>
+                        <div class="col-md-7">
+                          <input v-model="form.password_confirmation" :class="{ 'is-invalid': form.errors.has('password_confirmation') }" class="form-control" type="password" name="password_confirmation">
+                          <has-error :form="form" field="password_confirmation" />
+                        </div>
+                      </div>
+
+                      <!-- Submit Button -->
+                      <div class="form-group row">
+                        <div class="col-md-9 ml-md-auto">
+                          <v-button :loading="form.busy" type="success">
+                            {{ $t('update') }}
+                          </v-button>
+                        </div>
+                      </div>
+                    </form>
+                </div>
+            </div>
+        </section>
+        <!--/ Description -->
+    </div>
+  </div>
+ 
 </template>
 
 <script>

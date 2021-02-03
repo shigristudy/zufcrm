@@ -33,17 +33,19 @@
                         <li class="dropdown dropdown-user nav-item">
                             <a class="dropdown-toggle nav-link dropdown-user-link" href="#" data-toggle="dropdown">
                                 <div class="user-nav d-sm-flex d-none"><span class="user-name text-bold-600">{{ user.name}}</span>
-                                <!-- <span class="user-status">Available</span> -->
+                                    <span class="user-status">Online</span>
                                 </div>
-                                <span>
-                                    <img class="round" src="https://www.staging5.ziaulummahfoundation.org.uk/wp-content/uploads/2020/03/zuu-logo-green-100x100.png" alt="avatar" height="40" width="40"></span>
+                                <span><img class="round" src="https://www.staging5.ziaulummahfoundation.org.uk/wp-content/uploads/2020/03/zuu-logo-green-100x100.png" alt="avatar" height="40" width="40"></span>
                             </a>
                             <div class="dropdown-menu dropdown-menu-right">
-                                <!-- <a class="dropdown-item" href="#"><i class="feather icon-user"></i> Edit Profile</a>
-                                <a class="dropdown-item" href="#"><i class="feather icon-mail"></i> My Inbox</a>
-                                <a class="dropdown-item" href="#"><i class="feather icon-check-square"></i> Task</a> -->
-                                <!-- <a class="dropdown-item" href="#"><i class="feather icon-message-square"></i> Chats</a>
-                                <div class="dropdown-divider"></div> -->
+                                 <router-link class="dropdown-item" :to="{ name:'settings.profile' }"><i class="feather icon-user"></i>
+                                    <span class="menu-title">Profile</span>
+                                </router-link>
+                                <router-link class="dropdown-item" :to="{ name:'settings.password' }"><i class="feather icon-lock"></i>
+                                    <span class="menu-title">Change Password</span>
+                                </router-link>
+                                <!-- <a class="dropdown-item" href="#"><i class="feather icon-message-square"></i> Chats</a>-->
+                                <div class="dropdown-divider"></div> 
                                 <a class="dropdown-item" @click.prevent="logout">
                                     <i class="feather icon-power" fixed-width></i>
                                     {{ $t('logout') }}
