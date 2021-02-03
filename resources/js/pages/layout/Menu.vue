@@ -65,7 +65,7 @@
                         <span class="menu-title" data-i18n="Sponsorships">Sponsorships</span>
                     </a>
                     <ul class="menu-content">
-                        <li v-if="isPermitted('sponsorships.hafiz')"><router-link :to="{ name:'sponsorships.hafiz'}"><i></i><span class="menu-item" data-i18n="Sponsorships">Hafz</span></router-link></li>
+                        <li v-if="isPermitted('sponsorships.hafiz')"><router-link :to="{ name:'sponsorships.hafiz'}"><i></i><span class="menu-item" data-i18n="Sponsorships">Hifz</span></router-link></li>
                         <li v-if="isPermitted('sponsorships.scholar')"><router-link :to="{ name:'sponsorships.scholar'}"><i></i><span class="menu-item" data-i18n="Sponsorships">Scholar</span></router-link></li>
                     </ul>
                 </li>
