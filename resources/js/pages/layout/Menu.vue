@@ -59,14 +59,13 @@
                     </ul>
                 </li>
                 
-               
                 <li class=" nav-item has-sub" v-if="isPermitted('sponsorships')">
                     <a href="#">
                         <i class="feather icon-sliders"></i>
                         <span class="menu-title" data-i18n="Sponsorships">Sponsorships</span>
                     </a>
                     <ul class="menu-content">
-                        <li v-if="isPermitted('sponsorships.hafiz')"><router-link :to="{ name:'sponsorships.hafiz'}"><i></i><span class="menu-item" data-i18n="Sponsorships">Hafiz</span></router-link></li>
+                        <li v-if="isPermitted('sponsorships.hafiz')"><router-link :to="{ name:'sponsorships.hafiz'}"><i></i><span class="menu-item" data-i18n="Sponsorships">Hafz</span></router-link></li>
                         <li v-if="isPermitted('sponsorships.scholar')"><router-link :to="{ name:'sponsorships.scholar'}"><i></i><span class="menu-item" data-i18n="Sponsorships">Scholar</span></router-link></li>
                     </ul>
                 </li>
