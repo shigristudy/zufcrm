@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Models\Option;
 use App\Models\OrderItem;
 use App\Models\Report;
 use App\Models\Student;
@@ -33,11 +34,11 @@ class ReportController extends Controller
         $scolar_students = Student::where('student_type','scolar')->count();
 
         // income raised per year *
-        // top project with most donations
+        // top project with most donations *
         // pie chart with donation type
         // number of unallocated sponshorships *
         // unclaimed gift aid donations (number) *
-
+        
         $no_of_unallocated_spons = OrderItem::where('is_sponsor',1)->where('allocated_at',null)->count();
         $total_income_raised_this_year = WooOrder::year(date('Y'))->sum('order_total');
         $total_income_raised = WooOrder::sum('order_total');
@@ -45,7 +46,17 @@ class ReportController extends Controller
                         ->groupBy('product_id')
                         ->orderBy('total_donations','desc')
                         ->limit(5)->get();
-        // dd($top_projects->toArray());
+
+        $donation_types = array_map('trim', explode(',',Option::get('donation_types')));
+        $series_data = OrderItem::select(['donation_type',DB::raw("COUNT(donation_type) as total_donations")])
+                        ->where('donation_type','!=',null)
+                        ->groupBy('donation_type')
+                        ->orderBy('total_donations','desc')->get();
+        $series_labels = $series_data->pluck('donation_type');
+        $series        = $series_data->pluck('total_donations');
+        
+        
+        // dd($series_labels,$series);
         $response = [
             'not_claimed_count' => $not_claimed_count,
             'claimed_count'     => $claimed_count,
@@ -57,6 +68,8 @@ class ReportController extends Controller
             'no_of_unallocated_spons' => $no_of_unallocated_spons,
             'total_income_raised_this_year' => $total_income_raised_this_year,
             'total_income_raised' => $total_income_raised,
+            'series_labels' => $series_labels,
+            'series' => $series,
         ];
         return response()->json($response);
     }

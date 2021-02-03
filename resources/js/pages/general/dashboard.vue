@@ -177,7 +177,7 @@
             </div>     
         </section>
         <div class="row">
-            <div class="col-lg-4 col-12">
+            <div class="col-lg-6 col-12">
                 <div class="card">
                     <div class="card-header">
                         <h4 class="card-title">Top Projects</h4>
@@ -199,6 +199,21 @@
                     </div>
                 </div>
             </div>
+            <div class="col-lg-6 col-12">
+                <div class="card">
+                    <div class="card-header">
+                        <h4 class="card-title">Donation Types</h4>
+                    </div>
+                    <div class="card-content">
+                        <div class="card-body">
+                            <div id="chart" v-if="render_chart">
+                                <apexchart ref="mychart" type="pie" width="380" :options="chartOptions" :series="series"></apexchart>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
         </div>
     </div>
   </div>
@@ -210,7 +225,29 @@ export default {
   middleware: "auth",
   data(){
       return {
-          dashboard:{}
+          dashboard:{},
+          render_chart:false,
+          series: [],
+          chartOptions: {
+            chart: {
+              width: 380,
+              type: 'pie',
+            },
+            labels: [],
+            
+            responsive: [{
+              breakpoint: 480,
+              options: {
+                chart: {
+                  width: 200
+                },
+                legend: {
+                  position: 'bottom'
+                }
+              }
+            }]
+          },
+          
       }
   },
   metaInfo() {
@@ -236,12 +273,27 @@ export default {
       axios
         .post('/api/dashboard')
         .then((res) => {
-          this.dashboard = res.data
+            // this.donation_type_arr = window.config.options.find(x => x.key === 'donation_types').value.split(',')
+            this.dashboard = res.data
+            this.chartOptions.labels = this.dashboard.series_labels
+            this.series = this.dashboard.series
+            this.render_chart = true  
+           
+            
         })
         .catch((errors) => {
           console.log(errors);
         });
     },
+  },
+  computed: {
+    series: function() {
+        console.log('sadf')
+        return [{
+            name: 'sales',
+            data: [this.dashboard.series]
+        }]
+    }
   },
   created() {
     this.fetchData();
@@ -294,4 +346,6 @@ export default {
     width : 140px;
   }
 }
+
+
 </style>

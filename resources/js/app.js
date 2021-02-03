@@ -12,6 +12,10 @@ import Multiselect from 'vue-multiselect'
 // register globally
 Vue.component('multiselect', Multiselect)
 
+import VueApexCharts from 'vue-apexcharts'
+Vue.use(VueApexCharts)
+
+Vue.component('apexchart', VueApexCharts)
 
 import VueSweetalert2 from 'vue-sweetalert2';
  

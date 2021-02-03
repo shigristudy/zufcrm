@@ -120,7 +120,9 @@ table.dataTable thead .sorting:before, table.dataTable thead .sorting_asc:before
 .main-menu.menu-light .navigation > li.active > a{
     box-shadow:unset !important;
 }
-
+.apexcharts-canvas .apexcharts-tooltip{
+    color: white !important;
+}
     </style>
     <!-- BEGIN: Custom CSS-->
     <link rel="stylesheet" type="text/css" href="{{ asset('assets/css/style.css') }}">
