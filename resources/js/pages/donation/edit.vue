@@ -147,7 +147,7 @@
                                     <has-error :form="form" field="email" />
                                 </fieldset>
                                 <fieldset class="form-group">
-                                    <label for="contact">Contact</label>
+                                    <label for="contact">Telephone</label>
                                     <input v-model="form.contact" 
                                             :class="{ 'is-invalid': form.errors.has('contact') }" 
                                             type="text" 

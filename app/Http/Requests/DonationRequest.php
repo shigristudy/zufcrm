@@ -32,7 +32,7 @@ class DonationRequest extends FormRequest
             "city"                              => 'required',
             "country"                           => 'required',
             "postal_code"                       => 'required',
-            "contact"                           => 'required',
+            // "contact"                           => 'required',
             "email"                             => 'required',
             "address_line1"                     => 'required',
             // "address_line2"                     => 'required',

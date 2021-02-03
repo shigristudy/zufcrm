@@ -30,7 +30,7 @@
                                             :allow-empty="true">
                                             <template slot="option" slot-scope="props">
                                                 <div class="option__desc">
-                                                    <span class="option__title">{{ props.option.order.first_name + ' ' + props.option.order.last_name + ' - ' + props.option.name }} ( {{ props.option.total }} )</span>
+                                                    <span class="option__title">{{ props.option.order.first_name + ' ' + props.option.order.last_name + ' - ' + props.option.product.name }} ( {{ props.option.total }} )</span>
                                                    
                                                 </div>
                                             </template>
@@ -73,9 +73,9 @@ export default {
       this.getDonations()
   },
   methods:{ 
-    customLabel( {name,order,total} ){
+    customLabel( {name,order,total,product} ){
         
-        return `${name} — ${order.first_name} - ${order.last_name} - ${total}`
+        return `${order.first_name} — ${product.name}   - ${order.last_name} - ${total}`
     },
     getDonations(){
         
