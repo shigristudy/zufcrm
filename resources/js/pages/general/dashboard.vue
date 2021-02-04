@@ -207,7 +207,7 @@
                     <div class="card-content">
                         <div class="card-body">
                             <div id="chart" v-if="render_chart">
-                                <apexchart ref="mychart" type="pie" width="380" :options="chartOptions" :series="series"></apexchart>
+                                <apexchart ref="mychart" type="donut" width="380" :options="chartOptions" :series="series"></apexchart>
                             </div>
                         </div>
                     </div>
