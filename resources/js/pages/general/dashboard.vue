@@ -231,7 +231,7 @@ export default {
           chartOptions: {
             chart: {
               width: 380,
-              type: 'pie',
+              type: 'donut',
             },
             labels: [],
             
