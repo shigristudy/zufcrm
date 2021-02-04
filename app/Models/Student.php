@@ -13,4 +13,8 @@ class Student extends Model
     public function donations(){
         return $this->hasMany(StudentDonation::class,'student_id','id');
     }
+
+    public function statuses(){
+        return $this->hasMany(StudentStatus::class,'student_id','id');
+    }
 }

@@ -12,4 +12,12 @@ class StudentDonation extends Model
     public function order(){
         return $this->belongsTo(WooOrder::class,'order_id','id');
     }
+
+    public function student(){
+        return $this->belongsTo(Student::class,'student_id','id');
+    }
+
+    public function item(){
+        return $this->belongsTo(OrderItem::class,'order_item_id','id');
+    }
 }

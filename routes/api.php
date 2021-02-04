@@ -48,6 +48,7 @@ Route::group(['middleware' => 'auth:api'], function () {
     Route::get('student/getHafizStudents', [StudentController::class, 'getHafizStudents']);
     Route::get('student/getScholarStudents', [StudentController::class, 'getScholarStudents']);
     Route::get('student/getSingleStudent/{id}', [StudentController::class, 'getSingleStudent']);
+    Route::post('student_status/store', [StudentController::class, 'storeStatus']);
     
     // Donation Routes Starts 
     Route::post('donation/store', [DonationController::class, 'store']);
@@ -78,6 +79,8 @@ Route::group(['middleware' => 'auth:api'], function () {
     Route::get('one_off_donations',[ReportController::class,'one_off_donations']);
     Route::get('monthly_donations',[ReportController::class,'monthly_donations']);
     Route::post('includeProductInSponsorhips',[ReportController::class,'includeProductInSponsorhips']);
+
+    Route::post('send_report_to_donor',[ReportController::class,'send_report_to_donor']);
     
     Route::prefix('settings')->group(function () {
         

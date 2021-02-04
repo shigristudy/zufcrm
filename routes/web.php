@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Admin\ReportController;
 use App\Http\Controllers\GocardlessController;
 use App\Models\OrderItem;
 use App\Models\WooOrder;
@@ -105,7 +106,7 @@ Route::get('/testing', function () {
 });
 
 Route::get('/import-products', function () {
-    // dd(1);
+    dd(1);
     DB::beginTransaction();
 
     try {
@@ -143,5 +144,9 @@ Route::get('/import-products', function () {
 });
 
 
+Route::get('pdf_generator',[GocardlessController::class,'pdf_generator']);
+Route::get('view_reports/{id}',[ReportController::class,'viewReports']);
+Route::get('download_reports/{id}',[ReportController::class,'downloadReports']);
+Route::get('send_reports/{id}',[ReportController::class,'sendReports']);
 
 Route::get('gocardless_testing',[GocardlessController::class,'gocardless_testing']);

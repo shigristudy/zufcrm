@@ -7,10 +7,14 @@ use App\Models\Option;
 use App\Models\OrderItem;
 use App\Models\Report;
 use App\Models\Student;
+use App\Models\StudentDonation;
 use App\Models\WooOrder;
 use App\Models\WooProduct;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Mail;
+use Illuminate\Support\Facades\Storage;
+use PDF;
 
 class ReportController extends Controller
 {
@@ -244,5 +248,84 @@ class ReportController extends Controller
             'success'   => 1,
             'message'   => "{$count} Donations has been included in Sponsorhips"    
         ]);
+    }
+
+
+    public function viewReports($id){
+        
+        $sponsorship = StudentDonation::with(['student','order'])->find($id);
+        $url = asset('uploads/project/'.$sponsorship->student->profile_picture);
+        $data = [
+            'sponsorship' => $sponsorship,
+            'url' => $url
+        ];
+        
+        // return view('student_single',compact('sponsorship'));
+        $pdf = PDF::loadView('student_single', $data);
+        
+        return $pdf->stream('document.pdf');
+    }
+
+    public function downloadReports($id){
+        $sponsorship = StudentDonation::with(['student','order'])->find($id);
+        $data = [
+			'sponsorship' => $sponsorship
+        ];
+        
+        $pdf = PDF::loadView('student_single', $data);
+        // return $pdf->stream('document.pdf');
+        // Storage::put('public/pdf/invoice.pdf', $pdf->output());
+        return $pdf->dwonload('document.pdf');
+    }
+
+    public function sendReports($id){
+        // dd(Storage::path('public/pdf/_Suhail  Rahman.pdf'));
+        $sponsorship = StudentDonation::with(['student','order'])->find($id);
+        $data = [
+			'sponsorship' => $sponsorship
+        ];
+        $name = $sponsorship->student->full_name . '_' . $sponsorship->order->first_name . ' ' . $sponsorship->order->last_name . ' ' . time(); 
+        $donor_email = $sponsorship->order->email; 
+        $pdf = PDF::loadView('student_single', $data);
+        
+        Storage::put('public/pdf/'.$name.'.pdf', $pdf->output());
+        $pathToFile = Storage::path('public/pdf/'.$name .'.pdf');
+       
+        $check = Mail::send('reportemail', $data, function ($message) use ($pathToFile,$donor_email) {
+            $message->from('info@ziaulummah.co.uk', 'Zia Ul Ummah');
+            $message->to($donor_email);
+            $message->attach($pathToFile);
+        });
+        return response([
+            'success' => 1,
+            'message' => 'Report Send Successfully'
+        ]);
+        
+    }
+
+    public function send_report_to_donor(Request $request){
+        // dd(Storage::path('public/pdf/_Suhail  Rahman.pdf'));
+        $sponsorship = StudentDonation::with(['student','order'])->find($request->id);
+        $data = [
+			'sponsorship' => $sponsorship
+        ];
+        $name = $sponsorship->student->full_name . '_' . $sponsorship->order->first_name . ' ' . $sponsorship->order->last_name . ' ' . time(); 
+        $donor_email = $sponsorship->order->email; 
+        $pdf = PDF::loadView('student_single', $data);
+        
+        Storage::put('public/pdf/'.$name.'.pdf', $pdf->output());
+        $pathToFile = Storage::path('public/pdf/'.$name .'.pdf');
+       
+        $check = Mail::send('reportemail', $data, function ($message) use ($pathToFile,$donor_email) {
+            $message->subject('Student Report');
+            $message->from('info@ziaulummah.co.uk', 'Zia Ul Ummah');
+            $message->to($donor_email);
+            $message->attach($pathToFile);
+        });
+        return response([
+            'success' => 1,
+            'message' => 'Report Send Successfully'
+        ]);
+        
     }
 }

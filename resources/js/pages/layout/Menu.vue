@@ -6,7 +6,7 @@
                 <li class="nav-item mr-auto">
                     <router-link :to="{ name:'dashboard'}" class="navbar-brand">
                         <div class="brand-logo"></div>
-                        <h2 class="brand-text mb-0 d-none">ZUF</h2>
+                        <h2 class="brand-text mb-0 ">ZUF</h2>
                     </router-link>
                 </li>
                 <!-- <li class="nav-item nav-toggle">

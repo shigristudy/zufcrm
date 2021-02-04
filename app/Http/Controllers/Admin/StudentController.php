@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\StudentRequest;
 use App\Http\Requests\StudentUpdateRequest;
 use App\Models\Student;
+use App\Models\StudentStatus;
 use App\Services\ImageOptimizer;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
@@ -123,7 +124,24 @@ class StudentController extends Controller
 
 
     public function getSingleStudent( $id ){
-        $student = Student::with(['donations.order.webhooks'])->find($id);
+        $student = Student::with(['donations.item.product','donations.order.webhooks','statuses'])->find($id);
         return response()->json($student);
+    }
+
+
+    public function storeStatus( Request $request ){
+        $this->validate($request, [
+            'date' => 'required',
+            'notes' => 'required',
+        ]);
+        $status = new StudentStatus();
+        $status->date = $request->date;
+        $status->notes = $request->notes;
+        $status->student_id = $request->student_id;
+        $status->save();
+        return response()->json([
+            'success'   => 1,
+            'message'   => 'Status Update Successfully!'    
+        ]);
     }
 }

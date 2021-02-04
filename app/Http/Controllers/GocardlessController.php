@@ -8,6 +8,8 @@ use App\Models\WooOrder;
 use GuzzleHttp\Client;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Storage;
+use PDF;
 
 class GocardlessController extends Controller
 {
@@ -177,6 +179,20 @@ class GocardlessController extends Controller
             $customer = json_decode($customer->getBody(),true); 
             return $customer;
                         
+        
+    }
+
+
+
+    public function pdf_generator(){
+        // return view('student');     
+        $data = [
+			'foo' => 'bar'
+		];
+        $pdf = PDF::loadView('student', $data);
+        
+        Storage::put('public/pdf/invoice.pdf', $pdf->output());
+        return $pdf->stream('document.pdf');
         
     }
 }
