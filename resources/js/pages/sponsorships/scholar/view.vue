@@ -29,28 +29,36 @@
                                     <img style="width:150px;" :src="BaseUrlPublic+'uploads/project/'+student.profile_picture" class="users-avatar-shadow rounded mb-2 pr-2 ml-1" alt="avatar">
                                 </div>
                                 <div class="col-12 col-sm-9 col-md-6 col-lg-5">
-                                    <table>
+                                    <table class="table table-details">
                                         
                                         <tbody>
                                             <tr>
-                                                <td class="font-weight-bold">Full Name</td>
+                                                <td class="font-weight-bold">Full Name:</td>
                                                 <td>{{ student.full_name }}</td>
                                             </tr>
                                             <tr>
-                                                <td class="font-weight-bold">Father Name</td>
+                                                <td class="font-weight-bold">Father Name:</td>
                                                 <td>{{ student.father_name }}</td>
                                             </tr>
                                             <tr>
-                                                <td class="font-weight-bold">Gender</td>
+                                                <td class="font-weight-bold">Gender:</td>
                                                 <td>{{ student.gender }}</td>
                                             </tr>
                                             <tr>
-                                                <td class="font-weight-bold">Teacher Name</td>
+                                                <td class="font-weight-bold">Teacher Name:</td>
                                                 <td>{{ student.teacher_name }}</td>
                                             </tr>
                                             <tr>
-                                                <td class="font-weight-bold">Date Of Birth</td>
+                                                <td class="font-weight-bold">Date Of Birth:</td>
                                                 <td>{{ student.dob }}</td>
+                                            </tr>
+                                            <tr>
+                                                <td class="font-weight-bold">DMG Ref:</td>
+                                                <td>{{ student.dmg_ref }}</td>
+                                            </tr>
+                                            <tr>
+                                                <td class="font-weight-bold">ZUF Ref:</td>
+                                                <td>{{ student.zuf_ref }}</td>
                                             </tr>
                                         </tbody>
                                     </table>
@@ -58,21 +66,30 @@
 
 
                                 <div class="col-12 col-md-12 col-lg-5">
-                                    <table class="ml-0 ml-sm-0 ml-lg-0">
-                                        <tbody><tr>
-                                            <td class="font-weight-bold">Status</td>
+                                    <table class="ml-0 ml-sm-0 ml-lg-0 table table-details">
+                                        <tbody>
+                                        <tr>
+                                            <td class="font-weight-bold">Para Number:</td>
+                                            <td>{{ student.para_number }}</td>
+                                        </tr>
+                                        <tr>
+                                            <td class="font-weight-bold">Status:</td>
                                             <td>{{ student.status }}</td>
                                         </tr>
                                         <tr>
-                                            <td class="font-weight-bold">City</td>
+                                            <td class="font-weight-bold">City:</td>
                                             <td>{{ student.city }}</td>
                                         </tr>
                                         <tr>
-                                            <td class="font-weight-bold">Class Name</td>
+                                            <td class="font-weight-bold">Province:</td>
+                                            <td>{{ student.province }}</td>
+                                        </tr>
+                                        <tr>
+                                            <td class="font-weight-bold">Class Name:</td>
                                             <td>{{ student.class_name }}</td>
                                         </tr>
                                         <tr>
-                                            <td class="font-weight-bold">Student ID</td>
+                                            <td class="font-weight-bold">Student ID:</td>
                                             <td>{{ student.student_id }}</td>
                                         </tr>
                                         <tr>
@@ -318,3 +335,10 @@ export default {
 </script>
 
 
+<style scoped>
+.table-details th, .table-details td {
+    padding: 0.3rem;
+    vertical-align: top;
+    border-top: unset;
+}
+</style>

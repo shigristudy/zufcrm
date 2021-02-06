@@ -68,7 +68,7 @@
               </div>
 
               <div class="row">
-                <div class="col-md-6">
+                <div class="col-md-3">
                   <fieldset class="form-group">
                     <label>Gender</label>
                     <select
@@ -82,7 +82,7 @@
                     <has-error :form="form" field="gender" />
                   </fieldset>
                 </div>
-                <div class="col-md-6">
+                <div class="col-md-3">
                   <fieldset class="form-group">
                     <label for="city">From City</label>
                     <input
@@ -95,6 +95,21 @@
                       placeholder="City"
                     />
                     <has-error :form="form" field="city" />
+                  </fieldset>
+                </div>
+                <div class="col-md-6">
+                  <fieldset class="form-group">
+                    <label for="province">From Province</label>
+                    <input
+                      v-model="form.province"
+                      :class="{ 'is-invalid': form.errors.has('province') }"
+                      type="text"
+                      class="form-control"
+                      id="province"
+                      name="province"
+                      placeholder="province"
+                    />
+                    <has-error :form="form" field="province" />
                   </fieldset>
                 </div>
               </div>
@@ -191,6 +206,51 @@
                     <has-error :form="form" field="status" />
                   </fieldset>
                 </div>
+                <div class="col-md-4">
+                  <fieldset class="form-group">
+                    <label>Para Number</label>
+                    <input
+                      v-model="form.para_number"
+                      :class="{ 'is-invalid': form.errors.has('para_number') }"
+                      type="text"
+                      class="form-control"
+                      id="para_number"
+                      name="para_number"
+                      placeholder="Student Id"
+                    />
+                    <has-error :form="form" field="para_number" />
+                  </fieldset>
+                </div>
+                <div class="col-md-4">
+                  <fieldset class="form-group">
+                    <label>DMG Ref:</label>
+                    <input
+                      v-model="form.dmg_ref"
+                      :class="{ 'is-invalid': form.errors.has('dmg_ref') }"
+                      type="text"
+                      class="form-control"
+                      id="dmg_ref"
+                      name="dmg_ref"
+                      placeholder="Student Id"
+                    />
+                    <has-error :form="form" field="dmg_ref" />
+                  </fieldset>
+                </div>
+                <div class="col-md-4">
+                  <fieldset class="form-group">
+                    <label>Zuf Ref:</label>
+                    <input
+                      v-model="form.zuf_ref"
+                      :class="{ 'is-invalid': form.errors.has('zuf_ref') }"
+                      type="text"
+                      class="form-control"
+                      id="zuf_ref"
+                      name="zuf_ref"
+                      placeholder="Student Id"
+                    />
+                    <has-error :form="form" field="zuf_ref" />
+                  </fieldset>
+                </div>
               </div>
 
               <fieldset class="form-group">
@@ -269,6 +329,10 @@ export default {
         personal_statement: "",
         status: "active",
         profile_picture: null,
+        province:"",
+        para_number:"",
+        dmg_ref:"",
+        zuf_ref:"",
       }),
     };
   },
@@ -293,6 +357,10 @@ export default {
           this.form.student_id = response.data.student_id;
           this.form.personal_statement = response.data.personal_statement;
           this.form.status = response.data.status;
+          this.form.province = response.data.province
+          this.form.para_number = response.data.para_number
+          this.form.dmg_ref = response.data.dmg_ref
+          this.form.zuf_ref = response.data.zuf_ref
         })
         .catch((errors) => {
           console.log(errors);

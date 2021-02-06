@@ -32,7 +32,7 @@
                 </li>
                 <li class=" nav-item has-sub" v-if="isPermitted('donations')">
                     <a href="#">
-                        <i class="feather icon-sliders"></i>
+                        <i class="feather icon-bar-chart-2"></i>
                         <span class="menu-title" data-i18n="Sponsorships">Donations</span>
                     </a>
                     <ul class="menu-content">
@@ -61,12 +61,12 @@
                 
                 <li class=" nav-item has-sub" v-if="isPermitted('sponsorships')">
                     <a href="#">
-                        <i class="feather icon-sliders"></i>
+                        <i class="feather icon-sun"></i>
                         <span class="menu-title" data-i18n="Sponsorships">Sponsorships</span>
                     </a>
                     <ul class="menu-content">
-                        <li v-if="isPermitted('sponsorships.hafiz')"><router-link :to="{ name:'sponsorships.hafiz'}"><i></i><span class="menu-item" data-i18n="Sponsorships">Hifz</span></router-link></li>
-                        <li v-if="isPermitted('sponsorships.scholar')"><router-link :to="{ name:'sponsorships.scholar'}"><i></i><span class="menu-item" data-i18n="Sponsorships">Scholar</span></router-link></li>
+                        <li v-if="isPermitted('sponsorships.hafiz')"><router-link :to="{ name:'sponsorships.hafiz'}"><i class="feather icon-users"></i><span class="menu-item" data-i18n="Sponsorships">Hifz</span></router-link></li>
+                        <li v-if="isPermitted('sponsorships.scholar')"><router-link :to="{ name:'sponsorships.scholar'}"><i class="feather icon-users"></i><span class="menu-item" data-i18n="Sponsorships">Scholar</span></router-link></li>
                     </ul>
                 </li>
                 <li class=" nav-item has-sub" v-if="isPermitted('gift_aids')">
@@ -94,7 +94,7 @@
                 </li>
                
                <li class=" nav-item" v-if="isPermitted('donations')">
-                    <router-link :to="{ name:'donations'}"><i class="feather icon-plus-square"></i>
+                    <router-link :to="{ name:'donations'}"><i class="feather icon-filter"></i>
                         <span class="menu-title" data-i18n="Donation">Reporting</span>
                     </router-link>
                 </li>
@@ -104,10 +104,10 @@
                         <span class="menu-title" data-i18n="settings_items">Settings</span>
                     </a>
                     <ul class="menu-content">
-                        <li><router-link :to="{ name:'users'}"><i></i><span class="menu-item" data-i18n="settings_items">Users</span></router-link></li>
-                        <li><router-link :to="{ name:'settings.roles'}"><i></i><span class="menu-item" data-i18n="settings_items">Roles</span></router-link></li>
-                        <li><router-link :to="{ name:'settings.permissions'}"><i></i><span class="menu-item" data-i18n="settings_items">Permissions</span></router-link></li>
-                        <li><router-link :to="{ name:'settings.options'}"><i></i><span class="menu-item" data-i18n="settings_items">Options</span></router-link></li>
+                        <li><router-link :to="{ name:'users'}"><i class="feather icon-users"></i><span class="menu-item" data-i18n="settings_items">Users</span></router-link></li>
+                        <li><router-link :to="{ name:'settings.roles'}"><i class="feather icon-shield"></i><span class="menu-item" data-i18n="settings_items">Roles</span></router-link></li>
+                        <li><router-link :to="{ name:'settings.permissions'}"><i class="feather icon-user-check"></i><span class="menu-item" data-i18n="settings_items">Permissions</span></router-link></li>
+                        <li><router-link :to="{ name:'settings.options'}"><i class="feather icon-list"></i><span class="menu-item" data-i18n="settings_items">Options</span></router-link></li>
                     </ul>
                 </li>
             </ul>

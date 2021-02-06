@@ -27,6 +27,10 @@ class StudentController extends Controller
         $student->student_id         = $request->student_id;
         $student->personal_statement = $request->personal_statement;
         $student->status             = $request->status;
+        $student->province           = $request->province;
+        $student->para_number        = $request->para_number;
+        $student->dmg_ref            = $request->dmg_ref;
+        $student->zuf_ref            = $request->zuf_ref;
 
         $image_name  = Str::slug($request->full_name, '-') . '_' . time() . '.png';
         $imageoptimze   = new ImageOptimizer;
@@ -56,6 +60,10 @@ class StudentController extends Controller
         $student->student_id         = $request->student_id;
         $student->personal_statement = $request->personal_statement;
         $student->status             = $request->status;
+        $student->province           = $request->province;
+        $student->para_number        = $request->para_number;
+        $student->dmg_ref            = $request->dmg_ref;
+        $student->zuf_ref            = $request->zuf_ref;
 
         if($request->profile_picture != null){
             $image_name  = Str::slug($request->full_name, '-') . '_' . time() . '.png';
