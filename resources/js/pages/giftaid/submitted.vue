@@ -4,7 +4,7 @@
       <div class="content-header-left col-md-9 col-12 mb-2">
         <div class="row breadcrumbs-top">
           <div class="col-12">
-            <h2 class="content-header-title float-left mb-0">Gift Aids Generated</h2>
+            <h2 class="content-header-title float-left mb-0">Make A Claim</h2>
           </div>
         </div>
       </div>
@@ -24,7 +24,7 @@
                   <button v-if="form.selectedrows.length>0" class="btn btn-success" @click="markSelectedAsRenew()">Remove From This Claim</button>
               </div>
               <div class="col-md-6">
-                <button class="btn btn-primary float-right" @click="openReportSubmitModal()">Close All Donations</button>
+                <button class="btn btn-primary float-right" @click="openReportSubmitModal()">Complete Claim</button>
               </div>
 
             </div>

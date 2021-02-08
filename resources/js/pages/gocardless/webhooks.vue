@@ -4,12 +4,7 @@
       <div class="content-header-left col-md-9 col-12 mb-2">
         <div class="row breadcrumbs-top">
           <div class="col-12">
-            <h2 class="content-header-title float-left mb-0">Gocardless Updates</h2>
-            <div class="breadcrumb-wrapper col-12">
-              <ol class="breadcrumb">
-                <li class="breadcrumb-item"><a href="#">Webhooks</a></li>
-              </ol>
-            </div>
+            <h2 class="content-header-title float-left mb-0">Successful DD Payments</h2>
           </div>
         </div>
       </div>

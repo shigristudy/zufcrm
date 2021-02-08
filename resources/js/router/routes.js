@@ -44,10 +44,9 @@ export default [
   { path: '/gift-aids-claimed', name: 'gift_aids_claimed', component: page('giftaid/claimed.vue') },
   { path: '/gift-aids-reports', name: 'gift_aids_reports', component: page('giftaid/reports.vue') },
   { path: '/gift-aids-reports/details/:id', name: 'gift_aids_reports_details', component: page('giftaid/details.vue') },
-  
   // Reporting Section Routes
-  { path: '/webhooks', name: 'gocardless.webhooks', component: page('gocardless/webhooks.vue') },
-  { path: '/webhooks_failed', name: 'gocardless.webhooks.failed', component: page('gocardless/webhooks_failed.vue') },
+  { path: '/successfull_payments', name: 'gocardless.webhooks', component: page('gocardless/webhooks.vue') },
+  { path: '/failed_payments', name: 'gocardless.webhooks.failed', component: page('gocardless/webhooks_failed.vue') },
   { path: '/customers', name: 'sponsorship.customers', component: page('gocardless/sponsorship_customers.vue') },
   { path: '/webhooks/:id', name: 'gocardless.webhooks.details', component: page('gocardless/webhooks_details.vue') },
   { path: '/one-off-donations', name: 'one_off_donations.customers', component: page('reporting/one-off-donation.vue') },

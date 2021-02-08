@@ -33,7 +33,7 @@
                         <div class="row">
                           <div class="col-md-3">
                             <fieldset class="form-group">
-                                <label for="basicInput">GIFT AID</label>
+                                <label for="basicInput">Gift Aid</label>
                                 <select class="form-control" v-model="tableData.form.gift_aid">
                                     <option value="">Select Gift Aid</option>
                                     <option value="Yes">Yes</option>
@@ -51,9 +51,9 @@
                                     <option value="">
                                         <strong>Select Project</strong>
                                     </option>
-                                    <option v-for="p in wooProducts" :key="'woo_project'+p.product_id" 
+                                    <option v-for="p in format_and_sorted_products" :key="'woo_project'+p.product_id" 
                                             :value="p.product_id">
-                                        <strong>{{ project_name_computed(p) }}</strong>
+                                        <strong>{{ p.display_name }}</strong>
                                     </option>
                                 </select>
                             </fieldset>
@@ -99,7 +99,7 @@
                           
                           <div class="col-md-3">
                             <fieldset class="form-group">
-                                <label for="basicInput">Has Sponsored?</label>
+                                <label for="basicInput">Sponsored?</label>
                                 <select class="form-control" v-model="tableData.form.has_sponsored">
                                     <option value="">Select Type</option>
                                     <option value="Yes">Yes</option>
@@ -220,17 +220,18 @@ export default {
     let sortOrders = {};
     let columns = [
       { label : 'Projects',name : 'name'},
-      { label : 'Sponsor By',name : 'first_name'},
-      { label : 'Giftaid',name : 'gift_aid'},
+      { label : 'Sponsored By',name : 'first_name'},
+      { label : 'Gift Aid',name : 'gift_aid'},
       { label : 'Donation Date',name : 'donation_date'},
       { label : 'Payment Method',name : 'payment_method'},
       { label : 'Total',name : 'order_total',sortable:true},
-      { label : 'Action',name : 'action'},
+      { label : 'Action',name : 'action',clasess:'text-center'},
     ];
     columns.forEach((column) => {
       sortOrders[column.name] = -1;
     });
     return {
+      format_and_sorted_products:[],
       wooProducts:[],
       donations: [],
       columns: columns,
@@ -293,12 +294,32 @@ export default {
         return name;
     },
     async getProjects(){
+        var instance = this
         axios.get('/api/getProjects')
         .then((response) => {
-            this.wooProducts = response.data
+            this.wooProducts = response.data;
+            this.wooProducts.forEach(function(val,index){
+                var display_name = instance.project_name_computed(val)
+                instance.format_and_sorted_products.push({
+                    id: val.id,
+                    name: val.name,
+                    display_name:display_name,
+                    price: val.price,
+                    product_id: val.product_id,
+                    project_page: val.project_page,
+                    type: val.type,
+                })
+            })
+            instance.format_and_sorted_products.sort(function(a, b){
+                if(a.display_name < b.display_name) { return -1; }
+                if(a.display_name > b.display_name) { return 1; }
+                return 0;
+            })
+
         }).catch((errors) => {
             console.log(errors);
         });
+
     },
     getData(url = "/api/donation/getDonations") {
       // this.datatable_debounce()

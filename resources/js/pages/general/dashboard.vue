@@ -36,7 +36,7 @@
         </section>
         <section id="statistics-card" v-if="dashboard">
             <div class="row">
-                <div class="col-xl-2 col-md-4 col-sm-6">
+                <div class="col-xl-4 col-md-4 col-sm-6">
                     <div class="card text-center">
                         <div class="card-content">
                             <div class="card-body">
@@ -51,7 +51,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="col-xl-2 col-md-4 col-sm-6">
+                <div class="col-xl-4 col-md-4 col-sm-6">
                     <div class="card text-center">
                         <div class="card-content">
                             <div class="card-body">
@@ -69,7 +69,7 @@
 
 
 
-                <div class="col-xl-2 col-md-4 col-sm-6">
+                <div class="col-xl-4 col-md-4 col-sm-6">
                     <div class="card text-center">
                         <div class="card-content">
                             <div class="card-body">
@@ -78,13 +78,13 @@
                                         <i class="feather icon-x-circle text-info font-medium-5"></i>
                                     </div>
                                 </div>
-                                <h2 class="text-bold-700">{{ dashboard.not_claimed_count }}</h2>
-                                <p class="mb-0 line-ellipsis">Unclaimed GiftAids</p>
+                                <h2 class="text-bold-700">{{ round2Fixed(dashboard.not_claimed_total) }}</h2>
+                                <p class="mb-0 line-ellipsis">Unclaimed Gift Aid</p>
                             </div>
                         </div>
                     </div>
                 </div>
-                <div class="col-xl-2 col-md-4 col-sm-6">
+                <!-- <div class="col-xl-2 col-md-4 col-sm-6">
                     <div class="card text-center">
                         <div class="card-content">
                             <div class="card-body">
@@ -98,8 +98,8 @@
                             </div>
                         </div>
                     </div>
-                </div>
-                <div class="col-xl-2 col-md-4 col-sm-6">
+                </div> -->
+                <!-- <div class="col-xl-2 col-md-4 col-sm-6">
                     <div class="card text-center">
                         <div class="card-content">
                             <div class="card-body">
@@ -113,8 +113,8 @@
                             </div>
                         </div>
                     </div>
-                </div>
-                <div class="col-xl-2 col-md-4 col-sm-6">
+                </div> -->
+                <!-- <div class="col-xl-2 col-md-4 col-sm-6">
                     <div class="card text-center">
                         <div class="card-content">
                             <div class="card-body">
@@ -128,7 +128,7 @@
                             </div>
                         </div>
                     </div>
-                </div>
+                </div> -->
                 <div class="col-xl-4 col-md-4 col-sm-6">
                     <div class="card text-center">
                         <div class="card-content">
@@ -202,7 +202,7 @@
             <div class="col-lg-6 col-12">
                 <div class="card">
                     <div class="card-header">
-                        <h4 class="card-title">Donation Types</h4>
+                        <h4 class="card-title">Donation Types - All Time</h4>
                     </div>
                     <div class="card-content">
                         <div class="card-body">

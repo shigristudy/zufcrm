@@ -133,7 +133,7 @@ export default {
       { label: "Class Name",name : 'class_name'},
       { label: "Student ID",name : 'student_id'},
       { label: "Sponsored",name : 'sponsored'},
-      { label: "Action", name: "action" },
+      { label: "Action", name: "action",clasess:'text-center' },
     ];
     columns.forEach((column) => {
       sortOrders[column.name] = -1;

@@ -123,13 +123,12 @@
                                 </div>
                                 <fieldset class="form-group">
                                     <label for="country">Country</label>
-                                    <input v-model="form.country" 
-                                            :class="{ 'is-invalid': form.errors.has('country') }" 
-                                            type="text" 
-                                            class="form-control" 
-                                            id="country" 
-                                            name="country" 
-                                            placeholder="Country (e.g GB, PK)">
+                                     <select class="form-control" v-model="form.country">
+                                        <option value="">Please Select a Country</option>
+                                        <option value="GB">GB</option>
+                                        <option value="US">US</option>
+                                        <option value="Others">Others</option>
+                                    </select>
                                     <has-error :form="form" field="country" />
                                 </fieldset>
                             </div>
@@ -154,7 +153,7 @@
                                             class="form-control" 
                                             id="contact" 
                                             name="contact" 
-                                            placeholder="Contact">
+                                            placeholder="Telephone">
                                     <has-error :form="form" field="contact" />
                                 </fieldset>
                                 <h3>Donation Details</h3>
@@ -217,9 +216,9 @@
                                                     <option value="">
                                                         <strong>Select Project</strong>
                                                     </option>
-                                                    <option v-for="p in wooProducts" :key="'woo_project'+p.product_id" 
+                                                    <option v-for="p in format_and_sorted_products" :key="'woo_project'+p.product_id" 
                                                             :value="p.product_id">
-                                                        <strong>{{ p.name }}</strong>
+                                                        <strong>{{ p.display_name }}</strong>
                                                     </option>
                                                 </select>
                                                 <has-error :form="form" :field="`donationsArray.${index}.project`"/>
@@ -300,11 +299,16 @@ export default {
             address_line1 : '',
             address_line2 : '',
             donationsArray:[],
-        })
+        }),
+        format_and_sorted_products:[]
       }
   },
   created(){
-    this.donation_type_arr = window.config.options.find(x => x.key === 'donation_types').value.split(',')
+    this.donation_type_arr = window.config.options.find(x => x.key === 'donation_types').value.split(',').sort(function(a, b){
+                if(a < b) { return -1; }
+                if(a > b) { return 1; }
+                return 0;
+            })
     this.getProjects() 
     this.getData("/api/donation/getSingleDonation/"+this.$route.params.id)
   },
@@ -356,10 +360,44 @@ export default {
         })
         this.form.total_amount = parseFloat(total).toFixed(2)
     },
+    project_name_computed(p){
+        var name = '';
+        var type = '';
+        if(p.type == 'simple'){
+            type = '[One-Off]';
+        }else{
+            type = '[Monthly]';
+        }
+        if(p.project_page != null && p.project_page != ''){
+            name = p.project_page + ' - ' + p.name + ' - ' + type
+        }else{
+            name = p.name + ' - ' + type
+        }
+        return name;
+    },
     async getProjects(){
+        var instance = this
         axios.get('/api/getProjects')
         .then((response) => {
-            this.wooProducts = response.data
+            this.wooProducts = response.data;
+            this.wooProducts.forEach(function(val,index){
+                var display_name = instance.project_name_computed(val)
+                instance.format_and_sorted_products.push({
+                    id: val.id,
+                    name: val.name,
+                    display_name:display_name,
+                    price: val.price,
+                    product_id: val.product_id,
+                    project_page: val.project_page,
+                    type: val.type,
+                })
+            })
+            instance.format_and_sorted_products.sort(function(a, b){
+                if(a.display_name < b.display_name) { return -1; }
+                if(a.display_name > b.display_name) { return 1; }
+                return 0;
+            })
+
         }).catch((errors) => {
             console.log(errors);
         });

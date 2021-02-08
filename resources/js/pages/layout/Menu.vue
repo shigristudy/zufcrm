@@ -6,7 +6,7 @@
                 <li class="nav-item mr-auto">
                     <router-link :to="{ name:'dashboard'}" class="navbar-brand">
                         <div class="brand-logo"></div>
-                        <h2 class="brand-text mb-0 ">ZUF</h2>
+                        <h2 class="brand-text mb-0 d-none">ZUF</h2>
                     </router-link>
                 </li>
                 <!-- <li class="nav-item nav-toggle">
@@ -38,7 +38,7 @@
                     <ul class="menu-content">
                         <li class="nav-item" v-if="isPermitted('one_off_donations.customers')">
                             <router-link :to="{ name:'one_off_donations.customers' }"><i class="feather icon-trending-up"></i>
-                                <span class="menu-title">One-off Donations</span>
+                                <span class="menu-title">One-Off Donations</span>
                             </router-link>
                         </li>
                         <li class="nav-item" v-if="isPermitted('monthly_donations.customers')">
@@ -87,7 +87,7 @@
                         </li>
                         <li class=" nav-item" v-if="isPermitted('gift_aids_reports')">
                             <router-link :to="{ name:'gift_aids_reports'}"><i class="feather icon-lock"></i>
-                                <span class="menu-title">Claimed</span>
+                                <span class="menu-title">Past Claims</span>
                             </router-link>
                         </li>
                     </ul>

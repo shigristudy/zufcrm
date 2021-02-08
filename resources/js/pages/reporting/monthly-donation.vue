@@ -43,7 +43,7 @@
                                             :close-on-select="false"
                                             :custom-label="customLabel"
                                             :allow-empty="false">
-                                  <template slot="singleLabel" slot-scope="{ option }"><strong>{{ project_name_computed(option) }}</strong></template>
+                                  <template slot="singleLabel" slot-scope="{ option }"><strong>{{ option.display_name }}</strong></template>
                                 </multiselect>
                                 <!-- <select class="form-control" v-model="tableData.form.product_id">
                                     <option value="">
@@ -159,12 +159,15 @@
                       <td>{{ formattedDateDDMMYY(item.order.donation_date) }}</td>
                       <td>{{ round2Fixed(item.total) }}</td>
                       <td>
-                        <div v-if="item.allocated_at == null" class="badge badge-pill  badge-danger mr-1 mb-1">No Allocated</div>
+                        <div v-if="item.allocated_at == null" class="badge badge-pill  badge-danger mr-1 mb-1">Not Allocated</div>
                         <div v-else class="badge badge-pill  badge-success mr-1 mb-1">Allocated</div>
                       </td>
-                      <td class="text-center">
+                      <td>
                         <div v-if="item.is_sponsor == 1" class="badge badge-pill  badge-success mr-1 mb-1">Included</div>
-                        <div v-else>
+                        <div v-else class="badge badge-pill  badge-info mr-1 mb-1">Not Included</div>
+                      </td>
+                      <td class="text-center">
+                        <div >
                           <fieldset>
                             <div class="custom-control custom-checkbox">
                                 <input type="checkbox" class="custom-control-input" v-model="form2.selectedrows" :value="item.id" :id="'customCheck'+item.id">
@@ -211,7 +214,7 @@ export default {
     let columns = [
         // { label: "Type", name:'type' }, 
         { label: "Name", name:'name' }, 
-        { label: "Donation_type", name:'donation_type' }, 
+        { label: "Donation Type", name:'donation_type' }, 
         { label: "Donar", name:'first_name' }, 
         { label: "Email", name:'email' }, 
         { label: "Phone", name:'phone' }, 
@@ -219,7 +222,8 @@ export default {
         { label: "Postcode", name:'postcode' }, 
         { label: "Donation Date", name:'donation_date' }, 
         { label: "Total", name:'total',sortable:true }, 
-        { label: "Allocated?", name:'allocated' }, 
+        { label: "Sponsorship?", name:'allocated' }, 
+        { label: "Included?", name:'already_included' }, 
         { label: "Include in sponsorship?", name:'include' }, 
         
     ];
@@ -229,6 +233,7 @@ export default {
     return {
       datatableID:'monthly_donations_table',
       is_added_successfully:false,
+      successMessage:'',
       donation_type_arr:[],
       wooProducts: [],
       items: [],
@@ -296,12 +301,34 @@ export default {
       this.getData()
     },
     async getProjects(){
+      var instance = this
+      var format_and_sorted_products = []
         axios.get('/api/getProjects',{ params:{type:'subscription'} })
         .then((response) => {
-            this.wooProducts = response.data
+            this.wooProducts = response.data;
+            this.wooProducts.forEach(function(val,index){
+                var display_name = instance.project_name_computed(val)
+                format_and_sorted_products.push({
+                    id: val.id,
+                    name: val.name,
+                    display_name:display_name,
+                    price: val.price,
+                    product_id: val.product_id,
+                    project_page: val.project_page,
+                    type: val.type,
+                })
+            })
+            format_and_sorted_products.sort(function(a, b){
+                if(a.display_name < b.display_name) { return -1; }
+                if(a.display_name > b.display_name) { return 1; }
+                return 0;
+            })
+
+            this.wooProducts = format_and_sorted_products
         }).catch((errors) => {
             console.log(errors);
         });
+        
     },
      project_name_computed(p){
         var name = '';
@@ -337,7 +364,11 @@ export default {
     },
   },
   created() {
-    this.donation_type_arr = window.config.options.find(x => x.key === 'donation_types').value.split(',')
+    this.donation_type_arr = window.config.options.find(x => x.key === 'donation_types').value.split(',').sort(function(a, b){
+                if(a < b) { return -1; }
+                if(a > b) { return 1; }
+                return 0;
+            })
     this.getData();
     this.getProjects()
   },

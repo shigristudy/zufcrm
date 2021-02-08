@@ -24,6 +24,10 @@ class ReportController extends Controller
                     ->notClaimed()
                     ->notSubmitted()
                     ->count();
+        $not_claimed_total = WooOrder::giftaid()
+                    ->notClaimed()
+                    ->notSubmitted()
+                    ->sum('order_total');
         $claimed_count = WooOrder::giftaid()
                     ->claimed()
                     ->submitted()
@@ -48,7 +52,7 @@ class ReportController extends Controller
         $total_income_raised = WooOrder::sum('order_total');
         $top_projects = OrderItem::with('product')->select(['product_id',DB::raw("SUM(total) as total_amount"), DB::raw("COUNT(product_id) as total_donations")])
                         ->groupBy('product_id')
-                        ->orderBy('total_donations','desc')
+                        ->orderBy('total_amount','desc')
                         ->limit(5)->get();
 
         $donation_types = array_map('trim', explode(',',Option::get('donation_types')));
@@ -74,6 +78,7 @@ class ReportController extends Controller
             'total_income_raised' => $total_income_raised,
             'series_labels' => $series_labels,
             'series' => $series,
+            'not_claimed_total'=> $not_claimed_total
         ];
         return response()->json($response);
     }
@@ -237,13 +242,12 @@ class ReportController extends Controller
     }
 
     public function includeProductInSponsorhips( Request $request ){
-        
+        // dd($request->all());
         $count = count($request->selectedrows);
-
         OrderItem::whereIn('id',$request->selectedrows)->update([
-            'is_sponsor' => 1
+            'is_sponsor' => DB::raw('NOT is_sponsor')
         ]);
-
+                
         return response()->json([
             'success'   => 1,
             'message'   => "{$count} Donations has been included in Sponsorhips"    
