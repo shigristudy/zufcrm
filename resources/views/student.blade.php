@@ -30,7 +30,7 @@
                     @endif
                 </td>
                 <td style="width: 30%;">
-                    &nbsp;&nbsp;&nbsp;&nbsp;<img style="width: 150px;" src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRSn70eUIKTt9WJa6edVUU_FZVBS0jdUGr5uQ&usqp=CAU">
+                    &nbsp;&nbsp;&nbsp;&nbsp;<img style="width: 150px;" src="{{ $url }}">
                     <br>
                     <h4 style="color: green;">&nbsp;&nbsp;&nbsp;&nbsp;Student Details:</h4><br>
                     <h5 style="margin-bottom: 10px;">&nbsp;&nbsp;&nbsp;&nbsp;Name:</h5>
@@ -49,16 +49,16 @@
                     <p>&nbsp;&nbsp;&nbsp;&nbsp;Skardu</p>
                     <br>
                     <h5>&nbsp;&nbsp;&nbsp;&nbsp;Para Number:</h5>
-                    <p>&nbsp;&nbsp;&nbsp;&nbsp;13</p>
+                    <p>&nbsp;&nbsp;&nbsp;&nbsp;{{ $sponsorship->para_number }}</p>
                     <br>
                     <h5>&nbsp;&nbsp;&nbsp;&nbsp;Teacher Name:</h5>
                     <p>&nbsp;&nbsp;&nbsp;&nbsp;{{ $sponsorship->student->teacher_name }}</p>
                     <br>
                     <h5>&nbsp;&nbsp;&nbsp;&nbsp;DMG Ref:</h5>
-                    <p>&nbsp;&nbsp;&nbsp;&nbsp;HM-281</p>
+                    <p>&nbsp;&nbsp;&nbsp;&nbsp;{{ $sponsorship->dmg_ref }}</p>
                     <br>
                     <h5>&nbsp;&nbsp;&nbsp;&nbsp;ZUF Ref:</h5>
-                    <p>&nbsp;&nbsp;&nbsp;&nbsp;1083</p>
+                    <p>&nbsp;&nbsp;&nbsp;&nbsp;{{ $sponsorship->zuf_ref }}</p>
                 </td>
             </tr>
             <tr>

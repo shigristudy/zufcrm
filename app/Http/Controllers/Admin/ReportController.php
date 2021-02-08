@@ -272,8 +272,10 @@ class ReportController extends Controller
 
     public function downloadReports($id){
         $sponsorship = StudentDonation::with(['student','order'])->find($id);
+        $url = asset('uploads/project/'.$sponsorship->student->profile_picture);
         $data = [
-			'sponsorship' => $sponsorship
+            'sponsorship' => $sponsorship,
+            'url' => $url
         ];
         
         $pdf = PDF::loadView('student_single', $data);
@@ -285,8 +287,10 @@ class ReportController extends Controller
     public function sendReports($id){
         // dd(Storage::path('public/pdf/_Suhail  Rahman.pdf'));
         $sponsorship = StudentDonation::with(['student','order'])->find($id);
+        $url = asset('uploads/project/'.$sponsorship->student->profile_picture);
         $data = [
-			'sponsorship' => $sponsorship
+            'sponsorship' => $sponsorship,
+            'url' => $url
         ];
         $name = $sponsorship->student->full_name . '_' . $sponsorship->order->first_name . ' ' . $sponsorship->order->last_name . ' ' . time(); 
         $donor_email = $sponsorship->order->email; 
