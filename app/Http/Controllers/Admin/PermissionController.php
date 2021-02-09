@@ -13,7 +13,7 @@ use Illuminate\Support\Arr;
 
 class PermissionController extends Controller
 {
-
+    
     public function fetch(Request $request){
         $columns = ['id','name','display_name','description'];
         

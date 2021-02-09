@@ -46,19 +46,19 @@
                     <p>&nbsp;&nbsp;&nbsp;&nbsp;{{ $sponsorship->student->city }}</p>
                     <br>
                     <h5>&nbsp;&nbsp;&nbsp;&nbsp;From State/Province:</h5>
-                    <p>&nbsp;&nbsp;&nbsp;&nbsp;Skardu</p>
+                    <p>&nbsp;&nbsp;&nbsp;&nbsp;{{ $sponsorship->student->province }}</p>
                     <br>
                     <h5>&nbsp;&nbsp;&nbsp;&nbsp;Para Number:</h5>
-                    <p>&nbsp;&nbsp;&nbsp;&nbsp;{{ $sponsorship->para_number }}</p>
+                    <p>&nbsp;&nbsp;&nbsp;&nbsp;{{ $sponsorship->student->para_number }}</p>
                     <br>
                     <h5>&nbsp;&nbsp;&nbsp;&nbsp;Teacher Name:</h5>
                     <p>&nbsp;&nbsp;&nbsp;&nbsp;{{ $sponsorship->student->teacher_name }}</p>
                     <br>
                     <h5>&nbsp;&nbsp;&nbsp;&nbsp;DMG Ref:</h5>
-                    <p>&nbsp;&nbsp;&nbsp;&nbsp;{{ $sponsorship->dmg_ref }}</p>
+                    <p>&nbsp;&nbsp;&nbsp;&nbsp;{{ $sponsorship->student->dmg_ref }}</p>
                     <br>
                     <h5>&nbsp;&nbsp;&nbsp;&nbsp;ZUF Ref:</h5>
-                    <p>&nbsp;&nbsp;&nbsp;&nbsp;{{ $sponsorship->zuf_ref }}</p>
+                    <p>&nbsp;&nbsp;&nbsp;&nbsp;{{ $sponsorship->student->zuf_ref }}</p>
                 </td>
             </tr>
             <tr>

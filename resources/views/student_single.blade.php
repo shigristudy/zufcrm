@@ -2,6 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
+    <title>ZIA-UL-UMMAH FOUNDATIO {{ ucfirst($sponsorship->student->student_type) }}</title>
 </head>
 
 <body>
@@ -11,7 +12,7 @@
         <table style="width: 100%;">
             <tr>
                 <td style="text-align: center;">
-                    <h1 style="color: green;margin: 0;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Zia Ul Ummah Foundation</h1>
+                    <h1 style="color: green;margin: 0;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;ZIA UL UMMAH FOUNDATIO</h1>
                     <h3 style="color: #6bb56b;margin: 0;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{{ ucfirst($sponsorship->student->student_type) }} Student</h3>
                     <br>
                 </td>
@@ -47,19 +48,19 @@
                     <p>&nbsp;&nbsp;&nbsp;&nbsp;{{ $sponsorship->student->city }}</p>
                     <br>
                     <h5>&nbsp;&nbsp;&nbsp;&nbsp;From State/Province:</h5>
-                    <p>&nbsp;&nbsp;&nbsp;&nbsp;Skardu</p>
+                    <p>&nbsp;&nbsp;&nbsp;&nbsp;{{ $sponsorship->student->province }}</p>
                     <br>
                     <h5>&nbsp;&nbsp;&nbsp;&nbsp;Para Number:</h5>
-                    <p>&nbsp;&nbsp;&nbsp;&nbsp;{{ $sponsorship->para_number }}</p>
+                    <p>&nbsp;&nbsp;&nbsp;&nbsp;{{ $sponsorship->student->para_number }}</p>
                     <br>
                     <h5>&nbsp;&nbsp;&nbsp;&nbsp;Teacher Name:</h5>
                     <p>&nbsp;&nbsp;&nbsp;&nbsp;{{ $sponsorship->student->teacher_name }}</p>
                     <br>
                     <h5>&nbsp;&nbsp;&nbsp;&nbsp;DMG Ref:</h5>
-                    <p>&nbsp;&nbsp;&nbsp;&nbsp;{{ $sponsorship->dmg_ref }}</p>
+                    <p>&nbsp;&nbsp;&nbsp;&nbsp;{{ $sponsorship->student->dmg_ref }}</p>
                     <br>
                     <h5>&nbsp;&nbsp;&nbsp;&nbsp;ZUF Ref:</h5>
-                    <p>&nbsp;&nbsp;&nbsp;&nbsp;{{ $sponsorship->zuf_ref }}</p>
+                    <p>&nbsp;&nbsp;&nbsp;&nbsp;{{ $sponsorship->student->zuf_ref }}</p>
                 </td>
             </tr>
             <tr>

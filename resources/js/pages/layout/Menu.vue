@@ -36,22 +36,22 @@
                         <span class="menu-title" data-i18n="Sponsorships">Donations</span>
                     </a>
                     <ul class="menu-content">
-                        <li class="nav-item" v-if="isPermitted('one_off_donations.customers')">
+                        <li class="nav-item" v-if="isPermitted('one_off_donations.customers')" :class="{'sub_menu_active' : checkActive(['one_off_donations.customers']) }">
                             <router-link :to="{ name:'one_off_donations.customers' }"><i class="feather icon-trending-up"></i>
                                 <span class="menu-title">One-Off Donations</span>
                             </router-link>
                         </li>
-                        <li class="nav-item" v-if="isPermitted('monthly_donations.customers')">
+                        <li class="nav-item" v-if="isPermitted('monthly_donations.customers')" :class="{'sub_menu_active' : checkActive(['monthly_donations.customers']) }">
                             <router-link :to="{ name:'monthly_donations.customers' }"><i class="feather icon-repeat"></i>
                                 <span class="menu-title">Live DDs</span>
                             </router-link>
                         </li>
-                         <li class="nav-item" v-if="isPermitted('gocardless.successfull')">
+                         <li class="nav-item" v-if="isPermitted('gocardless.successfull')" :class="{'sub_menu_active' : checkActive(['gocardless.webhooks']) }">
                             <router-link :to="{ name:'gocardless.webhooks' }"><i class="feather icon-cloud"></i>
                                 <span class="menu-title">Successful DD Payments</span>
                             </router-link>
                         </li>
-                        <li class="nav-item" v-if="isPermitted('gocardless.failed')">
+                        <li class="nav-item" v-if="isPermitted('gocardless.failed')" :class="{'sub_menu_active' : checkActive(['gocardless.webhooks.failed']) }">
                             <router-link :to="{ name:'gocardless.webhooks.failed' }"><i class="feather icon-cloud-off"></i>
                                 <span class="menu-title">Failed DD Payments</span>
                             </router-link>
@@ -65,8 +65,8 @@
                         <span class="menu-title" data-i18n="Sponsorships">Sponsorships</span>
                     </a>
                     <ul class="menu-content">
-                        <li v-if="isPermitted('sponsorships.hafiz')"><router-link :to="{ name:'sponsorships.hafiz'}"><i class="feather icon-users"></i><span class="menu-item" data-i18n="Sponsorships">Hifz</span></router-link></li>
-                        <li v-if="isPermitted('sponsorships.scholar')"><router-link :to="{ name:'sponsorships.scholar'}"><i class="feather icon-users"></i><span class="menu-item" data-i18n="Sponsorships">Scholar</span></router-link></li>
+                        <li class="nav-item" v-if="isPermitted('sponsorships.hafiz')" :class="{'sub_menu_active' : checkActive(['sponsorships.hafiz']) }"><router-link :to="{ name:'sponsorships.hafiz'}"><i class="feather icon-users"></i><span class="menu-item" data-i18n="Sponsorships">Hifz</span></router-link></li>
+                        <li class="nav-item" v-if="isPermitted('sponsorships.scholar')" :class="{'sub_menu_active' : checkActive(['sponsorships.scholar']) }"><router-link :to="{ name:'sponsorships.scholar'}"><i class="feather icon-users"></i><span class="menu-item" data-i18n="Sponsorships">Scholar</span></router-link></li>
                     </ul>
                 </li>
                 <li class=" nav-item has-sub" v-if="isPermitted('gift_aids')">
@@ -75,17 +75,17 @@
                         <span class="menu-title" data-i18n="Sponsorships">Gift Aid</span>
                     </a>
                     <ul class="menu-content">
-                         <li class=" nav-item" v-if="isPermitted('gift_aids')">
+                         <li class=" nav-item" v-if="isPermitted('gift_aids')" :class="{'sub_menu_active' : checkActive(['gift_aids']) }">
                             <router-link :to="{ name:'gift_aids'}"><i class="feather icon-check"></i>
                                 <span class="menu-title">Unclaimed Gift Aid</span>
                             </router-link>
                         </li>
-                        <li class=" nav-item" v-if="isPermitted('gift_aids_submitted')">
+                        <li class=" nav-item" v-if="isPermitted('gift_aids_submitted')" :class="{'sub_menu_active' : checkActive(['gift_aids_submitted']) }">
                             <router-link :to="{ name:'gift_aids_submitted'}"><i class="feather icon-check-circle"></i>
                                 <span class="menu-title">Make A Claim</span>
                             </router-link>
                         </li>
-                        <li class=" nav-item" v-if="isPermitted('gift_aids_reports')">
+                        <li class=" nav-item" v-if="isPermitted('gift_aids_reports')" :class="{'sub_menu_active' : checkActive(['gift_aids_reports']) }">
                             <router-link :to="{ name:'gift_aids_reports'}"><i class="feather icon-lock"></i>
                                 <span class="menu-title">Past Claims</span>
                             </router-link>
@@ -104,10 +104,10 @@
                         <span class="menu-title" data-i18n="settings_items">Settings</span>
                     </a>
                     <ul class="menu-content">
-                        <li><router-link :to="{ name:'users'}"><i class="feather icon-users"></i><span class="menu-item" data-i18n="settings_items">Users</span></router-link></li>
-                        <li><router-link :to="{ name:'settings.roles'}"><i class="feather icon-shield"></i><span class="menu-item" data-i18n="settings_items">Roles</span></router-link></li>
-                        <li><router-link :to="{ name:'settings.permissions'}"><i class="feather icon-user-check"></i><span class="menu-item" data-i18n="settings_items">Permissions</span></router-link></li>
-                        <li><router-link :to="{ name:'settings.options'}"><i class="feather icon-list"></i><span class="menu-item" data-i18n="settings_items">Options</span></router-link></li>
+                        <li :class="{'sub_menu_active' : checkActive(['users']) }"><router-link :to="{ name:'users'}"><i class="feather icon-users"></i><span class="menu-item" data-i18n="settings_items">Users</span></router-link></li>
+                        <li :class="{'sub_menu_active' : checkActive(['settings.roles']) }"><router-link :to="{ name:'settings.roles'}"><i class="feather icon-shield"></i><span class="menu-item" data-i18n="settings_items">Roles</span></router-link></li>
+                        <li :class="{'sub_menu_active' : checkActive(['settings.permissions']) }"><router-link :to="{ name:'settings.permissions'}"><i class="feather icon-user-check"></i><span class="menu-item" data-i18n="settings_items">Permissions</span></router-link></li>
+                        <li :class="{'sub_menu_active' : checkActive(['settings.options']) }"><router-link :to="{ name:'settings.options'}"><i class="feather icon-list"></i><span class="menu-item" data-i18n="settings_items">Options</span></router-link></li>
                     </ul>
                 </li>
             </ul>
@@ -129,14 +129,50 @@ export default {
                 $(this).removeClass('hover');
             })
             $(document).on('click','#main-menu-navigation .nav-item',function(){
+                
                 $('#main-menu-navigation .nav-item').removeClass('open');
                 $('#main-menu-navigation .nav-item').removeClass('active');
                 $(this).addClass('open');
                 $(this).addClass('active');
+                console.log($(this).has('ul'))
             })
-        })
 
-        
+        //     $(document).on('click', 'ul.menu-content li', function (e) {
+        //         console.log('slkdjf')
+        //         var $listItem = $(this);
+        //         if ($listItem.is('.disabled')) {
+        //             e.preventDefault();
+        //         } else {
+        //             if ($listItem.has('ul')) {
+        //                 $(this).addClass('active');
+
+        //                 if ($listItem.is('.open')) {
+        //                     $listItem.removeClass('open');
+        //                     // menuObj.collapse($listItem);
+        //                 } else {
+        //                     $listItem.addClass('open');
+
+        //                     $listItem.siblings('.open').find('li.open').trigger('close.app.menu');
+        //                     $listItem.siblings('.open').trigger('close.app.menu');
+        //                     e.stopPropagation();
+        //                 }
+                        
+        //             }else{
+        //                 $(this).addClass('active');
+        //             }
+        //         }
+
+        //         e.stopPropagation();
+        //     });
+        })
+    },
+    methods:{
+        checkActive(arr){
+            if(this.$route.name == arr[0]){
+                return true;
+            }
+            return false;
+        }
     }
 }
 </script>
