@@ -5,7 +5,11 @@
                 <div class="navbar-collapse" id="navbar-mobile">
                     <div class="mr-auto float-left bookmark-wrapper d-flex align-items-center">
                         <ul class="nav navbar-nav">
-                            <li class="nav-item mobile-menu d-xl-none mr-auto"><a class="nav-link nav-menu-main menu-toggle hidden-xs" href="#"><i class="ficon feather icon-menu"></i></a></li>
+                            <li class="nav-item mobile-menu d-xl-none mr-auto">
+                              <a class="nav-link nav-menu-main menu-toggle hidden-xs" href="#">
+                                <i @click="open" class="ficon feather icon-menu"></i>
+                              </a>
+                            </li>
                         </ul>
                     </div>
                     <ul class="nav navbar-nav float-right">
@@ -45,7 +49,7 @@
                                     <span class="menu-title">Change Password</span>
                                 </router-link>
                                 <!-- <a class="dropdown-item" href="#"><i class="feather icon-message-square"></i> Chats</a>-->
-                                <div class="dropdown-divider"></div> 
+                                <div class="dropdown-divider"></div>
                                 <a class="dropdown-item" @click.prevent="logout">
                                     <i class="feather icon-power" fixed-width></i>
                                     {{ $t('logout') }}
@@ -77,7 +81,44 @@ export default {
 
         // Redirect to login.
         this.$router.push({ name: 'login' })
-        }
+        },
+        open: function () {
+            var $body = $("body");
+
+            $body.removeClass("menu-hide menu-collapsed").addClass("menu-open");
+
+            if ($body.hasClass("vertical-overlay-menu")) {
+                $(".sidenav-overlay").removeClass("d-none").addClass("d-block");
+                $("body").css("overflow", "hidden");
+            }
+            if (
+                !$(".main-menu").hasClass("menu-native-scroll") &&
+                $(".main-menu").hasClass("menu-fixed")
+            ) {
+                // this.manualScroller.enable();
+                $(".main-menu-content").css(
+                "height",
+                $(window).height() -
+                    $(".header-navbar").height() -
+                    $(".main-menu-header").outerHeight() -
+                    $(".main-menu-footer").outerHeight()
+                );
+
+                $(".main-menu").addClass("transformation");
+                // this.manualScroller.update();
+            }
+
+            if (!$body.hasClass("vertical-overlay-menu")) {
+                $(".sidenav-overlay").removeClass("d-block d-none");
+                $("body").css("overflow", "auto");
+            }
+            },
     }
 }
 </script>
+<style>
+.transformation {
+  transform: translate3d(260px, 0, 0) !important;
+  opacity: 1 !important;
+}
+</style>
