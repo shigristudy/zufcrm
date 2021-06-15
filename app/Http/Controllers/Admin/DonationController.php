@@ -17,7 +17,7 @@ use Illuminate\Support\Facades\Log;
 class DonationController extends Controller
 {
     public function store( DonationRequest $request ){
-        
+
         $is_sponsor_count = 0;
         foreach($request->donationsArray as $key => $line ){
             if(in_array($line['project'],[11863, 11864, 11814, 11815, 11816])){
@@ -48,10 +48,10 @@ class DonationController extends Controller
             $woo->payment_method            = $request->payment_type;
             $woo->payment_method_title      = $request->payment_type;
             $woo->donation_type             = 'offline';
-            
+
             $woo->save();
-            
-            // Insert Donation Lines 
+
+            // Insert Donation Lines
             foreach($request->donationsArray as $item ){
                 $is_sponsor = 0;
                 if(in_array($item['project'],[11863, 11864, 11814, 11815, 11816])){
@@ -69,19 +69,19 @@ class DonationController extends Controller
                 $Orderitem->save();
             }
             DB::commit();
-        
+
         } catch (\Exception $e) {
             DB::rollback();
             return $e;
         }
         return response()->json([
             'success'   => 1,
-            'message'   => 'Donation Added Successfully!'    
+            'message'   => 'Donation Added Successfully!'
         ]);
     }
 
     public function update( DonationRequest $request ){
-        
+
         $is_sponsor_count = 0;
         foreach($request->donationsArray as $key => $line ){
             if(in_array($line['project'],[11863, 11864, 11814, 11815, 11816])){
@@ -117,17 +117,17 @@ class DonationController extends Controller
             $woo->payment_method            = $request->payment_type;
             $woo->payment_method_title      = $request->payment_type;
             $woo->donation_type             = 'offline';
-            
+
             $woo->save();
-            
-            // Insert Donation Lines 
+
+            // Insert Donation Lines
             OrderItem::where('order_id',$request->edit_id)->delete();
             foreach($request->donationsArray as $item ){
                 $is_sponsor = 0;
                 if(in_array($item['project'],[11863, 11864, 11814, 11815, 11816])){
                     $is_sponsor = 1;
                 }
-                
+
                 $Orderitem = new OrderItem();
                 $Orderitem->order_id         = $woo->id;
                 $Orderitem->woo_order_id     = 0;
@@ -140,20 +140,20 @@ class DonationController extends Controller
                 $Orderitem->save();
             }
             DB::commit();
-        
+
         } catch (\Exception $e) {
             DB::rollback();
             return $e;
         }
         return response()->json([
             'success'   => 1,
-            'message'   => 'Donation Added Successfully!'    
+            'message'   => 'Donation Added Successfully!'
         ]);
     }
 
 
     public function getDonations(Request $request){
-        
+
         // $columns = ['id','payment_type','date_of_donation','full_name','gift_aid','city','postal_code','contact','email','address_line1','address_line2','status'];
         $columns = ['id','gift_aid','first_name','last_name','email','order_total','phone','payment_method','submitted','claimed','is_allocated'];
         $length = $request->input('length');
@@ -164,7 +164,7 @@ class DonationController extends Controller
         $query = WooOrder::with('items.product')->orderBy($columns[$column], $dir);
         // Filters
         if($request->filtering){
-            
+
             $filters = json_decode($request->form,true);
             $gift_aid           = $filters["gift_aid"];
             $project            = $filters["project"];
@@ -173,7 +173,7 @@ class DonationController extends Controller
             $date_from          = ($filters["date_from"]);
             $date_to            = ($filters["date_to"]);
             $has_sponsored      = $filters["has_sponsored"];
-            
+
             if($gift_aid != ''){
                 $query->ofGiftAidType($gift_aid);
             }
@@ -187,7 +187,7 @@ class DonationController extends Controller
                 $query->where('payment_method',$payment_method);
             }
             if($date_from || $date_to){
-                
+
                 if($date_from && $date_to){
                     $query->whereBetween('donation_date',[$date_from,$date_to]);
                 }else if($date_from){
@@ -199,7 +199,7 @@ class DonationController extends Controller
         }
         if ($searchValue) {
             $woo_products = WooProduct::where('name','like','%' . $searchValue . '%')->get()->pluck('product_id');
-            
+
             if(count($woo_products) > 0){
                 $query->whereHas('items',function($q) use ($searchValue,$woo_products){
                     return $q->whereIn('product_id', $woo_products);
@@ -252,12 +252,12 @@ class DonationController extends Controller
                 $woo->phone                     = $value['phone'];
                 $woo->payment_method            = $value['payment_method'];
                 $woo->payment_method_title      = $value['payment_method_title'];
-                
+
                 $woo->save();
-    
+
                 // insert order items
                 foreach($value['order_items'] as $item ){
-                    
+
                     $Orderitem = new OrderItem();
                     $Orderitem->order_id         = $woo->id;
                     $Orderitem->woo_order_id     = $item['order_id'];
@@ -270,10 +270,10 @@ class DonationController extends Controller
                     $Orderitem->donation_type    = $item['donation_type'];
                     $Orderitem->save();
                 }
-            }  
-        
+            }
+
             DB::commit();
-            
+
         } catch (\Exception $e) {
             DB::rollback();
             return $e;
@@ -289,6 +289,24 @@ class DonationController extends Controller
             $projects = WooProduct::whereIn('type',['simple','subscription'])->orderBy('name','asc')->get();
         }
         return response()->json($projects);
+    }
+
+
+    public function create_product_in_crm(Request $request){
+        $value = $request->all();
+        $check = WooProduct::where('product_id',$value['product_id'])->first();
+        if(!$check){
+            $woo = new WooProduct();
+            $woo->product_id            = $value['product_id'];
+            $woo->name                  = $value['name'];
+            $woo->type                  = $value['type'];
+            $woo->price                 = ($value['price'] && $value['price'] != '') ?? 0;
+            $woo->childs                =  null;
+            $woo->project_page          = $value['project_page'];
+            $woo->save();
+        }
+
+        return response()->json($request->all());
     }
 
 }

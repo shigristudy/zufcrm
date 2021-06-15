@@ -42,15 +42,15 @@ Route::group(['middleware' => 'auth:api'], function () {
     Route::patch('settings/profile', [ProfileController::class, 'update']);
     Route::patch('settings/password', [PasswordController::class, 'update']);
 
-    // Student Routes Starts 
+    // Student Routes Starts
     Route::post('student/store', [StudentController::class, 'store']);
     Route::post('student/update', [StudentController::class, 'update']);
     Route::get('student/getHafizStudents', [StudentController::class, 'getHafizStudents']);
     Route::get('student/getScholarStudents', [StudentController::class, 'getScholarStudents']);
     Route::get('student/getSingleStudent/{id}', [StudentController::class, 'getSingleStudent']);
     Route::post('student_status/store', [StudentController::class, 'storeStatus']);
-    
-    // Donation Routes Starts 
+
+    // Donation Routes Starts
     Route::post('donation/store', [DonationController::class, 'store']);
     Route::post('donation/update', [DonationController::class, 'update']);
     Route::get('donation/getDonations', [DonationController::class, 'getDonations']);
@@ -81,16 +81,16 @@ Route::group(['middleware' => 'auth:api'], function () {
     Route::post('includeProductInSponsorhips',[ReportController::class,'includeProductInSponsorhips']);
 
     Route::post('send_report_to_donor',[ReportController::class,'send_report_to_donor']);
-    
+
     Route::prefix('settings')->group(function () {
-        
+
         // Roles Routes
         Route::get('roles', [RolesController::class,'fetch']);
         Route::post('role/store', [RolesController::class,'store']);
         Route::get('role/edit/{id}', [RolesController::class,'edit']);
         Route::post('role/destroy', [RolesController::class,'destroy']);
         Route::get('role/getAllRoles', [RolesController::class,'getAllRoles']);
-        
+
         // Permission Routes
         Route::get('permissions', [PermissionController::class,'fetch']);
         Route::post('permission/store', [PermissionController::class,'store']);
@@ -113,7 +113,7 @@ Route::group(['middleware' => 'auth:api'], function () {
         Route::post('user/edit', [UserController::class,'edit']);
 
     });
-   
+
 
     Route::get('getWebhooks', [GocardlessController::class,'getWebhooks']);
     Route::get('gocardlessCustomer', [GocardlessController::class,'gocardlessCustomer']);
@@ -132,10 +132,10 @@ Route::group(['middleware' => 'guest:api'], function () {
 
     Route::post('oauth/{driver}', [OAuthController::class, 'redirect']);
     Route::get('oauth/{driver}/callback', [OAuthController::class, 'handleCallback'])->name('oauth.callback');
-    
-    Route::post('getneworderdata', [DonationController::class, 'getneworderdata']);
 
-    
+    Route::post('getneworderdata', [DonationController::class, 'getneworderdata']);
+    Route::post('create_product_in_crm', [DonationController::class, 'create_product_in_crm']);
+
 });
 
 
