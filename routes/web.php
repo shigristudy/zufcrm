@@ -27,7 +27,7 @@ use Illuminate\Support\Facades\Route;
 // })->withoutMiddleware(['csrf']);
 Route::get('/shigri',function (){
 
-    
+
     $order = WooOrder::where('order_id',13383)
                                 ->update([
                                     'submitted' => null,
@@ -36,25 +36,25 @@ Route::get('/shigri',function (){
     dd($order);
     $donations = OrderItem::with(['order','product'])
                 ->whereHas('product',function($q){
-                   return $q->where('type','simple');        
+                   return $q->where('type','simple');
                 })
                 ->whereIn('product_id',[11863, 11864, 11814, 11815, 11816])
 
                 ->get();
-                
+
     return response()->json($donations);
 });
 
 
 Route::get('/testing', function () {
     dd(1);
-   
+
     $client = new Client();
     $response = $client->request('GET', 'https://www.staging5.ziaulummahfoundation.org.uk//wp-json/getdonations/v1/get_all_donations');
     DB::beginTransaction();
     try {
         foreach(json_decode($response->getBody(),true) as $value){
-            
+
             $woo = new WooOrder();
             $woo->order_id                  = $value['order_id'];
             $woo->order_total               = $value['order_total'];
@@ -77,12 +77,12 @@ Route::get('/testing', function () {
             $woo->phone                     = $value['phone'];
             $woo->payment_method            = $value['payment_method'];
             $woo->payment_method_title      = $value['payment_method_title'];
-            
+
             $woo->save();
 
             // insert order items
             foreach($value['order_items'] as $item ){
-                
+
                 $Orderitem = new OrderItem();
                 $Orderitem->order_id         = $woo->id;
                 $Orderitem->woo_order_id     = $item['order_id'];
@@ -97,7 +97,7 @@ Route::get('/testing', function () {
             }
         }
         DB::commit();
-        
+
     } catch (\Exception $e) {
         DB::rollback();
         return $e;
@@ -106,41 +106,38 @@ Route::get('/testing', function () {
 });
 
 Route::get('/import-products', function () {
-    dd(1);
+    // dd(1);
     DB::beginTransaction();
 
     try {
         $client = new Client();
-        // $response = $client->request('GET', 'https://www.staging5.ziaulummahfoundation.org.uk/wp-json/wc/v3/products?per_page=100',[
-        //                 'auth' => [
-        //                     'ck_4202435a3ffa2878c84d3064e2e5463f7a234589', 
-        //                     'cs_91b6f3fd2894b1a818f8c38e912ca56756b88ba6'
-        //                 ]
-        //             ]);
-        $response = $client->request('GET', 'https://www.staging5.ziaulummahfoundation.org.uk/wp-json/getproducts/v1/get_all_products');
-        // return json_decode($response->getBody(),true);
-        // echo $response->getStatusCode(); // 200
-        // echo $response->getHeaderLine('content-type'); // 'application/json; charset=utf8'
-        // echo $response->getBody(); // '{"id": 1420053, "name": "guzzle", ...}'
+
+        $response = $client->request('GET', 'https://www.ziaulummahfoundation.org.uk/wp-json/getproducts/v1/get_all_products');
 
         foreach(json_decode($response->getBody(),true) as $value){
-            $woo = new WooProduct();
-            $woo->product_id            = $value['product_id'];
-            $woo->name                  = $value['name'];
-            $woo->type                  = $value['type'];
-            $woo->price                 = ($value['price'] && $value['price'] != '') ?? 0;
-            $woo->childs                =  null;
-            $woo->project_page          = $value['project_page'];
-            $woo->save();
+            if(!WooProduct::where('product_id',$value['product_id'])->first()){
+                if($value['product_id']){
+
+                    $woo = new WooProduct();
+                    $woo->product_id            = $value['product_id'];
+                    $woo->name                  = $value['name'];
+                    $woo->type                  = $value['type'];
+                    $woo->price                 = ($value['price'] && $value['price'] != '') ?? 0;
+                    $woo->childs                =  null;
+                    $woo->project_page          = $value['project_page'];
+                    $woo->save();
+                }
+            }
         }
 
         DB::commit();
-        
+
     } catch (\Exception $e) {
         DB::rollback();
         return $e;
     }
-    
+
+
 });
 
 
